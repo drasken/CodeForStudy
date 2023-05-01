@@ -3,7 +3,7 @@
 """
 Created on Wed Apr  5 22:40:45 2023
 
-@author: rudy
+@author: drasken
 """
 
 #Così riesco a estrarre una citazione dal sito
