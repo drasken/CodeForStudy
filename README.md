@@ -1,5 +1,5 @@
 # CodeForStudy
 
-Repository for posting coding while studying
+Repository for posting code while studying.
 
-In this repository i'll post works from my CS Uni courses and side-projects for learning purpose
+In this repository i'll post works from my Uni course, online and side-projects for learning purpose.
