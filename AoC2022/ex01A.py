@@ -8,7 +8,15 @@ with open (file="input01A.txt", mode="r") as file:
         else:
             count.append(temp)
             temp = 0
-    print(max(count))
+    #solutino for first half
+    new_count = sorted(count, reverse=True)
     
-    #soluzione 72511
+    print(sum(new_count[0:3]))
+
+
+    #solutionA 72511
+    #OK!!
+
+    #solution B1 142325, too low...
+    #solution B2 212117
     #OK!!
