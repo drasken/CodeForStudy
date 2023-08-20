@@ -9,7 +9,9 @@
 with open(file="input02A.txt", mode="r") as file:
     stringaS = file.readlines() #the string read from the txt file
     responses = []
+    responses2 = []
     res = 0
+    res2 = 0
     for i in stringaS:
         responses.append(i[2:].rstrip("\n")) #only letter for response
 
@@ -46,3 +48,40 @@ with open(file="input02A.txt", mode="r") as file:
     X means you need to lose, Y means you need to end the round in a 
     draw, and Z means you need to win. Good luck!"
     """
+    # First try with a multiple if branch
+    for i in stringaS:
+        responses2.append(i[0:].rstrip("\n")) #only letter for response
+
+    for respo in responses2: #this count the points for signs played
+        if 'Z' in respo:
+            res2 += 6
+        elif 'Y' in respo:
+            res2 += 3
+
+    for move in stringaS:
+        if move[0] == 'A':
+            if move[2] == 'X':
+                res2 += 3
+            if move[2] == 'Y':
+                res2 += 1
+            if move[2] == 'Z':
+                res2 += 2 
+        if move[0] == 'B':
+            if move[2] == 'X':
+                res2 += 1
+            if move[2] == 'Y':
+                res2 += 2
+            if move[2] == 'Z':
+                res2 += 3 
+        if move[0] == 'C':
+            if move[2] == 'X':
+                res2 += 2
+            if move[2] == 'Y':
+                res2 += 3
+            if move[2] == 'Z':
+                res2 += 1                        
+
+    print(res2)
+
+    #first try: 5143, too low
+    #second try: 15457 OK!!
