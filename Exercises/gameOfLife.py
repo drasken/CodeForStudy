@@ -21,13 +21,24 @@ def deadState (width, height):
     return output
 
 #IN PROGRESS
-def randomState(board):
-    for i in range():
-        for j in range(len(i)):
-            board[i][j] = random.randint(0,1)
+
+def randomState (board, probability = 0.5):
+
+    for li in board:
+        for j in range(len(li)):
+
+            rand = random.random()
+            if rand >= probability:
+                li[j] = 1
+            else:
+                li[j] = 0    
+
+
 
 
 board = deadState(10,10)
-randomState(board)
-
 print(board)
+randomState(board)
+test = [x for x in range (10)]
+
+print (board)
