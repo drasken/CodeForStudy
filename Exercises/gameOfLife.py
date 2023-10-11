@@ -86,8 +86,12 @@ def checkCellState(cell, nearCellsCount): #return the int nu tu put in the tab
             return 0
     elif cell == 1:
         if nearCellsCount == 0 or nearCellsCount == 1:
-            pass #da finire
-    
+            return 0
+        if nearCellsCount == 2 or nearCellsCount == 3:
+            return 1
+        if nearCellsCount > 3:
+            return 0
+    # eventually add error handling etc.    
 
 
 
