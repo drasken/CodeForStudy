@@ -66,8 +66,29 @@ def render(state):
 
 #Third Milestone
 
+#probably need to implement a checkIfAlive function
 def next_board_state(state):
     pass
+
+
+def checkCellState(cell, nearCellsCount): #return the int nu tu put in the tab
+    """
+    Any live cell with 0 or 1 live neighbors becomes dead, because of underpopulation
+    Any live cell with 2 or 3 live neighbors stays alive, because its neighborhood is just right
+    Any live cell with more than 3 live neighbors becomes dead, because of overpopulation
+    Any dead cell with exactly 3 live neighbors becomes alive, by reproduction
+
+    """
+    if cell == 0:
+        if nearCellsCount == 3:
+            return 1
+        else:
+            return 0
+    elif cell == 1:
+        if nearCellsCount == 0 or nearCellsCount == 1:
+            pass #da finire
+    
+
 
 
 board = deadState(10,10)
