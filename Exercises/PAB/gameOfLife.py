@@ -67,9 +67,9 @@ def render(state):
 #Third Milestone
 
 #probably need to implement a checkIfAlive function
-def next_board_state(state):
-    pass
-
+def next_board_state(state): #use next function for this 
+    newState = deadState(len(state[0]), len(state))
+    return newState                     
 
 def checkCellState(cell, nearCellsCount): #return the int nu tu put in the tab
     """
@@ -93,6 +93,12 @@ def checkCellState(cell, nearCellsCount): #return the int nu tu put in the tab
             return 0
     # eventually add error handling etc.    
 
+def calcNeighbor(tab):
+    pass
+    
+    
+    
+
 
 
 board = deadState(10,10)
@@ -106,6 +112,9 @@ print(bo)
 randomState(board)
 test = [x for x in range (10)]
 
-print (board)
+print(board)
 
 render(board)
+
+test3 = next_board_state(board)
+print(test3)
