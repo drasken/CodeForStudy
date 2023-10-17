@@ -93,8 +93,15 @@ def checkCellState(board, cell): #return the int nu tu put in the tab
     #Pseudocodice per me, da cancellare
     # ad ogni check se tovo un 1 aggiungi += 1 a aliveCells
     #if cell[0] == 0: #first row
+    if cell[0] == 0:#first row
+        
     #  if cell[1] == 0 or == len(stat[0]):
-    #    chech for angle
+        if cell[1] == 0: #check angle up left
+            pass
+        or cell[1] == len(board[0] -1): #check angle up right
+            pass
+        #    chech for angle
+            
     #elif cell[1] == 0 or come sopra:
     #  sono in un borso laterale
     #elif: #come per la prima file ma invertita
