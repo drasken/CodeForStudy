@@ -11,6 +11,17 @@ Created on Tue Oct 17 19:11:16 2023
 
 # Space for the if main thing
 
+import argparse
+import time
+
+def main():
+    parser = argparse.ArgumentParser(prog='simpleAlarm', 
+                                     description='A simple CLi tool for starting an alarm using a terminal program after a given amount of minutes')
+    #here the rest of the code
+    
+
+
+
 if __name__ == '__main__':
     pass
     
