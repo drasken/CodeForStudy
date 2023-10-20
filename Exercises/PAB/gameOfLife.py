@@ -73,13 +73,15 @@ def next_board_state(state): #use next function for
     newState = deadState(width, height )
     for i in range(width):
         for j in range(height):
+            cell = (i, j) #tuple of index
+            #use checkCellState function
+            #checkCellState(state,cell)
             #here the idea is tu return a 1 or 0 depending of the state
-            # with the function checkCellState
-            indexCell = [i, j]
-            newState[i][j] = checkCellState(state,state[i][j])
+            # with the function checkCellState            
+            newState[i][j] = checkCellState(state,cell)
     return newState                     
 
-def checkCellState(board, cell): #return the int nu tu put in the tab
+def checkCellState(board, cell): #return the int num tu put in the tab
     """
     Check for dead or alive neighbors.
     Cell is a List of index for the position of the Cell in the Grid.
@@ -89,6 +91,8 @@ def checkCellState(board, cell): #return the int nu tu put in the tab
     Any dead cell with exactly 3 live neighbors becomes alive, by reproduction
 
     """
+    width = len(board[0])
+    height = len(board)
     aliveCells = 0
     #Pseudocodice per me, da cancellare
     # ad ogni check se tovo un 1 aggiungi += 1 a aliveCells
@@ -97,11 +101,14 @@ def checkCellState(board, cell): #return the int nu tu put in the tab
         
     #  if cell[1] == 0 or == len(stat[0]):
         if cell[1] == 0: #check angle up left
-            pass
-        or cell[1] == len(board[0] -1): #check angle up right
-            pass
+            aliveCells += board[0][2].count(1)
+            aliveCells += board[1][:2]
+        elif cell[1] == width -1: #check angle up right
+            aliveCells += board[0][width -1].count(1)
+            aliveCells += board[1][width -2:].count(1)
         #    chech for angle
-            
+        else: #the board is on top row not an angle
+            pass
     #elif cell[1] == 0 or come sopra:
     #  sono in un borso laterale
     #elif: #come per la prima file ma invertita
