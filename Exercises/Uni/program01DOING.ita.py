@@ -42,16 +42,35 @@ Provare anche in maniera ricorsiva, chiamare la fnzione finchè sum < 10 e retur
 
 
 def ex1(int_seq:str, subtotal:int) -> int:
+    pass
+    newSeq : list[int] = [int(x) for x in int_seq if x.isdigit()]
+
+    for i in newSeq:
+        pass 
+    return newSeq
     # Inserisci qui il tuo codice
-    res : int = 0 #local variable
-    for i in int_seq:
-        if i.isdigit:
+    # res : int = 0 #local variable
+    # for i in int_seq:
+    #     tot : int = 0 # temp sum of substring        
+    #     if i.isdigit() == False:
+    #         continue
+    #     if i.isdigit():
+
+    #     tot = 0
+    #     while tot < subtotal +1:
+    #         if i.isdigit():
+    #             tot += int(i)
+    #             if tot == subtotal:
+    #                 res += 1
+    # return res
+
 
         
-
-
-
 if __name__ == '__main__':
     # Inserisci qui i tuoi test personali
-    pass
-
+    try_int_seq='3,0,4,0,3,1,0,1,0,1,0,0,5,0,4,2'
+    val = ex1(try_int_seq, 9)
+    provaL = [1,4,5,8,2,3,4,1,2,3,2,7,3,5,4,9,4,6,2]
+    #testLC = [y in x[x for x in provaL if ]
+    testComp = [[x for x in range(4)] for y in range(10)]
+    print(val)
