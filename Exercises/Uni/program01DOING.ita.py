@@ -44,9 +44,17 @@ Provare anche in maniera ricorsiva, chiamare la fnzione finchè sum < 10 e retur
 def ex1(int_seq:str, subtotal:int) -> int:
     pass
     newSeq : list[int] = [int(x) for x in int_seq if x.isdigit()]
+    
+    index_sx = 0
+    
+    for i in range(len(newSeq)):
+        pass
+        tot : int = 0
+        dx_index : int = i
+        while tot < subtotal +1:
+            pass
 
-    for i in newSeq:
-        pass 
+    
     return newSeq
     # Inserisci qui il tuo codice
     # res : int = 0 #local variable
