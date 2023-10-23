@@ -1,73 +1,80 @@
-# -*- coding: utf-8 -*-
+import testlib
+import random
+from ddt import file_data, ddt, data, unpack
 
-''' 
-Abbiamo una stringa int_seq contenente una sequenza di interi non-negativi
-    separati da virgole ed un intero positivo subtotal.
+import program01 as program
 
-Progettare una funzione ex1(int_seq, subtotal) che
-    riceve come argomenti la stringa int_seq e l'intero subtotal e
-    restituisce il numero di sottostringhe di int_seq
-    la somma dei cui valori è subtotal.
+@ddt
+class Test(testlib.TestCase):
 
-Ad esempio, per int_seq='3,0,4,0,3,1,0,1,0,1,0,0,5,0,4,2' e subtotal=9,
-    la funzione deve restituire 7.
+    def do_test(self, test_int_seq, test_subtotal, expected):
+        """Test implementation
+        - test_int_seq: input string
+        - test_subtotal: input number
+        - expected: expected output
+        TIMEOUT: 1 second for each test
+        """
+        with    self.ignored_function('builtins.print'), \
+                self.ignored_function('pprint.pprint'), \
+                self.forbidden_function('builtins.input'), \
+                self.timeout(1), \
+                self.timer(1):
+            result = program.ex1(test_int_seq, test_subtotal)
+        self.assertEqual(type(result), int,
+                         ('The output type should be: int\n'
+                          '[Il tipo di dato in output deve essere: int]'))
+        self.assertEqual(result, expected,
+                         ('The return value is incorrect\n'
+                          '[Il valore di ritorno è errato]'))
+        return 1
 
-Infatti:
-'3,0,4,0,3,1,0,1,0,1,0,0,5,0,4,2'
- _'0,4,0,3,1,0,1,0'_____________
- _'0,4,0,3,1,0,1'_______________
- ___'4,0,3,1,0,1,0'_____________
-____'4,0,3,1,0,1'_______________
-____________________'0,0,5,0,4'_
-______________________'0,5,0,4'_
- _______________________'5,0,4'_
+    @file_data("test_01.json")
+    def test_1_S1(self, test_int_seq, test_subtotal, expected):
+        return self.do_test(test_int_seq, test_subtotal, expected)
 
-NOTA: è VIETATO usare/importare ogni altra libreria a parte quelle già presenti
+    def test_many_zeros_1000(self):
+        """Test with a string having 1000 0’s and
+        250,000 sequences such that
+        the sum of their values is equal to 2
+        [Test con una stringa avente 1000 zeri e
+         250.000 sequenze tali che
+         la somma dei loro valori sia uguale a 2]"""
+        test_seq_len  = 1000
+        half          = test_seq_len // 2
+        zeros         = ['0'] * (half-1)
+        test_int_seq  = ",".join(zeros + ['1']*2 + zeros)
+        test_subtotal = 2
+        expected      = half ** 2
+        return self.do_test(test_int_seq, test_subtotal, expected)
 
-NOTA: il timeout previsto per questo esercizio è di 1 secondo per ciascun test (sulla VM)
+    def test_many_1s(self):
+        """Test with a string having 20,000 1’s and
+        19,001 sequences such that
+        the sum of their values is equal to 1000
+        [Test con una stringa avente 20,000 valori uguali a 1 e
+         19.001 sequenze tali che
+         la somma dei loro valori sia uguale a 1000]"""
+        test_seq_len  = 20000
+        test_int_seq  = ",".join(['1'] * test_seq_len)
+        test_subtotal = 1000
+        expected      = test_seq_len - test_subtotal + 1
+        return self.do_test(test_int_seq, test_subtotal, expected)
 
-ATTENZIONE: quando caricate il file assicuratevi che sia nella codifica UTF8
-    (ad esempio editatelo dentro Spyder)
-'''
-
-"""
-Idea per risolvere il programa
-lanciare un ciclo while che finchè fa somma < 10:
-                                     if somma == 9 -> res += 1
-
-Provare anche in maniera ricorsiva, chiamare la fnzione finchè sum < 10 e return res = 0 se non sum == 9
-                                                                     
-"""
-
-
-
-def ex1(int_seq:str, subtotal:int) -> int:
-    newSeq : list[int] = [int(x) for x in int_seq if x.isdigit()]
+    def test_many_internal_zeros(self):
+        """Test with a string having 1,000 0’s and
+        1 sequence such that
+        the sum of its values is equal to 2
+        [Test con una stringa avente 1000 zeri ed
+         1 sequenza tale che
+         la somma dei suoi valori sia uguale a 2]"""
+        test_seq_len  = 1000
+        zeros         = ['0'] * test_seq_len
+        test_int_seq  = ",".join(['1'] + zeros + ['1'])
+        test_subtotal = 2
+        expected      = 1
+        return self.do_test(test_int_seq, test_subtotal, expected)
     
-    
-    res : int = 0
-    index_sx : int = 0
-    arrLen: int = len(newSeq)
-    
-    for i in range(arrLen):
-        tot : int = 0
-        index_dx : int = index_sx + 1
-        while tot <= subtotal and index_dx <= arrLen:
-            tot = sum(newSeq[index_sx:index_dx])
-            index_dx += 1
-            if tot == subtotal:
-                res += 1
-        index_sx += 1
-        
-    return res
-        
-
-        
 if __name__ == '__main__':
-    # Inserisci qui i tuoi test personali
-    try_int_seq='3,0,4,0,3,1,0,1,0,1,0,0,5,0,4,2'
-    val = ex1(try_int_seq, 9)
-    provaL = [1,4,5,8,2,3,4,1,2,3,2,7,3,5,4,9,4,6,2]
-    #testLC = [y in x[x for x in provaL if ]
-    testComp = [[x for x in range(4)] for y in range(10)]
-    print(val)
+    Test.main()
+
+
