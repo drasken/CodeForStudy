@@ -135,11 +135,21 @@ def generate_digits(bases : List[int] ) -> List[List[int]]:
     [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4]]
     è una soluzione valida.
     '''
+    #first try with nested or loops
+    res : list[int] = []
+    
+    for i in range(bases[0]):
+        for j in range(bases[1]):
+            res.append([i,j])
+    
+    return res
+    
+    
     #pass
-    first : int = bases[0]
-    second = bases[1]
-    res = [[i for i in range(second)] for j in range(first
-                                                     )]
+    # first : int = bases[0]
+    # second = bases[1]
+    # res = [[i for i in range(second)] for j in range(first
+    #                                                  )]
     
     
     return res
@@ -169,8 +179,12 @@ def find_doubles(bases : List[int]) -> Set[int]:
 if __name__ == '__main__':
     
     #First function works, need refactoring
-    provaCode = decode_digits([1,1,2],[2,3,4])
-    print(provaCode)
+    # provaCode = decode_digits([1,1,2],[2,3,4])
+    # print(provaCode)
+    
+    #second function tests
+    prova2nd = generate_digits([2,5])
+    print(prova2nd)
     
     
     # inserisci qui i tuoi test
