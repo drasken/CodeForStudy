@@ -142,7 +142,7 @@ def generate_digits(bases : List[int] ) -> List[List[int]]:
         for j in range(bases[1]):
             res.append([i,j])
     
-    return res
+    #return res
     
     
     #pass
@@ -150,7 +150,10 @@ def generate_digits(bases : List[int] ) -> List[List[int]]:
     # second = bases[1]
     # res = [[i for i in range(second)] for j in range(first
     #                                                  )]
+    allNumb = lambda x,k : [x in range(k)]
     
+    prova = allNumb(2,3)
+    print(prova)  
     
     return res
 
@@ -185,6 +188,9 @@ if __name__ == '__main__':
     #second function tests
     prova2nd = generate_digits([2,5])
     print(prova2nd)
+    
+    # 3rd function tests
+    
     
     
     # inserisci qui i tuoi test
