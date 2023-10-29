@@ -64,19 +64,30 @@ ATTENZIONE: è vietato importare altre librerie oltre quelle già presenti.
 """
 
 from typing import List, Set
+import random #DA CANCELLARE
 
-#TO DELETE APPOGGIO PER LA PRIMA FUNZIONE
-def powTemp(bass : list[int]) -> list[int]:
+#COMENT TO DELETE APPOGGIO PER LA PRIMA FUNZIONE
+def powBases(bass : list[int]) -> list[int]:
     
     res : list[int] = []
-    index : int = 0
+    # index : int = 0
     
-    for k in bass:
-        res.append(pow(k,index))
-        index += 1
+    # for k in bass:
+    #     res.append(pow(k,index))
+    #     index += 1
+    
+    for i,j in enumerate(bass):
+          #result.append(pow(j, i)) # append meno veloce  
+          res += [pow(j,i)]
     
     return res
-        
+
+def mulTuple (element : tuple[int]) -> int:
+    #pass #da implementare, frse basta una lambda     
+    res : int = 0
+    for i in element:
+        res += i[0] * i[1]
+    return res    
         
 # FUNZIONA, TO REFACTOR
 def decode_digits(digits: List[int], bases: List[int]) -> int:
@@ -97,29 +108,47 @@ def decode_digits(digits: List[int], bases: List[int]) -> int:
     
     
     # ITERATIVE STYLE
-    # temp = powTemp(bases)
+    #temp = powBases(bases)
+    #print(temp)
+    temp = list(zip(digits,powBases(bases)))
+    
+    for i in temp:
+        result.append(i[0] * i[1])
+    # temp3 = list(map(mulTuple, temp2))
+    # print(temp3)
+    # print (temp2)
     # index = 0
     # for i in digits:
-    #     result.append(i * temp[index])
+    #     result.append(i * temp2[index])
     #     index += 1
     
+    return sum(result)   #iterative
     
     # MORE FUNCTIONAL
-    for i,j in enumerate(bases):
-          result.append(pow(j, i))   
+    # for i,j in enumerate(bases):
+    #       #result.append(pow(j, i)) # append meno veloce  
+    #       result += [pow(j,i)]
     
-    result = list(zip(digits, result))
+    # print(result)
+    # result = list(zip(digits, result))
     
-    #sumTuple = (lambda x : x[0] * x[1])
+    # #sumTuple = (lambda x : x[0] * x[1])
     
-    result = sum(map(lambda x : x[0] * x[1], result)) #Da debaggare
+    # result = sum(map(lambda x : x[0] * x[1], result)) #Da debaggare// Debuggato,ora funziona
     
     
-    #return sum(result)   #iterative
-    return result #iterative
     
+    # return result #iterative
 
-# TO DO, WORK IN PROGRESS
+#----------------------------------------------------------------------------
+# TO DO, WORK IN PROGRESS second function
+def generateListUtil(listDigits : list[int]) -> list[int]:
+    res : list[int] = []
+    for i in listDigits:
+        res.append([x for x in range(i)])
+    return res
+        
+
 def generate_digits(bases : List[int] ) -> List[List[int]]:
     '''
     Data una lista di basi, genera la lista di tutte le possibili
@@ -135,12 +164,17 @@ def generate_digits(bases : List[int] ) -> List[List[int]]:
     [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4]]
     è una soluzione valida.
     '''
-    #first try with nested or loops
-    res : list[int] = []
+    result  : list[int] = []
+    listsLimits : list[list] = generateListUtil(bases)
+    result = [[x, y] for x in ]
     
-    for i in range(bases[0]):
-        for j in range(bases[1]):
-            res.append([i,j])
+    
+    #first try with nested or loops
+    # res : list[int] = []
+    
+    # for i in range(bases[0]):
+    #     for j in range(bases[1]):
+    #         res.append([i,j])
     
     #return res
     
@@ -150,12 +184,12 @@ def generate_digits(bases : List[int] ) -> List[List[int]]:
     # second = bases[1]
     # res = [[i for i in range(second)] for j in range(first
     #                                                  )]
-    allNumb = lambda x,k : [x in range(k)]
+    # allNumb = lambda x,k : [x in range(k)]
     
-    prova = allNumb(2,3)
-    print(prova)  
+    # prova = allNumb(2,3)
+    # print(prova)  
     
-    return res
+    # return res
 
 
 
@@ -180,14 +214,20 @@ def find_doubles(bases : List[int]) -> Set[int]:
 
 ###################################################################################
 if __name__ == '__main__':
+    pass
+    #prova con 2 liste randomper le funzioni
+    #list1digits = [random.randrange(0,100) for x in range(1000)]
+    #list1bases = [random.randrange(0,100) for x in range(1000)]
+    
     
     #First function works, need refactoring
-    # provaCode = decode_digits([1,1,2],[2,3,4])
-    # print(provaCode)
+    provaCode = decode_digits([1,1,2],[2,3,4])
+    #provaCode2= decode_digits(list1bases,list1digits)
+    print(provaCode)
     
     #second function tests
-    prova2nd = generate_digits([2,5])
-    print(prova2nd)
+    #prova2nd = generate_digits([2,5])
+    #print(prova2nd)
     
     # 3rd function tests
     
