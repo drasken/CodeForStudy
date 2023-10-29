@@ -165,8 +165,13 @@ def generate_digits(bases : List[int] ) -> List[List[int]]:
     è una soluzione valida.
     '''
     result  : list[int] = []
-    listsLimits : list[list] = generateListUtil(bases)
-    result = [[x, y] for x in ]
+    
+    # PRATICAMENTE SI DEVE FARE UN PRODOTTO CARTESIANO
+    
+    
+    
+    # listsLimits : list[list] = generateListUtil(bases)
+    # result = [[x, y] for x in ]
     
     
     #first try with nested or loops

@@ -9,9 +9,9 @@ Created on Tue Oct 17 19:56:52 2023
 import argparse
 from pathlib import Path
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(prog='Simple CLI Program')
 
-parser.add_argument("path")
+parser.add_argument("path", help='the path to the target directory')
 
 args = parser.parse_args()
 
