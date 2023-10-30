@@ -66,7 +66,7 @@ ATTENZIONE: è vietato importare altre librerie oltre quelle già presenti.
 from typing import List, Set
 import random #DA CANCELLARE
 
-#COMENT TO DELETE APPOGGIO PER LA PRIMA FUNZIONE
+#COMMENT TO DELETE APPOGGIO PER LA PRIMA FUNZIONE
 def powBases(bass : list[int]) -> list[int]:
     
     res : list[int] = []
@@ -149,6 +149,28 @@ def generateListUtil(listDigits : list[int]) -> list[int]:
     return res
         
 
+def product(*args, repeat=1):
+    pools = [tuple(pool) for pool in args] * repeat
+    result = [[]]
+    for pool in pools:
+        result = [x+[y] for x in result for y in pool]
+    for prod in result:
+        yield tuple(prod)
+        
+def combine(elems): #per adesso usa questa
+    if len(elems) == 0:
+        return [[]]
+    result = []    
+    subcombinations =  combine(elems[1:])
+    for x in elems[0]:
+        for y in subcombinations:
+            result.append([x, *y])
+    return result        
+
+def generateLists(nu : int) -> list[int]: #used to generate a list in range of num
+    res = list(map(int, range(nu)))
+    return res
+
 def generate_digits(bases : List[int] ) -> List[List[int]]:
     '''
     Data una lista di basi, genera la lista di tutte le possibili
@@ -164,7 +186,24 @@ def generate_digits(bases : List[int] ) -> List[List[int]]:
     [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4]]
     è una soluzione valida.
     '''
-    result  : list[int] = []
+    
+    #PSEUDO CODICE
+    
+    flatList : list[int] = []
+    flatList += list(map(generateLists, bases))
+    
+    result : list[int] = combine(flatList)
+    
+    return result 
+    
+    
+    # result  : list[int] = []
+    # firstEl = [0] * len(bases)
+    # result.append(firstEl)
+    # for i in bases:
+    #     [x for x in range(i)]
+    
+    # return result
     
     # PRATICAMENTE SI DEVE FARE UN PRODOTTO CARTESIANO
     
@@ -229,11 +268,16 @@ if __name__ == '__main__':
     provaCode = decode_digits([1,1,2],[2,3,4])
     #provaCode2= decode_digits(list1bases,list1digits)
     print(provaCode)
-    
+    #---------------------------------------------------------------------
     #second function tests
     #prova2nd = generate_digits([2,5])
     #print(prova2nd)
+    provaGenerate = generate_digits([2,5])
+    print(provaGenerate)
     
+    
+    
+    #--------------------------------------------------------------------
     # 3rd function tests
     
     
