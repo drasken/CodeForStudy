@@ -145,7 +145,7 @@ def decode_digits(digits: List[int], bases: List[int]) -> int:
 def generateListUtil(listDigits : list[int]) -> list[int]:
     res : list[int] = []
     for i in listDigits:
-        res.append([x for x in range(i)])
+        res.appenpd([x for x in range(i)])
     return res
         
 
@@ -188,13 +188,33 @@ def generate_digits(bases : List[int] ) -> List[List[int]]:
     '''
     
     #PSEUDO CODICE
+    #Prova recursive
+    #caso base, se vuota return []
+    #se uno return x in range (x)
+    #e faccio res += function(list[1:])
+    #PROVA
+
+    if len(bases) == 0:
+        return []
+
+    result : list[int] = []
+
+    for x in bases:
+        result += x in range(x) + generate_digits(bases[1:])
+
+    return result
+
     
-    flatList : list[int] = []
-    flatList += list(map(generateLists, bases))
     
-    result : list[int] = combine(flatList)
+
+
     
-    return result 
+    # flatList : list[int] = []
+    # flatList += list(map(generateLists, bases))
+    
+    # result : list[int] = combine(flatList)
+    
+    # return result 
     
     
     # result  : list[int] = []
