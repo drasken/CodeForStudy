@@ -145,17 +145,10 @@ def decode_digits(digits: List[int], bases: List[int]) -> int:
 def generateListUtil(listDigits : list[int]) -> list[int]:
     res : list[int] = []
     for i in listDigits:
-        res.appenpd([x for x in range(i)])
+        res.append([x for x in range(i)])
     return res
         
 
-def product(*args, repeat=1):
-    pools = [tuple(pool) for pool in args] * repeat
-    result = [[]]
-    for pool in pools:
-        result = [x+[y] for x in result for y in pool]
-    for prod in result:
-        yield tuple(prod)
         
 def combine(elems): #per adesso usa questa
     if len(elems) == 0:
@@ -170,6 +163,18 @@ def combine(elems): #per adesso usa questa
 def generateLists(nu : int) -> list[int]: #used to generate a list in range of num
     res = list(map(int, range(nu)))
     return res
+
+#FROM PYTHON DOCS -->>STUDIARE, PER ORA USO NEL CODICE
+def product(*args, repeat=1):
+    # product('ABCD', 'xy') --> Ax Ay Bx By Cx Cy Dx Dy
+    # product(range(2), repeat=3) --> 000 001 010 011 100 101 110 111
+    pools = [tuple(pool) for pool in args] * repeat
+    result = [[]]
+    for pool in pools:
+        result = [x+[y] for x in result for y in pool]
+    for prod in result:
+        yield list(prod)
+
 
 def generate_digits(bases : List[int] ) -> List[List[int]]:
     '''
@@ -186,6 +191,38 @@ def generate_digits(bases : List[int] ) -> List[List[int]]:
     [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4]]
     è una soluzione valida.
     '''
+    pass
+
+    listBases = [[x for x in range(i)] for i in bases]
+    print(listBases)
+    index = 1
+    res = listBases[0]
+    while index == len(listBases):
+        list(product(res, listBases[index]))
+    return res
+    #Prova da Python Doc
+    # if len(bases) == 0:
+    #     return []
+    
+    # result = list(product(bases[0], bases[1]))
+    # result += generateListUtil(bases[1:])
+    
+    # return result
+    # if len(bases) == 1:
+    #     return product(bases[0])
+    
+    # result : list = list(product(bases[0], bases[1]))
+    # result.extend(product(bases[],bases[1]))
+        
+    # return result
+
+
+    #provo a creare tutte liste di zeri e cambiare con gli indici
+    # bases
+    # res : list[int] = [0]
+    
+    
+    
     
     #PSEUDO CODICE
     #Prova recursive
@@ -193,16 +230,23 @@ def generate_digits(bases : List[int] ) -> List[List[int]]:
     #se uno return x in range (x)
     #e faccio res += function(list[1:])
     #PROVA
+    
+    # if len(bases) == 0:
+    #     return []
+    
+    # flatList : list[int] = []
+    # flatList += list(map(generateLists, bases))
+    
+    # for i in range(len(flatList[0])):
+    #     flatList[0].extend(flatList[1:])
+    
 
-    if len(bases) == 0:
-        return []
+    # result : list[int] = []
 
-    result : list[int] = []
+    # for x in bases:
+    #     result += x in range(x) + generate_digits(bases[1:])
 
-    for x in bases:
-        result += x in range(x) + generate_digits(bases[1:])
-
-    return result
+    # return flatList
 
     
     
@@ -293,7 +337,9 @@ if __name__ == '__main__':
     #prova2nd = generate_digits([2,5])
     #print(prova2nd)
     provaGenerate = generate_digits([2,5])
-    print(provaGenerate)
+    provaGenerate2 = generate_digits([2,4,7])
+    provaGenerate3 = list(product([0,1],[0,1,2,3,4],['a','b','c']))
+    print(provaGenerate2)
     
     
     
