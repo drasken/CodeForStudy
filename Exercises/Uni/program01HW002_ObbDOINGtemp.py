@@ -64,32 +64,20 @@ ATTENZIONE: è vietato importare altre librerie oltre quelle già presenti.
 """
 
 from typing import List, Set
-import random #DA CANCELLARE
 
-#COMMENT TO DELETE APPOGGIO PER LA PRIMA FUNZIONE
+#Funzione di apoggio per la funzione successiva, preferita ad una lambda
 def powBases(bass : list[int]) -> list[int]:
     
     res : list[int] = []
-    # index : int = 0
-    
-    # for k in bass:
-    #     res.append(pow(k,index))
-    #     index += 1
+   
     
     for i,j in enumerate(bass):
-          #result.append(pow(j, i)) # append meno veloce  
           res += [pow(j,i)]
     
     return res
 
-def mulTuple (element : tuple[int]) -> int:
-    #pass #da implementare, frse basta una lambda     
-    res : int = 0
-    for i in element:
-        res += i[0] * i[1]
-    return res    
-        
-# FUNZIONA, TO REFACTOR
+
+# FUNZIONA, REFACTOR(?)
 def decode_digits(digits: List[int], bases: List[int]) -> int:
     '''
     Riceve una lista di cifre ed una lista di basi della stessa lunghezza.
@@ -106,74 +94,15 @@ def decode_digits(digits: List[int], bases: List[int]) -> int:
     
     result : list[int] = []
     
-    
-    # ITERATIVE STYLE
-    #temp = powBases(bases)
-    #print(temp)
+   
     temp = list(zip(digits,powBases(bases)))
     
     for i in temp:
         result.append(i[0] * i[1])
-    # temp3 = list(map(mulTuple, temp2))
-    # print(temp3)
-    # print (temp2)
-    # index = 0
-    # for i in digits:
-    #     result.append(i * temp2[index])
-    #     index += 1
-    
-    return sum(result)   #iterative
-    
-    # MORE FUNCTIONAL
-    # for i,j in enumerate(bases):
-    #       #result.append(pow(j, i)) # append meno veloce  
-    #       result += [pow(j,i)]
-    
-    # print(result)
-    # result = list(zip(digits, result))
-    
-    # #sumTuple = (lambda x : x[0] * x[1])
-    
-    # result = sum(map(lambda x : x[0] * x[1], result)) #Da debaggare// Debuggato,ora funziona
-    
-    
-    
-    # return result #iterative
 
+    return sum(result)   #more functional version, to delete
+ 
 #----------------------------------------------------------------------------
-# TO DO, WORK IN PROGRESS second function
-def generateListUtil(listDigits : list[int]) -> list[int]:
-    res : list[int] = []
-    for i in listDigits:
-        res.append([x for x in range(i)])
-    return res
-        
-
-        
-def combine(elems): #per adesso usa questa
-    if len(elems) == 0:
-        return [[]]
-    result = []    
-    subcombinations =  combine(elems[1:])
-    for x in elems[0]:
-        for y in subcombinations:
-            result.append([x, *y])
-    return result        
-
-def generateLists(nu : int) -> list[int]: #used to generate a list in range of num
-    res = list(map(int, range(nu)))
-    return res
-
-#FROM PYTHON DOCS -->>STUDIARE, PER ORA USO NEL CODICE
-def product(*args, repeat=1):
-    # product('ABCD', 'xy') --> Ax Ay Bx By Cx Cy Dx Dy
-    # product(range(2), repeat=3) --> 000 001 010 011 100 101 110 111
-    pools = [tuple(pool) for pool in args] * repeat
-    result = [[]]
-    for pool in pools:
-        result = [x+[y] for x in result for y in pool]
-    for prod in result:
-        yield list(prod)
 
 
 def generate_digits(bases : List[int] ) -> List[List[int]]:
@@ -192,135 +121,24 @@ def generate_digits(bases : List[int] ) -> List[List[int]]:
     è una soluzione valida.
     '''
     pass
-    listOfRanges : list[int] = [[x for x in range(i)] for i in bases]
-    print(listOfRanges)
-    result = [[]]  # Initialize with an empty list
+    #genero lista di liste di valori che dovrò poi usare
+    listOfRanges : list[int] = [[x for x in range(i)] for i in bases] 
+    #print(listOfRanges)
+    
+    result : list[int] = [[]] #inizializzo una lista vuota  
 
     for element in listOfRanges:
-        new_result = []  # Store the new result
-        print(new_result)
+        resultTemp = []  
+        
         for num in element:
             for product in result:
-                new_result.append(product + [num])
+                resultTemp.append(product + [num])
 
-        result = new_result  # Update the result with the new combinations
+        result = resultTemp  
 
     return result
 
-
-
-    # res : list[int] = [x for x in range(bases[0])]
-    
-    # for i in bases[1:]:
-    #     tempList : list[int] = [x for x in range(i)]
-    #     tempRes : list[int] = list(product(res, tempList))
-    # return res
-    # listBases = [[x for x in range(i)] for i in bases]
-    # print(listBases)
-    # index = 1
-    # res = listBases[0]
-    # while index == len(listBases):
-    #     list(product(res, listBases[index]))
-    # return res
-    #Prova da Python Doc
-    # if len(bases) == 0:
-    #     return []
-    
-    # result = list(product(bases[0], bases[1]))
-    # result += generateListUtil(bases[1:])
-    
-    # return result
-    # if len(bases) == 1:
-    #     return product(bases[0])
-    
-    # result : list = list(product(bases[0], bases[1]))
-    # result.extend(product(bases[],bases[1]))
-        
-    # return result
-
-
-    #provo a creare tutte liste di zeri e cambiare con gli indici
-    # bases
-    # res : list[int] = [0]
-    
-    
-    
-    
-    #PSEUDO CODICE
-    #Prova recursive
-    #caso base, se vuota return []
-    #se uno return x in range (x)
-    #e faccio res += function(list[1:])
-    #PROVA
-    
-    # if len(bases) == 0:
-    #     return []
-    
-    # flatList : list[int] = []
-    # flatList += list(map(generateLists, bases))
-    
-    # for i in range(len(flatList[0])):
-    #     flatList[0].extend(flatList[1:])
-    
-
-    # result : list[int] = []
-
-    # for x in bases:
-    #     result += x in range(x) + generate_digits(bases[1:])
-
-    # return flatList
-
-    
-    
-
-
-    
-    # flatList : list[int] = []
-    # flatList += list(map(generateLists, bases))
-    
-    # result : list[int] = combine(flatList)
-    
-    # return result 
-    
-    
-    # result  : list[int] = []
-    # firstEl = [0] * len(bases)
-    # result.append(firstEl)
-    # for i in bases:
-    #     [x for x in range(i)]
-    
-    # return result
-    
-    # PRATICAMENTE SI DEVE FARE UN PRODOTTO CARTESIANO
-    
-    
-    
-    # listsLimits : list[list] = generateListUtil(bases)
-    # result = [[x, y] for x in ]
-    
-    
-    #first try with nested or loops
-    # res : list[int] = []
-    
-    # for i in range(bases[0]):
-    #     for j in range(bases[1]):
-    #         res.append([i,j])
-    
-    #return res
-    
-    
-    #pass
-    # first : int = bases[0]
-    # second = bases[1]
-    # res = [[i for i in range(second)] for j in range(first
-    #                                                  )]
-    # allNumb = lambda x,k : [x in range(k)]
-    
-    # prova = allNumb(2,3)
-    # print(prova)  
-    
-    # return res
-
+#----------------------------------------------------------------------------
 
 
 def find_doubles(bases : List[int]) -> Set[int]:
@@ -338,7 +156,19 @@ def find_doubles(bases : List[int]) -> Set[int]:
     [3, 1, 1] -> 3*4^0 + 1*3^1 + 1*2^2 = 10
     [0, 2, 1] -> 0*4^0 + 2*3^1 + 1*2^2 = 10
     '''
-    # SCRIVI QUI IL TUO CODICE
+    res : dict = {}
+    #da capire dove ottenere lista digits
+    tempCombinations :list[list[int]] = generate_digits(bases)#manca arg digits
+    for i in tempCombinations:
+        tempValue = decode_digits(i)
+        if tempValue in res.keys():
+            res[i] += 1
+        else:
+            res[i] = 1
+            
+            
+    
+    return max(res)
     pass
 
 
@@ -351,26 +181,25 @@ if __name__ == '__main__':
     
     
     #First function works, need refactoring
-    provaCode = decode_digits([1,1,2],[2,3,4])
+    # provaCode = decode_digits([1,1,2],[2,3,4])
     #provaCode2= decode_digits(list1bases,list1digits)
+    # print(provaCode)
     
     #---------------------------------------------------------------------
     #second function tests
     #prova2nd = generate_digits([2,5])
     #print(prova2nd)
     provaGenerate = generate_digits([2,5])
-    provaGenerate2 = generate_digits([2,4,7])
-    provaGenerate3 = list(product([0,1],[0,1,2,3,4],['a','b','c']))
-    provaGenerate3 = list(product([0,1,2,3],[1]))
-    provaGenerate4 = list(product([[0,1],[2,3]],['a','b']))
+    #provaGenerate2 = generate_digits([2,4,7])
     provaGenerate5 = generate_digits([2,4,6])
-    print(provaGenerate5)
+    # print(provaGenerate5)
     
     
     
     #--------------------------------------------------------------------
     # 3rd function tests
-    
+    provaFind = find_doubles([4,3,2])
+    print(provaFind)
     
     
     # inserisci qui i tuoi test
