@@ -13,4 +13,4 @@ Funzione03:
 
 IN PROGRESS
 
-Idea: combinare le 2 funzioni una volta otenuti i valori dal tutto salvarli in un dizionario, quindi ritrnare il mad(dict) in output
+Idea: combinare le 2 funzioni, una volta ottenuti i valori dal tutto, salvarli in un dizionario e quindi ritrnare il mad(dict) in output. Manca da capire dove trovare list digits che nella prima funzione vengono vonsiderati come forniti, da capire come vengono generati peressere forniti nei test.
