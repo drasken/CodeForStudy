@@ -192,14 +192,36 @@ def generate_digits(bases : List[int] ) -> List[List[int]]:
     è una soluzione valida.
     '''
     pass
+    listOfRanges : list[int] = [[x for x in range(i)] for i in bases]
+    print(listOfRanges)
+    result = [[]]  # Initialize with an empty list
 
-    listBases = [[x for x in range(i)] for i in bases]
-    print(listBases)
-    index = 1
-    res = listBases[0]
-    while index == len(listBases):
-        list(product(res, listBases[index]))
-    return res
+    for element in listOfRanges:
+        new_result = []  # Store the new result
+        print(new_result)
+        for num in element:
+            for product in result:
+                new_result.append(product + [num])
+
+        result = new_result  # Update the result with the new combinations
+
+    return result
+
+
+
+    # res : list[int] = [x for x in range(bases[0])]
+    
+    # for i in bases[1:]:
+    #     tempList : list[int] = [x for x in range(i)]
+    #     tempRes : list[int] = list(product(res, tempList))
+    # return res
+    # listBases = [[x for x in range(i)] for i in bases]
+    # print(listBases)
+    # index = 1
+    # res = listBases[0]
+    # while index == len(listBases):
+    #     list(product(res, listBases[index]))
+    # return res
     #Prova da Python Doc
     # if len(bases) == 0:
     #     return []
@@ -331,7 +353,7 @@ if __name__ == '__main__':
     #First function works, need refactoring
     provaCode = decode_digits([1,1,2],[2,3,4])
     #provaCode2= decode_digits(list1bases,list1digits)
-    print(provaCode)
+    
     #---------------------------------------------------------------------
     #second function tests
     #prova2nd = generate_digits([2,5])
@@ -339,7 +361,10 @@ if __name__ == '__main__':
     provaGenerate = generate_digits([2,5])
     provaGenerate2 = generate_digits([2,4,7])
     provaGenerate3 = list(product([0,1],[0,1,2,3,4],['a','b','c']))
-    print(provaGenerate2)
+    provaGenerate3 = list(product([0,1,2,3],[1]))
+    provaGenerate4 = list(product([[0,1],[2,3]],['a','b']))
+    provaGenerate5 = generate_digits([2,4,6])
+    print(provaGenerate5)
     
     
     
