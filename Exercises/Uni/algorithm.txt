@@ -1,0 +1,16 @@
+DESCRIZIONE DELL'ALGORITMO
+
+Funzione 01:
+
+Ho generato una tuple di coppie di valori dela cifra da coltiplicare con il valore della base ala potenza che serviva, per far questo ho utilizzato una piccola funzione appoggio, ho trovato che fosse più legibile e pulito che usare una lambda.
+Fatto questo moltiplico ogni coppia di valori della tupla e ottengo una lista dei risultati ottenuti che poi do in inputo alla funzione sum() per ottenere il risultato voluto
+
+Funzione 02:
+Inizialmente ho usato una list comprehension er generare una lista di liste contenenti tutti i possibili valori necessari per il mio output desiderato. Passo quindi la lista in una serie di cicli for in cui, utilizzando un lista di appoggio, aggoingo progressivamente alle liste così generate ogni possibile valore di ogni listain successione, generando così ogni possibile combinazione.
+Questi cicli for annidati sono un problema forse per l'efficienza, ho provato anche a farlo in modo ricorsivo ma non mi usciva un buon risultato e mi sono un po' incartato. Ho preferito allafine l'aproccio iterativo, più diretto e leggibile
+
+Funzione03:
+
+IN PROGRESS
+
+Idea: combinare le 2 funzioni una volta otenuti i valori dal tutto salvarli in un dizionario, quindi ritrnare il mad(dict) in output
