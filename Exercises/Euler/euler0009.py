@@ -23,4 +23,13 @@ def findTriplets(limitSum, num1, num2, num3):
         return num1* num2 * num3
     else:
         return -1
-    
+
+res = 0    
+
+for i in range(501):
+    resTemp =  findTriplets(triSum,indexA,indexB,indexC)
+    if resTemp != -1:
+        res = resTemp
+    indexA, indexB, indexC += 1
+
+print(res)
