@@ -99,13 +99,63 @@ ATTENZIONE: è proibito:
     - aprire file
 '''
 
+def checkPayDebt(money, receiver, inter, dictInterme):
+    #use this function for repaying debts after a transaction
+    for innerList in dictInterme:
+        for innerKey in innerList:
+            if innerKey == inter: #here we find the debt if exists
+                if innerKey[receiver] < 0:
+                    return innerKey[receiver]
+    return 0
+            
+def checkUserBalance(money, sender, dictionaryUsers):
+    #used to check if a transaction in doable
+    res = 0
+    if dictionaryUsers[sender] >= money:
+        res = money #this will be updatedto receiver account else 0
+        dictionaryUsers[sender] -= money
+    return res
+
+def payIntermediary(fee, sender, dictUsers, interm, dictIntermediary, dictDebtors):
+    if dictUsers[sender] >= fee:
+        dictIntermediary[interm] += fee
+        dictUsers[sender] -= fee
+    else:
+        difference = fee - dictUsers[sender]
+        dictIntermediary[interm] += dictUsers[sender]
+        dictUsers[sender] = 0
+        for i in dictDebtors:
+            for j in i:
+                if j == interm:
+                    i[j][sender] -= difference
+                
+
 
 def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
+    #INITIALIZE ALL WITH THE INPUT EXEPT LOG
     #initialize the dictionary for the 
     dictUsers = {acn1: init_amount, acn2: init_amount, acn3: init_amount}
     dictIntermediary = {imd_acn1: 0, imd_acn2: 0}
     #still wrking on extracting list from this dictionary
     dictDebts = [{imd_acn1: {acn1: 0, acn2: 0, acn3: 0}}, {imd_acn2: {acn1: 0, acn2: 0, acn3: 0}}] 
+    
+    #TO USE AND INPLEMENT FUNC FOR LOG OPERATION
+    #initialize helpful variablec??
+    for transact in transact_log:
+        #initialize util var
+        sender = transact[0][0]
+        receiver = transact[0][1]
+        moneySent = transact[1]
+        intermediaryTemp = transact[2]
+        intermediaryFee = moneySent * transact[3] / 100
+        #first check if transaction in doable for now i assume if check == money precedence to receiver
+        dictUsers[receiver] += checkUserBalance(moneySent, sender, dictUsers) 
+        #now pay the int
+            #if not enought pay intermediary and than augment the debt
+        payIntermediary(intermediaryFee, sender, dictUsers, intermediaryTemp, dictIntermediary, dictDebts)
+        #with money received the receiver pay debts if there are
+        pass #implement a function that take a tuple in input ad operate on the dictionary
+    
     
     #OUTPUTS
     listUserAccount = list(dictUsers.values()) #this is the first list, user accounts
@@ -122,5 +172,11 @@ def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
 
 
 if __name__ == '__main__':
-    # Insert your own tests here
+    provaTest = ex1(0x5B23, 0xC78D, 0x44AE, 0x1612, 0x90FF, 1000,
+        [ ((0x44AE, 0x5B23),  800, 0x1612,  4),
+          ((0x44AE, 0xC78D),  800, 0x90FF, 10),
+          ((0xC78D, 0x5B23),  400, 0x1612,  8),
+          ((0x44AE, 0xC78D), 1800, 0x90FF, 12),
+          ((0x5B23, 0x44AE),  100, 0x1612,  2)
+        ])
     pass
