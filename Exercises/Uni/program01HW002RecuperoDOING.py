@@ -110,13 +110,14 @@ def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
     #OUTPUTS
     listUserAccount = list(dictUsers.values()) #this is the first list, user accounts
     listIntermediaryMoney = list(dictIntermediary.values()) #this is list intermediary accounts
-    listDebts = [list(dictDebts[0].values()), list(dictDebts[1].values())] #halfway, all dict
-    listDebts = [[list(x.values()) for x in j] for j in dictDebts] #halfway, all dict
-    #listDebts = [x.values() for x in listDebts]
-    # listDebtsRes = []
-    # for i in listDebts:
-    #     listDebtsRes += list(i.values()) 
-    return listUserAccount, listIntermediaryMoney, listDebts
+    #halfway done, all dictionary storage, to extract list of values
+    listDebts = [list(dictDebts[0].values()), list(dictDebts[1].values())]
+    listRes = [] #finale list to return, list of lists
+    for innerList in listDebts: 
+        for innerDict in innerList:
+            listRes.append(list(innerDict.values()))
+    
+    return listUserAccount, listIntermediaryMoney, listRes
     pass
 
 
