@@ -162,8 +162,10 @@ def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
             #if not enought pay intermediary and than augment the debt
         payIntermediary(intermediaryFee, sender, dictUsers, intermediaryTemp, dictIntermediary, dictDebts)
         #with money received the receiver pay debts if there are
-        while dictUsers[receiver] > 0 or dictDebts[imd_acn1][receiver] == 0 and dictDebts[imd_acn2][receiver] == 0:
-            paydebts(receiver, dictUsers, dictDebts,)
+        
+        #try with a for using the max debt and usig he payInterm function and than pay the second int, just 2
+        # while dictUsers[receiver] > 0 or dictDebts[imd_acn1][receiver] == 0 and dictDebts[imd_acn2][receiver] == 0:
+        #     paydebts(receiver, dictUsers, dictDebts,)
         pass #implement a function that take a tuple in input ad operate on the dictionary
     
     
