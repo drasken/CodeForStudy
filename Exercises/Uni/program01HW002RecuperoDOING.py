@@ -130,6 +130,14 @@ def payIntermediary(fee, sender, dictUsers, interm, dictIntermediary, dictDebtor
                     i[j][sender] -= difference
                 
 
+def paydebts(user, dictUser, dictDebts): #last one that I miss!!!
+    #idea check il debito maggiore e se puoi pagare paga (func esistente?)
+    listIntermediary = [x for x in dictDebts]
+    if dictDebts[listIntermediary[0]][user] > dictDebts[listIntermediary[1]][user]:
+        payIntermediary(dictUser[user], user, dictUser, listIntermediary[0], dictDebts[listIntermediary[0]], dictDebts)
+    else:
+        payIntermediary(dictUser[user], user, dictUser, listIntermediary[1], dictDebts[listIntermediary[1]], dictDebts)
+    pass
 
 def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
     #INITIALIZE ALL WITH THE INPUT EXEPT LOG
@@ -154,6 +162,8 @@ def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
             #if not enought pay intermediary and than augment the debt
         payIntermediary(intermediaryFee, sender, dictUsers, intermediaryTemp, dictIntermediary, dictDebts)
         #with money received the receiver pay debts if there are
+        while dictUsers[receiver] > 0 or dictDebts[imd_acn1][receiver] == 0 and dictDebts[imd_acn2][receiver] == 0:
+            paydebts(receiver, dictUsers, dictDebts,)
         pass #implement a function that take a tuple in input ad operate on the dictionary
     
     
