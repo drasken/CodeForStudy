@@ -147,8 +147,9 @@ def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
     #list intermediary keys
     #still wrking on extracting list from this dictionary
     dictDebts = [{imd_acn1: {acn1: 0, acn2: 0, acn3: 0}}, {imd_acn2: {acn1: 0, acn2: 0, acn3: 0}}] 
-    debtInt1 = dictDebts[0]
-    debtInt2 = dictDebts[1]
+    #created whit pointer so referring to the same object
+    debtInt1 = dictDebts[0][imd_acn1]
+    debtInt2 = dictDebts[1][imd_acn2]
     
     #TO USE AND INPLEMENT FUNC FOR LOG OPERATION
     #initialize helpful variablec??
@@ -165,7 +166,9 @@ def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
             #if not enought pay intermediary and than augment the debt
         payIntermediary(intermediaryFee, sender, dictUsers, intermediaryTemp, dictIntermediary, dictDebts)
         #with money received the receiver pay debts if there are
-        
+        while dictUsers[receiver] > 0 or debtInt1[receiver] < 0 and debtInt2[receiver] < 0:
+            if debtInt1[receiver] < debtInt2[receiver]:
+                pass #to end thi implementation
         
         #try with a for using the max debt and usig he payInterm function and than pay the second int, just 2
         # while dictUsers[receiver] > 0 or dictDebts[imd_acn1][receiver] == 0 and dictDebts[imd_acn2][receiver] == 0:
