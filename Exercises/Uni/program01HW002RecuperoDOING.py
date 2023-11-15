@@ -144,8 +144,11 @@ def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
     #initialize the dictionary for the 
     dictUsers = {acn1: init_amount, acn2: init_amount, acn3: init_amount}
     dictIntermediary = {imd_acn1: 0, imd_acn2: 0}
+    #list intermediary keys
     #still wrking on extracting list from this dictionary
     dictDebts = [{imd_acn1: {acn1: 0, acn2: 0, acn3: 0}}, {imd_acn2: {acn1: 0, acn2: 0, acn3: 0}}] 
+    debtInt1 = dictDebts[0]
+    debtInt2 = dictDebts[1]
     
     #TO USE AND INPLEMENT FUNC FOR LOG OPERATION
     #initialize helpful variablec??
@@ -162,6 +165,7 @@ def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
             #if not enought pay intermediary and than augment the debt
         payIntermediary(intermediaryFee, sender, dictUsers, intermediaryTemp, dictIntermediary, dictDebts)
         #with money received the receiver pay debts if there are
+        
         
         #try with a for using the max debt and usig he payInterm function and than pay the second int, just 2
         # while dictUsers[receiver] > 0 or dictDebts[imd_acn1][receiver] == 0 and dictDebts[imd_acn2][receiver] == 0:
