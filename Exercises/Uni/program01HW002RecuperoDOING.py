@@ -130,7 +130,7 @@ def payIntermediary(fee, sender, dictUsers, interm, dictIntermediary, dictDebtor
                     i[j][sender] -= difference
                 
 
-def paydebts(user, dictUser, dictDebts): #last one that I miss!!!
+def payDebts(user, dictUser, dictDebts): #last one that I miss!!!
     #dictDebts is negative
     currentDebt = abs(dictDebts[user])
     if dictUser[user] >= dictDebts[user]:
@@ -173,9 +173,13 @@ def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
             #if not enought pay intermediary and than augment the debt
         payIntermediary(intermediaryFee, sender, dictUsers, intermediaryTemp, dictIntermediary, dictDebts)
         #with money received the receiver pay debts if there are
-        while dictUsers[receiver] > 0 or debtInt1[receiver] < 0 and debtInt2[receiver] < 0:
+        while dictUsers[receiver] > 0 and (debtInt1[receiver] < 0 and debtInt2[receiver] < 0):
             if debtInt1[receiver] < debtInt2[receiver]:
-                pass #to end thi implementation
+                payDebts(receiver, dictUsers, debtInt1)
+            else:
+                payDebts(receiver, dictUsers, debtInt2)
+                pass #to end thi implementatsion
+        # STILL NOW WORKING 100 DIFFERENCE DEBTS NOT PAID, TEST
         
         #try with a for using the max debt and usig he payInterm function and than pay the second int, just 2
         # while dictUsers[receiver] > 0 or dictDebts[imd_acn1][receiver] == 0 and dictDebts[imd_acn2][receiver] == 0:
