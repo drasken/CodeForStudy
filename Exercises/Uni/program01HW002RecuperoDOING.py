@@ -131,13 +131,20 @@ def payIntermediary(fee, sender, dictUsers, interm, dictIntermediary, dictDebtor
                 
 
 def paydebts(user, dictUser, dictDebts): #last one that I miss!!!
-    #idea check il debito maggiore e se puoi pagare paga (func esistente?)
-    listIntermediary = [x for x in dictDebts]
-    if dictDebts[listIntermediary[0]][user] > dictDebts[listIntermediary[1]][user]:
-        payIntermediary(dictUser[user], user, dictUser, listIntermediary[0], dictDebts[listIntermediary[0]], dictDebts)
+    #dictDebts is negative
+    currentDebt = abs(dictDebts[user])
+    if dictUser[user] >= dictDebts[user]:
+        dictUser[user] -= currentDebt
+        dictDebts[user] = 0
     else:
-        payIntermediary(dictUser[user], user, dictUser, listIntermediary[1], dictDebts[listIntermediary[1]], dictDebts)
-    pass
+        dictDebts[user] += dictUser[user]
+        dictUser[user] = 0
+    # listIntermediary = [x for x in dictDebts]
+    # if dictDebts[listIntermediary[0]][user] > dictDebts[listIntermediary[1]][user]:
+    #     payIntermediary(dictUser[user], user, dictUser, listIntermediary[0], dictDebts[listIntermediary[0]], dictDebts)
+    # else:
+    #     payIntermediary(dictUser[user], user, dictUser, listIntermediary[1], dictDebts[listIntermediary[1]], dictDebts)
+    # pass
 
 def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
     #INITIALIZE ALL WITH THE INPUT EXEPT LOG
