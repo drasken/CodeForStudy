@@ -132,13 +132,20 @@ def payIntermediary(fee, sender, dictUsers, interm, dictIntermediary, dictDebtor
 
 def payDebts(user, dictUser, dictDebts): #last one that I miss!!!
     #dictDebts is negative
-    currentDebt = abs(dictDebts[user])
+    #currentMoney = abs(dictUser[user]) #used to pay the int
+    #currentDebt = abs(dictDebts[user])
     if dictUser[user] >= dictDebts[user]:
-        dictUser[user] -= currentDebt
+        dictUser[user] += dictDebts[user]
         dictDebts[user] = 0
     else:
         dictDebts[user] += dictUser[user]
         dictUser[user] = 0
+    # if dictUser[user] >= dictDebts[user]:
+    #     dictUser[user] -= currentDebt
+    #     dictDebts[user] = 0
+    # else:
+    #     dictDebts[user] += dictUser[user]
+    #     dictUser[user] = 0
     # listIntermediary = [x for x in dictDebts]
     # if dictDebts[listIntermediary[0]][user] > dictDebts[listIntermediary[1]][user]:
     #     payIntermediary(dictUser[user], user, dictUser, listIntermediary[0], dictDebts[listIntermediary[0]], dictDebts)
@@ -173,12 +180,13 @@ def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
             #if not enought pay intermediary and than augment the debt
         payIntermediary(intermediaryFee, sender, dictUsers, intermediaryTemp, dictIntermediary, dictDebts)
         #with money received the receiver pay debts if there are
-        while dictUsers[receiver] > 0 and (debtInt1[receiver] < 0 and debtInt2[receiver] < 0):
-            if debtInt1[receiver] < debtInt2[receiver]:
-                payDebts(receiver, dictUsers, debtInt1)
-            else:
-                payDebts(receiver, dictUsers, debtInt2)
-                pass #to end thi implementatsion
+        if debtInt1[receiver] < debtInt2[receiver]:
+            payDebts(receiver, dictUsers, debtInt1)
+            payDebts(receiver, dictUsers, debtInt2)
+        else:
+            payDebts(receiver, dictUsers, debtInt2)
+            payDebts(receiver, dictUsers, debtInt1)
+            pass #to end thi implementatsion
         # STILL NOW WORKING 100 DIFFERENCE DEBTS NOT PAID, TEST
         
         #try with a for using the max debt and usig he payInterm function and than pay the second int, just 2
