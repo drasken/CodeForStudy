@@ -130,27 +130,22 @@ def payIntermediary(fee, sender, dictUsers, interm, dictIntermediary, dictDebtor
                     i[j][sender] -= difference
                 
 
-def payDebts(user, dictUser, dictDebts): #last one that I miss!!!
+def payDebts(user, dictUser, dictDebts, keyImd, dictImd): #last one that I miss!!!
     #dictDebts is negative
-    #currentMoney = abs(dictUser[user]) #used to pay the int
-    #currentDebt = abs(dictDebts[user])
-    if dictUser[user] >= dictDebts[user]:
-        dictUser[user] += dictDebts[user]
+    currentMoney = dictUser[user] #used to pay the int
+    currentDebt = abs(dictDebts[user])
+    if currentMoney >= currentDebt:
+        transaction = currentMoney - currentDebt
+        dictUser[user] = transaction
+        dictImd[keyImd] += currentDebt
         dictDebts[user] = 0
     else:
-        dictDebts[user] += dictUser[user]
+        transaction = currentDebt - currentMoney
+        dictDebts[user] = - transaction
+        dictImd[keyImd] += currentMoney
         dictUser[user] = 0
-    # if dictUser[user] >= dictDebts[user]:
-    #     dictUser[user] -= currentDebt
-    #     dictDebts[user] = 0
-    # else:
-    #     dictDebts[user] += dictUser[user]
-    #     dictUser[user] = 0
-    # listIntermediary = [x for x in dictDebts]
-    # if dictDebts[listIntermediary[0]][user] > dictDebts[listIntermediary[1]][user]:
-    #     payIntermediary(dictUser[user], user, dictUser, listIntermediary[0], dictDebts[listIntermediary[0]], dictDebts)
-    # else:
-    #     payIntermediary(dictUser[user], user, dictUser, listIntermediary[1], dictDebts[listIntermediary[1]], dictDebts)
+    
+    
     # pass
 
 def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
@@ -180,12 +175,12 @@ def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
             #if not enought pay intermediary and than augment the debt
         payIntermediary(intermediaryFee, sender, dictUsers, intermediaryTemp, dictIntermediary, dictDebts)
         #with money received the receiver pay debts if there are
-        if debtInt1[receiver] < debtInt2[receiver]:
-            payDebts(receiver, dictUsers, debtInt1)
-            payDebts(receiver, dictUsers, debtInt2)
+        if debtInt1[receiver] <= debtInt2[receiver]:
+            payDebts(receiver, dictUsers, debtInt1, imd_acn1, dictIntermediary)
+            payDebts(receiver, dictUsers, debtInt2, imd_acn2, dictIntermediary)
         else:
-            payDebts(receiver, dictUsers, debtInt2)
-            payDebts(receiver, dictUsers, debtInt1)
+            payDebts(receiver, dictUsers, debtInt2, imd_acn2, dictIntermediary)
+            payDebts(receiver, dictUsers, debtInt1, imd_acn1, dictIntermediary)
             pass #to end thi implementatsion
         # STILL NOW WORKING 100 DIFFERENCE DEBTS NOT PAID, TEST
         
