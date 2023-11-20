@@ -5,16 +5,27 @@ Find the sum of all the primes below two million.
 """
 
 
-listPrimes = [x for x in range(2,100000) if x % 2 != 0 and x % 3 != 0 and x % 5 != 0 and x % 7 != 0 and x % 11 != 0 and x % 13 != 0 and x % 17 !=0 and x % 19 != 0 and x % 23 != 0 and x % 29 != 0]
-listPrimes = [2,3,5,7,11,13,17,19,23,29] + listPrimes
+listPrimes = [x for x in range(2,2000000) if x % 2 != 0 and x % 3 != 0 and x % 5 != 0 and x % 7 != 0 and x % 11 != 0 and x % 13 != 0 and x % 17 !=0 and x % 19 != 0 and x % 23 != 0 and x % 29 != 0 and x % 31!= 0 and x % 37 != 0]
+listPrimes = [2,3,5,7,11,13,17,19,23,29,31,37] + listPrimes
 index = 0
 for x in listPrimes[index:]:
     for i in listPrimes[index+1:]:
         if i % x == 0:
             listPrimes.remove(i)#print(x)
     index += 1
+#it works, trimmed a lot of numbers
 
-print(listPrimes)
+#now cycle for to delete number not primes
+
+for i in listPrimes:
+    for j in listPrimes:
+        if j != i:
+            if j % i == 0:
+                listPrimes.remove(j)
+    
+
+
+#print(listPrimes)
 print(sum(listPrimes))
 print(len(listPrimes))
 
