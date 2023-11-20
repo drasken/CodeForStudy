@@ -8,7 +8,19 @@
 
 def check(number):
     numberStr = str(number)
-    for i in numberStr:
-        print(i)
+    listDig = list(numberStr)
+    listDig = [int(x) for x in listDig]
+    return(sum(listDig))
 
-prova = check(100)
+listRes = []
+
+for i in range(10000, 100000):
+    if check(i) == i:
+        listRes.append(i)
+
+
+    
+prova = check(132)
+
+print(sum(listRes))
+
