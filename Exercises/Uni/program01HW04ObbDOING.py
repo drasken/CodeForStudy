@@ -98,16 +98,28 @@ e con i parametri dinamici (https://pyformat.info/#param_align).
 """
 import json
 
-def media_studente(stud_code, dbsize) -> int:# return average for specific student 
+def media_studente(stud_code, dbsize) -> int:
+    # return average for specific student 
     #basically, open the json file corresponding to the param size
     #for each dictionary if the corresponding student code is found append grade value ti res list
     #round each float to he second digit
     #return the average value of the student grades
-    fileName = f'{dbsize}_student.json' #the file to open
-    resList = [] #the list in wich apend each grade
+    
+    # print(f'check for code: {stud_code}')
+    # print(f'check for size: {dbsize}')
+    fileName = f'{dbsize}_exams.json' #the file to open
+    resList = [] #the list in wich append each grade
     with open(fileName, 'r') as f:
+
         content = json.load(f)
-        return content
+        #print(content)
+        for i in range(len(content)):
+            #print(content[i])
+            if content[i]['stud_code'] == stud_code:
+                #resList.append(i)
+                resList.append(content[i]['grade'])
+    average = round(sum(resList)/ len(resList), 2)
+    return average
         
     pass
 
@@ -130,3 +142,7 @@ def stampa_studenti_brillanti(dbsize, fileout):
     pass
 
 
+#test per prima funzione
+prova = media_studente('1803891', 'small')
+print(prova) #expected average of 22,26,23,24
+    
