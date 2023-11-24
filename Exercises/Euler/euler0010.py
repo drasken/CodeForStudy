@@ -5,7 +5,7 @@ Find the sum of all the primes below two million.
 """
 
 
-listPrimes = [x for x in range(2,2000000) if x % 2 != 0 and x % 3 != 0 and x % 5 != 0 and x % 7 != 0 and x % 11 != 0 and x % 13 != 0 and x % 17 !=0 and x % 19 != 0 and x % 23 != 0 and x % 29 != 0 and x % 31!= 0 and x % 37 != 0]
+listPrimes = [x for x in range(2,2000) if x % 2 != 0 and x % 3 != 0 and x % 5 != 0 and x % 7 != 0 and x % 11 != 0 and x % 13 != 0 and x % 17 !=0 and x % 19 != 0 and x % 23 != 0 and x % 29 != 0 and x % 31!= 0 and x % 37 != 0]
 listPrimes = [2,3,5,7,11,13,17,19,23,29,31,37] + listPrimes
 index = 0
 for x in listPrimes[index:]:

@@ -9,7 +9,7 @@
 def check(number):
     numberStr = str(number)
     listDig = list(numberStr)
-    listDig = [int(x) for x in listDig]
+    listDig = [int(x) for x in listDig if]
     return(sum(listDig))
 
 listRes = []
