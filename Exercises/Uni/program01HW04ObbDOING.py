@@ -124,6 +124,19 @@ def media_studente(stud_code, dbsize) -> int:
     pass
 
 def media_corso(course_code, dbsize):
+    #cycle for loop exams dictionary
+    #for each elements of the dict check the course_id key
+    #if course_code == param append grade to list result
+    #return 
+    filename = f'{dbsize}_exams.json'
+    resultList = []
+    with open(filename, 'r') as f:
+        content = json.load(f)
+        for i in range(len(content)):
+            if content[i]['course_code'] == course_code:
+                resultList.append(content[i]['grade'])
+    average = round(sum(resultList) / len(resultList), 2)
+    return average
     pass
 
 def media_docente(teach_code, dbsize):
@@ -142,7 +155,16 @@ def stampa_studenti_brillanti(dbsize, fileout):
     pass
 
 
+
 #test per prima funzione
 prova = media_studente('1803891', 'small')
 print(prova) #expected average of 22,26,23,24
-    
+
+#test seconda funzione
+prova2 = media_corso('TIPAPFC0xa0bb4a', 'small')
+# data: 22+21+31+27+31+24+19+27+19
+print(prova2)
+prova2B = media_corso('CELE0xc62458', 'medium')
+print(prova2B)
+prova2C = media_corso('MASP0x6f69a0', 'large')
+print(prova2C)
