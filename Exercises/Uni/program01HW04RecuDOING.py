@@ -98,7 +98,7 @@ e con i parametri dinamici (https://pyformat.info/#param_align).
 """
 import json
 
-def media_studente(stud_code, dbsize) -> int:
+def media_studente(stud_code, dbsize):
     # return average for specific student 
     #basically, open the json file corresponding to the param size
     #for each dictionary if the corresponding student code is found append grade value ti res list
@@ -140,6 +140,29 @@ def media_corso(course_code, dbsize):
     pass
 
 def media_docente(teach_code, dbsize):
+    #extract the course code for each teacher's course
+    #save in a list, each teac maybe multiple courses
+    #than use the same logic search for each exam if code in listCourse append to result
+    #use func mediacorso?
+    fileName = f'{dbsize}_courses.json'
+    coursesLegit = []
+    averagesForTotalGrades = []
+    with open(fileName, 'r') as file:
+        content = json.load(file)
+        for i in range(len(content)):
+            if content[i]['teach_code'] == teach_code:
+                coursesLegit.append(content[i]['course_code'])
+        print(coursesLegit)
+        # for j in coursesLegit:
+        #     averagesForTotalGrades.append(media_corso(j, dbsize))
+        #using the function return not expected value, changing approach
+        
+        for k in coursesLegit:
+            pass
+        
+    print(averagesForTotalGrades)
+    totalAverages = round(sum(averagesForTotalGrades) / len(averagesForTotalGrades), 2)
+    return totalAverages
     pass
 
 def studenti_brillanti(dbsize):
@@ -159,7 +182,6 @@ def stampa_studenti_brillanti(dbsize, fileout):
 #test per prima funzione
 prova = media_studente('1803891', 'small')
 print(prova) #expected average of 22,26,23,24
-#TESTED AND PASSED
 
 #test seconda funzione
 prova2 = media_corso('TIPAPFC0xa0bb4a', 'small')
@@ -169,4 +191,12 @@ prova2B = media_corso('CELE0xc62458', 'medium')
 print(prova2B)
 prova2C = media_corso('MASP0x6f69a0', 'large')
 print(prova2C)
-#TESTED AND PASSED
+
+#test per la terza funzione
+prova3A = media_docente('003', 'small')
+print(prova3A)
+#expected courses: EDIELFAC0x5203a7, SOM0x835db8, SNL0xadd7c7
+
+prova3 = media_docente('001', 'small')
+#expected courses: MP0x3702b5,TIPAPFC0xa0bb4a
+
