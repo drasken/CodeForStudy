@@ -159,6 +159,7 @@ def stampa_studenti_brillanti(dbsize, fileout):
 #test per prima funzione
 prova = media_studente('1803891', 'small')
 print(prova) #expected average of 22,26,23,24
+#TESTED AND PASSED
 
 #test seconda funzione
 prova2 = media_corso('TIPAPFC0xa0bb4a', 'small')
@@ -168,3 +169,4 @@ prova2B = media_corso('CELE0xc62458', 'medium')
 print(prova2B)
 prova2C = media_corso('MASP0x6f69a0', 'large')
 print(prova2C)
+#TESTED AND PASSED
