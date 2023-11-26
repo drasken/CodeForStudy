@@ -152,15 +152,19 @@ def media_docente(teach_code, dbsize):
         for i in range(len(content)):
             if content[i]['teach_code'] == teach_code:
                 coursesLegit.append(content[i]['course_code'])
-        print(coursesLegit)
+        #print(coursesLegit)
         # for j in coursesLegit:
         #     averagesForTotalGrades.append(media_corso(j, dbsize))
         #using the function return not expected value, changing approach
+    
+    examsName = f'{dbsize}_exams.json'
+    with open(examsName, 'r') as f2:
+        cont = json.load(f2)
+        for j in range(len(cont)):
+            if cont[j]['course_code'] in coursesLegit:
+                averagesForTotalGrades.append(cont[j]['grade'])
         
-        for k in coursesLegit:
-            pass
-        
-    print(averagesForTotalGrades)
+    #print(averagesForTotalGrades)
     totalAverages = round(sum(averagesForTotalGrades) / len(averagesForTotalGrades), 2)
     return totalAverages
     pass
@@ -194,9 +198,10 @@ print(prova2C)
 
 #test per la terza funzione
 prova3A = media_docente('003', 'small')
+print('test 3')
 print(prova3A)
 #expected courses: EDIELFAC0x5203a7, SOM0x835db8, SNL0xadd7c7
-
 prova3 = media_docente('001', 'small')
+print(prova3)
 #expected courses: MP0x3702b5,TIPAPFC0xa0bb4a
-
+#test passed with print not test lib
