@@ -200,6 +200,7 @@ print(prova2C)
 prova3A = media_docente('003', 'small')
 print('test 3')
 print(prova3A)
+print(type(prova3A))
 #expected courses: EDIELFAC0x5203a7, SOM0x835db8, SNL0xadd7c7
 prova3 = media_docente('001', 'small')
 print(prova3)
