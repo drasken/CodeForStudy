@@ -170,6 +170,13 @@ def media_docente(teach_code, dbsize):
     pass
 
 def studenti_brillanti(dbsize):
+    #fare check della media per ogni studente
+    #se media >= 28 tieni studente
+    #nella lista memorizza ogni informazione studente
+    #ordina in baseordinate in modo decrescente per media
+    #in caso di parità, in ordine lessicografico per il cognome e il nome dello studente.
+    #In caso di ulteriore parità, si usi il valore numerico dello stud_code in ordine crescente.
+    #una volta ordinato tutto, ritorna solo gli stud_code
     pass
 
 def stampa_verbale(exam_code, dbsize, fileout):
@@ -206,3 +213,5 @@ prova3 = media_docente('001', 'small')
 print(prova3)
 #expected courses: MP0x3702b5,TIPAPFC0xa0bb4a
 #test passed with print not test lib
+
+#test per la funzione 4
