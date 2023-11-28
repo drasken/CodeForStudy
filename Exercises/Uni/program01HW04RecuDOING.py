@@ -173,22 +173,37 @@ def studenti_brillanti(dbsize):
     #fare check della media per ogni studente
     #se media >= 28 tieni studente
     #nella lista memorizza ogni informazione studente
-    #ordina in baseordinate in modo decrescente per media
+    #ordina in baseordinate in modo decrescente per media --> FIRST
     #in caso di parità, in ordine lessicografico per il cognome e il nome dello studente.
     #In caso di ulteriore parità, si usi il valore numerico dello stud_code in ordine crescente.
     #una volta ordinato tutto, ritorna solo gli stud_code
     
     allStudentCode = [] #save here all extracted stud_code
-    topStudents = [] #save here top study only
+    topStudents = [] #save here top stundent stud_code only
+    topAverage = []
+    topStudentsDict = [] #save only top students profile
     
     fileName = f'{dbsize}_students.json'
     
     with open(fileName, 'r') as file:
         content = json.load(file)
         for i in range(len(content)):
-            allStudentCode.append(content[i]['stud_code'])
-            
-    return allStudentCode    
+            allStudentCode.append(content[i]['stud_code']) #added all stud_code
+        
+        for j in allStudentCode:
+            if media_studente(j, dbsize) >= 28:
+                topStudents.append(j)
+                topAverage.append(media_studente(j, dbsize))
+        
+        for k in range(len(content)):
+            if content[k]['stud_code'] in topStudents:
+                topStudentsDict.append(content[k])
+        studentsAndAverage = list(zip(topStudents, topAverage))
+        
+        #IN PROGRES FROM HERE
+        #Use the zipped list for sort the list, than sort by [0] element of the 2
+        # topStudents = sorted(topStudents, key=lambda x: (x['grade'], x['']))    
+    return studentsAndAverage
     pass
 
 def stampa_verbale(exam_code, dbsize, fileout):
@@ -228,3 +243,5 @@ print(prova3)
 
 #test per la funzione 4
 prova4 = studenti_brillanti('small')
+print('test 4')
+print(prova4)
