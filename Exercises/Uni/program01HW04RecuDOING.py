@@ -177,13 +177,25 @@ def studenti_brillanti(dbsize):
     #in caso di parità, in ordine lessicografico per il cognome e il nome dello studente.
     #In caso di ulteriore parità, si usi il valore numerico dello stud_code in ordine crescente.
     #una volta ordinato tutto, ritorna solo gli stud_code
+    
+    allStudentCode = [] #save here all extracted stud_code
+    topStudents = [] #save here top study only
+    
+    fileName = f'{dbsize}_students.json'
+    
+    with open(fileName, 'r') as file:
+        content = json.load(file)
+        for i in range(len(content)):
+            allStudentCode.append(content[i]['stud_code'])
+            
+    return allStudentCode    
     pass
 
 def stampa_verbale(exam_code, dbsize, fileout):
     pass
 
 def stampa_esami_sostenuti(stud_code, dbsize, fileout):
-    pass
+    pass 
 
 def stampa_studenti_brillanti(dbsize, fileout):
     pass
@@ -207,7 +219,7 @@ print(prova2C)
 prova3A = media_docente('003', 'small')
 print('test 3')
 print(prova3A)
-print(type(prova3A))
+# print(type(prova3A))
 #expected courses: EDIELFAC0x5203a7, SOM0x835db8, SNL0xadd7c7
 prova3 = media_docente('001', 'small')
 print(prova3)
@@ -215,3 +227,4 @@ print(prova3)
 #test passed with print not test lib
 
 #test per la funzione 4
+prova4 = studenti_brillanti('small')
