@@ -182,6 +182,7 @@ def studenti_brillanti(dbsize):
     topStudents = [] #save here top stundent stud_code only
     topAverage = []
     topStudentsDict = [] #save only top students profile
+    topStudentsRanked = []
     
     fileName = f'{dbsize}_students.json'
     
@@ -198,12 +199,15 @@ def studenti_brillanti(dbsize):
         for k in range(len(content)):
             if content[k]['stud_code'] in topStudents:
                 topStudentsDict.append(content[k])
-        studentsAndAverage = list(zip(topStudents, topAverage))
+        studentsAndAverage = list(zip(topStudentsDict, topAverage)) #tuple (studProfile, average)
+        studentsAndAverage.sort(reverse=True, key=lambda x: (x[1], x[0]['stud_name'], x[0]['stud_surname'], int(x[0]['stud_code'])))
+        for z in range(len(studentsAndAverage)):
+            topStudentsRanked.append(studentsAndAverage[z][0]['stud_code'])
         
         #IN PROGRES FROM HERE
         #Use the zipped list for sort the list, than sort by [0] element of the 2
         # topStudents = sorted(topStudents, key=lambda x: (x['grade'], x['']))    
-    return studentsAndAverage
+    return topStudentsRanked
     pass
 
 def stampa_verbale(exam_code, dbsize, fileout):
@@ -245,3 +249,6 @@ print(prova3)
 prova4 = studenti_brillanti('small')
 print('test 4')
 print(prova4)
+prova4_2 = studenti_brillanti('medium')
+print('prova medium')
+print(prova4_2)
