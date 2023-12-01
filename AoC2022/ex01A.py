@@ -8,7 +8,7 @@ with open (file="input01A.txt", mode="r") as file:
         else:
             count.append(temp)
             temp = 0
-    #solutino for first half
+    #solution for first half
     new_count = sorted(count, reverse=True)
     
     print(sum(new_count[0:3]))
