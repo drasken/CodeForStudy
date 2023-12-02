@@ -19,8 +19,11 @@ def readTxt(fileName):
         extract = lambda st : st[0] + st[-1]   #util func for extracting digit 
         results = [extract(x) for x in results]  
         results = [int(y) for y in results]
-        return sum(results)
-    
+        #dict to convert string to int for each number
+        numDicts = {'one' : 1, 'two' : 2, 'three' : 3, 'four': 4, 'five' : 5, 'six' : 6, 'seven' : 7, 'eight' : 8, 'nine' : 9}    
+
+        #return sum(results) -> return for first half
+        return content
 prova = readTxt(fileInput)
 print(prova)
 
