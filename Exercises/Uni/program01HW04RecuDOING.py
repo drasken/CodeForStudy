@@ -262,7 +262,7 @@ def stampa_esami_sostenuti(stud_code, dbsize, fileout):
     
     results = [x for x in content if x['stud_code'] == stud_code]
     convertDate = lambda k,i : (int(k[i][:3]), int(k[i][5:7]), int(k[i][-2:]))
-    results.sort(key= lambda x : (int(x['date'][:4]), int(x['date'][5:7], int(x['date'][-2:]))))
+    results.sort(key= lambda x : (int(x['date'][:4]), int(x['date'][5:7]), int(x['date'][-2:]), x['course_code']))
     return results
     
     pass 
