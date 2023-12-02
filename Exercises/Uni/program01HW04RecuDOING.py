@@ -254,6 +254,17 @@ def stampa_esami_sostenuti(stud_code, dbsize, fileout):
         None.
 
     """
+    
+    fileName = f'{dbsize}_exams.json'
+    
+    with open(fileName, mode='r') as f:
+        content = json.load(f)
+    
+    results = [x for x in content if x['stud_code'] == stud_code]
+    convertDate = lambda k,i : (int(k[i][:3]), int(k[i][5:7]), int(k[i][-2:]))
+    results.sort(key= lambda x : (int(x['date'][:4]), int(x['date'][5:7], int(x['date'][-2:]))))
+    return results
+    
     pass 
 
 def stampa_studenti_brillanti(dbsize, fileout):
@@ -309,3 +320,10 @@ print(prova3)
 prova4 = studenti_brillanti('small')
 print('test 4')
 print(prova4)
+
+#test per la funzione 5
+print('test for function 5')
+print()
+prova5 = stampa_esami_sostenuti('1803891', 'small', 'fileout')
+print(prova5)
+
