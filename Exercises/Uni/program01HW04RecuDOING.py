@@ -169,7 +169,7 @@ def media_docente(teach_code, dbsize):
     return totalAverages
     pass
 
-def studenti_brillanti(dbsize):
+def studenti_brillanti(dbsize): #works, just timeout error, need refactoring
     #fare check della media per ogni studente
     #se media >= 28 tieni studente
     #nella lista memorizza ogni informazione studente
@@ -200,7 +200,7 @@ def studenti_brillanti(dbsize):
             if content[k]['stud_code'] in topStudents:
                 topStudentsDict.append(content[k])
         studentsAndAverage = list(zip(topStudentsDict, topAverage)) #tuple (studProfile, average)
-        studentsAndAverage.sort(reverse=True, key=lambda x: (x[1], x[0]['stud_name'], x[0]['stud_surname'], int(x[0]['stud_code'])))
+        studentsAndAverage.sort(key=lambda x: (-x[1], x[0]['stud_surname'], x[0]['stud_name'], int(x[0]['stud_code'])))
         for z in range(len(studentsAndAverage)):
             topStudentsRanked.append(studentsAndAverage[z][0]['stud_code'])
         
@@ -249,6 +249,3 @@ print(prova3)
 prova4 = studenti_brillanti('small')
 print('test 4')
 print(prova4)
-prova4_2 = studenti_brillanti('medium')
-print('prova medium')
-print(prova4_2)
