@@ -261,9 +261,20 @@ def stampa_esami_sostenuti(stud_code, dbsize, fileout):
         content = json.load(f)
     
     results = [x for x in content if x['stud_code'] == stud_code]
-    convertDate = lambda k,i : (int(k[i][:3]), int(k[i][5:7]), int(k[i][-2:]))
     results.sort(key= lambda x : (int(x['date'][:4]), int(x['date'][5:7]), int(x['date'][-2:]), x['course_code']))
-    return results
+    
+    with open(f'{dbsize}students.json', mode='r') as st:
+        studCredentials = json.load(st)
+        studCredentials = [x for x in studCredentials if x['stud_code'] == stud_code]
+        #use this for extract param for output in first string 
+    
+    #use the studCredential variable for this params
+    output = f"Esami sostenuti dallo studente  <stud_surname> <stud_name>, matricola <stud_code>"
+    with open('fileout', mode='w') as out:
+        #need to write output file
+        pass
+    
+    return len(results) #this return the number of exams taken
     
     pass 
 
