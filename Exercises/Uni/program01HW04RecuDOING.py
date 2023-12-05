@@ -228,6 +228,37 @@ def stampa_verbale(exam_code, dbsize, fileout):
         None.
 
     """
+    
+    filename = f'{dbsize}_exams.json'
+    
+    with open(filename, mode='r') as f:
+        content = json.load(f)
+        esame = [x for x in content if x['exam_code'] == exam_code]
+        #need to get course name from course code
+        
+    #need to get student name and surname from stud code
+    student = esame[0]['stud_code']
+    
+    with open(f'{dbsize}_students.json', mode='r') as stud:
+        studentContent = json.load(stud)
+        studentContent = [x for x in studentContent if x['stud_code'] == student]
+        name = studentContent[0]['stud_name']
+        surname = studentContent[0]['stud_surname']
+    
+    date = esame[0]['date']
+    
+    #TODO: to get the course name
+    
+    #TODO: to get the teach info
+    #need to get tech name and rusname from stud code
+    
+    output = f"Lo studente {name} {surname}, matricola {student}, ha sostenuto in data {date} l'esame di <course_name> con il docente <teach_surname> <teach_name> con votazione <grade>."
+        
+
+        
+    return output
+        
+    
     pass
 
 def stampa_esami_sostenuti(stud_code, dbsize, fileout):
@@ -260,19 +291,27 @@ def stampa_esami_sostenuti(stud_code, dbsize, fileout):
     with open(fileName, mode='r') as f:
         content = json.load(f)
     
-    results = [x for x in content if x['stud_code'] == stud_code]
+    results = [x for x in content if x['stud_code'] == stud_code] #all exam for a specific student
     results.sort(key= lambda x : (int(x['date'][:4]), int(x['date'][5:7]), int(x['date'][-2:]), x['course_code']))
     
-    with open(f'{dbsize}students.json', mode='r') as st:
+    with open(f'{dbsize}_students.json', mode='r') as st:
         studCredentials = json.load(st)
         studCredentials = [x for x in studCredentials if x['stud_code'] == stud_code]
         #use this for extract param for output in first string 
     
     #use the studCredential variable for this params
     output = f"Esami sostenuti dallo studente  <stud_surname> <stud_name>, matricola <stud_code>"
-    with open('fileout', mode='w') as out:
+    with open(fileout, mode='a', encoding='utf8') as out:
         #need to write output file
-        pass
+        out.writelines(output)
+        for ex in results:
+            extratLine = lambda x : (x['course_code'], x['date'], x['grade'])
+            toAddString = extratLine(ex)
+            lineToAdd = toAddString[0] + '\t' + toAddString[1] + '\t' + str(toAddString[2]) + '\n'
+            out.writelines(lineToAdd)
+            
+    #apparently it's done!
+    #need to adjust each column        
     
     return len(results) #this return the number of exams taken
     
@@ -338,3 +377,8 @@ print()
 prova5 = stampa_esami_sostenuti('1803891', 'small', 'fileout')
 print(prova5)
 
+#test per la funzione 6
+print('test for function 5')
+print()
+prova6 = stampa_verbale(445, 'small', 'fileout')
+print(prova6)
