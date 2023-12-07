@@ -246,17 +246,32 @@ def stampa_verbale(exam_code, dbsize, fileout):
         surname = studentContent[0]['stud_surname']
     
     date = esame[0]['date']
+    grade = esame[0]['grade']
     
     #TODO: to get the course name
+    courseId = esame[0]['course_code']
+    with open(f'{dbsize}_courses.json', mode='r') as course:
+        cour = json.load(course)
+        cour = [x for x in cour if x['course_code'] == courseId]
+        courseName = cour[0]['course_name']
+        teachId = cour[0]['teach_code']
     
     #TODO: to get the teach info
+    
+    with open(f'{dbsize}_teachers.json', mode='r') as teach:
+        teac = json.load(teach)
+        teac = [x for x in teac if x['teach_code'] == teachId]
+        teachName = teac[0]['teach_name']
+        teachSurname = teac[0]['teach_surname']
+    
     #need to get tech name and rusname from stud code
     
-    output = f"Lo studente {name} {surname}, matricola {student}, ha sostenuto in data {date} l'esame di <course_name> con il docente <teach_surname> <teach_name> con votazione <grade>."
+    output = f"Lo studente {name} {surname}, matricola {student}, ha sostenuto in data {date} l'esame di {courseName} con il docente {teachSurname} {teachName} con votazione {grade}."
         
-
+    with open('fileout', mode='a', encoding='utf8') as out:
+        out.writelines(output)
         
-    return output
+    return grade
         
     
     pass
@@ -378,7 +393,7 @@ prova5 = stampa_esami_sostenuti('1803891', 'small', 'fileout')
 print(prova5)
 
 #test per la funzione 6
-print('test for function 5')
+print('test for function 6')
 print()
 prova6 = stampa_verbale(445, 'small', 'fileout')
 print(prova6)
