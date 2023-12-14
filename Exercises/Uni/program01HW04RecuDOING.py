@@ -263,9 +263,7 @@ def stampa_verbale(exam_code, dbsize, fileout):
         teac = [x for x in teac if x['teach_code'] == teachId]
         teachName = teac[0]['teach_name']
         teachSurname = teac[0]['teach_surname']
-    
-    #need to get tech name and rusname from stud code
-    
+        
     output = f"Lo studente {name} {surname}, matricola {student}, ha sostenuto in data {date} l'esame di {courseName} con il docente {teachSurname} {teachName} con votazione {grade}."
         
     with open('fileout', mode='a', encoding='utf8') as out:
@@ -353,6 +351,35 @@ def stampa_studenti_brillanti(dbsize, fileout):
         None.
 
     """
+    riga = "<stud_surname> <stud_name>\t<media>"
+    #TODO ALLINEA MEDIA VOTO UNA CON L'ALTRA
+    
+    allStudentCode = []
+    topStudents = []
+    topAverage = []
+    studentsNames = []
+    
+    fileToOpen = f'{dbsize}_students.json'
+    
+    with open(fileToOpen, 'r') as file:
+        content = json.load(file)
+        for i in range(len(content)):
+            allStudentCode.append(content[i]['stud_code']) #added all stud_code
+        
+        for j in allStudentCode:
+            if media_studente(j, dbsize) >= 28:
+                topStudents.append(j)
+                topAverage.append(media_studente(j, dbsize))
+                #TODO!!!!! GET NAME AND SURNAME FROM HERE(?)
+    
+    with open(fileout, mode='a') as f:
+        f.writelines(riga)
+        
+    
+    
+    studentAndGrade = list(zip(topStudents,topAverage))    
+    
+    return studentAndGrade
     pass
 
 
@@ -397,3 +424,9 @@ print('test for function 6')
 print()
 prova6 = stampa_verbale(445, 'small', 'fileout')
 print(prova6)
+
+#test per la funzione 7
+print()
+print('test per la funzione 7')
+prova7 = stampa_studenti_brillanti('small', 'fileout.txt')
+print(prova7)
