@@ -219,15 +219,8 @@ def stampa_verbale(exam_code, dbsize, fileout):
       La funzione ritorna il voto dell'esame associato
       all'identificatore ricevuto in input.
 
-    Args:
-        exam_code (TYPE): DESCRIPTION.
-        dbsize (TYPE): DESCRIPTION.
-        fileout (TYPE): DESCRIPTION.
-
-    Returns:
-        None.
-
     """
+    #return Int is correct, error returned prob by formatting
     
     filename = f'{dbsize}_exams.json'
     
@@ -288,14 +281,6 @@ def stampa_esami_sostenuti(stud_code, dbsize, fileout):
       rispetto al nome del corso più lungo (ovvero tutte le date e
       i voti sono allineati verticalmente). La funzione ritorna
       il numero di esami sostenuti dallo studente.
-
-    Args:
-        stud_code (TYPE): DESCRIPTION.
-        dbsize (TYPE): DESCRIPTION.
-        fileout (TYPE): DESCRIPTION.
-
-    Returns:
-        None.
 
     """
     
@@ -358,6 +343,7 @@ def stampa_studenti_brillanti(dbsize, fileout):
     topStudents = []
     topAverage = []
     studentsNames = []
+    studentSurnames = []
     
     fileToOpen = f'{dbsize}_students.json'
     
@@ -372,14 +358,28 @@ def stampa_studenti_brillanti(dbsize, fileout):
                 topAverage.append(media_studente(j, dbsize))
                 #TODO!!!!! GET NAME AND SURNAME FROM HERE(?)
     
+    for y in range(len(content)):
+        if content[y]['stud_code'] in topStudents:
+            studentsNames.append(content[y]['stud_name'])
+            studentSurnames.append(content[y]['stud_surname'])
+    
+    studentAndGrade = list(zip(studentSurnames,studentsNames,topAverage)) 
+    studentAndGrade.sort(key=lambda x : (-int(x[2]), x[0], x[1]) )
+    
     with open(fileout, mode='a') as f:
-        f.writelines(riga)
+        for i in studentAndGrade:
+            name = i[1]
+            surname = i[0]
+            grade= i[2]
+            tempRiga = f"{surname} {name}\t{grade}"
+            spazioLunghezza = ' ' * (60 -len(tempRiga))
+            tempRiga = f"{surname} {name}" + spazioLunghezza + f"\t{grade}\n" 
+            f.writelines(tempRiga)
+    
+    with open(fileout, mode='r') as fOut:
+        result = fOut.readlines()
         
-    
-    
-    studentAndGrade = list(zip(topStudents,topAverage))    
-    
-    return studentAndGrade
+    return len(result)
     pass
 
 
@@ -422,7 +422,7 @@ print(prova5)
 #test per la funzione 6
 print('test for function 6')
 print()
-prova6 = stampa_verbale(445, 'small', 'fileout')
+prova6 = stampa_verbale(447, 'small', 'fileout')
 print(prova6)
 
 #test per la funzione 7
