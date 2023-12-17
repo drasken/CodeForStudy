@@ -32,3 +32,52 @@ def es27(tabella, colonna, valore):
 
     '''
     # inserisci qui il tuo codice
+
+    res = len(tabella) #var for storing number of deleted raws
+    
+    #SECOND TRY
+
+    tabella[:] = [dictio for dictio in tabella if dictio.get(colonna) == valore]
+
+    for i in tabella:
+        i.pop(colonna)
+
+    res -= len(tabella)     
+        
+    return res
+
+    #TEST PASSED!!
+
+
+    
+    #FIRST TRY
+    # use column to delete raw if val == val in raw
+    # each time a raw is deleted add 1 to res
+    #after that delet param column for each remaining raw
+    #return res
+
+    # newTab = []
+    # for i in tabella:
+    #     if i[colonna] == valore:
+    #        continue
+    #     else:
+    #         tabella.remove(colonna[valore])
+    #         res += 1
+
+    # for j in newTab:
+    #     j.pop(colonna)
+
+    # tabella = newTab
+
+    return res
+
+        
+    
+prova = [{'nome': 'Sofia', 'anno': 1973 ,'tel': 5553546}, {'nome': 'Bruno', 'anno': 1981 ,'tel': 5558432}, {'nome': 'Carlo', 'anno': 1981 ,'tel': 6661203}, {'nome': 'Mimma', 'anno': 1997 ,'tel': 11164473}]
+
+provaFun = es27(prova, 'anno', 1981)
+
+
+print(provaFun)
+
+        
