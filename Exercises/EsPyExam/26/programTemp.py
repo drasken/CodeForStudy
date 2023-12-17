@@ -32,7 +32,7 @@ def es26(tabella, colonna):
     
     # inserisci qui il tuo codice
 
-    tabella.sort(key= lambda x : x[colonna])
+    tabella.sort(reverse=True, key= lambda x : x[colonna])
 
     return len(tabella)
     #TODO: to run test !!!!!!
@@ -71,8 +71,11 @@ def es26(tabella, colonna):
         
 #     return listAppoggio
 
-provaTab = [{'nome': 'Sofia', 'anno': 1973 ,'tel': 5553546},{'nome': 'Bruno', 'anno': 1981 ,'tel': 5558432}]
+provaTab = [{'nome': 'Sofia', 'anno': 1973 ,'tel': 5553546},{'nome': 'Bruno', 'anno': 1981 ,'tel': 5558432},{'nome': 'Carla', 'anno': 1951 ,'tel': 2224621},{'nome': 'Franco', 'anno': 1997 ,'tel': 6661630}]
+
+print(provaTab)
 
 provaFun = es26(provaTab, 'anno')
 
 print(provaFun)
+print(provaTab)
