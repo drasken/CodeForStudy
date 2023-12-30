@@ -146,8 +146,16 @@ Note to self: nel file da stampare ogni riga per un palazzo in base a parametri
 
 from pngmatrix import load_png8
 
-def colourRect(raw : int, column: int) -> None:
+def colourRect(lup_y : int, lup_x: int, width: int, height: int, table: list) -> None:
     #util function: after finding a rect saves coordinates setting values to black
+    #params are coordinates of Left up angle and measures
+    
+    #default check and vaue is black, not using a variable, change if needed
+    
+    for rawNum, raw in enumerate(table[lup_y: lup_y+width]):
+        for columnNum, elem in enumerate(raw[lup_x: lup_x+width]):
+            if table[rawNum][columnNum] != (0,0,0):
+                table[rawNum][columnNum] = (0,0,0)
     pass
 
 def calculateRect(x : int, y : int, table: list) -> tuple: #TODO!!!!!
