@@ -150,9 +150,32 @@ def colourRect(raw : int, column: int) -> None:
     #util function: after finding a rect saves coordinates setting values to black
     pass
 
-def calculateRect(x : int, y : int) -> (int,int):
+def calculateRect(x : int, y : int, table: list) -> tuple: #TODO!!!!!
     #function that calculate width and height
     #terurn a tuple of int
+    value = table[y][x]
+    # pivot = 0
+    height = 0
+    width = 0
+   
+    #calculate width
+    for j in table[y][x:]:
+        if j == value:
+            width += 1
+        else:
+            break
+    #calculate height
+    for i in table[y:]:
+        if i[x] == value:
+            height += 1
+        else:
+            break
+    
+        
+
+    
+    meas = (height,width)
+    return meas
     pass
     
 
@@ -168,16 +191,16 @@ def checkRectangle(table: list[list]) -> list:
         list: the list of the rectangles found in the images.
 
     """
-    
+    black  = (0,0,0)
     #to do: function to calcuate rectangule mesures
     listRect = [] #here save each rect when found
     for numRaw, raw in enumerate(table): #get each raw
         for numColumn, color in enumerate(raw):
-            if color != (0,0,0): #find a palace
-                measures = calculateRect(numRaw, numColumn)
+            if color != black: #find a palace
+                measures = calculateRect(numRaw, numColumn, table)
                 tempRectangle = (numRaw, numColumn, measures[0], measures[1], color)
                 listRect.append(tempRectangle) #save the rectangle found in listRect
-                colourRect(measures[0], measures[2]) #use this to not calculate 2 times same rect
+                colourRect(measures[0], measures[1]) #use this to not calculate 2 times same rect
                 
                 # measures = calculateRect(numRaw, numColumn)
                 # perimeter = sum(measures) * 2
@@ -186,6 +209,16 @@ def checkRectangle(table: list[list]) -> list:
                 
     return listRect   
 
+def extractRect(listRect : tuple) -> str:
+    #use this function to translate tuple rect in a string to write in file
+    pass
+
+def printRect(listRect: list, fileName: str) -> None:
+    with open(fileName, mode='a') as myFile:
+        pass
+    
+    #return nothing wtite in the file
+    
 
 def ex(file_png, file_txt, file_out):
     """
@@ -219,4 +252,6 @@ if __name__ == "__main__":
     test = ex('images/image0.png', 'rectangles/rectangles0.txt', 'prova2.txt')
     test = ex('images/example.png', 'rectangles/example.txt', 'prova2.txt')
     print(test)
+    prova = calculateRect(4, 4, test)
+    prova2 = calculateRect(0, 0, test)
     pass
