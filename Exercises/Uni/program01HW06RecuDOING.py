@@ -152,10 +152,13 @@ def colourRect(lup_y : int, lup_x: int, width: int, height: int, table: list) ->
     
     #default check and vaue is black, not using a variable, change if needed
     
-    for rawNum, raw in enumerate(table[lup_y: lup_y+width]):
+    for rawNum, raw in enumerate(table[lup_y: lup_y+height]):
         for columnNum, elem in enumerate(raw[lup_x: lup_x+width]):
             if table[rawNum][columnNum] != (0,0,0):
                 table[rawNum][columnNum] = (0,0,0)
+    
+    
+    #TO DEBUG, SECOND RECTANGLE NOT WORKING CORRECTLY
     pass
 
 def calculateRect(x : int, y : int, table: list) -> tuple: #TODO!!!!!
@@ -208,7 +211,7 @@ def checkRectangle(table: list[list]) -> list:
                 measures = calculateRect(numRaw, numColumn, table)
                 tempRectangle = (numRaw, numColumn, measures[0], measures[1], color)
                 listRect.append(tempRectangle) #save the rectangle found in listRect
-                colourRect(measures[0], measures[1]) #use this to not calculate 2 times same rect
+                colourRect(numRaw, numColumn, measures[0], measures[1], table) #use this to not calculate 2 times same rect
                 
                 # measures = calculateRect(numRaw, numColumn)
                 # perimeter = sum(measures) * 2
