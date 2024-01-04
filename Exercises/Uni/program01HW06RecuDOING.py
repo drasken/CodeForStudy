@@ -255,6 +255,19 @@ def printRect(listRect: list, fileName: str) -> None:
 
 #end idea part 2 -----------------------------------------
 
+
+def checkInsideUfo() -> bool:
+    #this function check inside UFO shadow isall black or building
+    #the returned bool is used for the parent returned list
+    pass
+
+def extractUfoFromFile():
+    #use this function to extract measures from file to use in script: list,str,tuple,etc what needed
+    pass
+
+
+
+
 def ex(file_png, file_txt, file_out):
     """
     Docstring: TODO
