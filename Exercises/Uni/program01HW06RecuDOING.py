@@ -154,8 +154,8 @@ def colourRect(lup_y : int, lup_x: int, width: int, height: int, table: list) ->
     
     for rawNum, raw in enumerate(table[lup_y: lup_y+height]):
         for columnNum, elem in enumerate(raw[lup_x: lup_x+width]):
-            if table[rawNum][columnNum] != (0,0,0):
-                table[rawNum][columnNum] = (0,0,0)
+            if elem != (0,0,0):
+                table[lup_y + rawNum][lup_x + columnNum] = (0,0,0)
     
     
     #TO DEBUG, SECOND RECTANGLE NOT WORKING CORRECTLY
@@ -182,13 +182,10 @@ def calculateRect(x : int, y : int, table: list) -> tuple: #TODO!!!!!
         else:
             break
     
-        
-
-    
     meas = (height,width)
     return meas
     pass
-    
+    #Apparently it's working
 
 #implement a function for checking colour rectangle
 def checkRectangle(table: list[list]) -> list:
@@ -211,25 +208,52 @@ def checkRectangle(table: list[list]) -> list:
                 measures = calculateRect(numRaw, numColumn, table)
                 tempRectangle = (numRaw, numColumn, measures[0], measures[1], color)
                 listRect.append(tempRectangle) #save the rectangle found in listRect
-                colourRect(numRaw, numColumn, measures[0], measures[1], table) #use this to not calculate 2 times same rect
+                colourRect(numColumn, numRaw, measures[1], measures[0], table) #use this to not calculate 2 times same rect
                 
-                # measures = calculateRect(numRaw, numColumn)
+                # measures = calculateRect(numRaw, numColumn, table)
                 # perimeter = sum(measures) * 2
                 # tempRect = (perimeter, numRaw, measures[0], measures[1], color)
                 # listRect.append(tempRect)
-                
+    
+    listRect.sort(reverse=True, key= lambda x : (x[1], - x[0]))
+            
     return listRect   
 
-def extractRect(listRect : tuple) -> str:
+def extractRect(list_in_tuple : tuple) -> str:
     #use this function to translate tuple rect in a string to write in file
+    #use tuple unpack
+    
+    x_num, y_num, wid, hig, color = list_in_tuple
+    
+    r_col, g_col, b_col = color
+    
+    str_output = f"{x_num},{y_num},{wid},{hig},{r_col},{g_col},{b_col}\n"
+    
+    return str_output
+    
     pass
 
 def printRect(listRect: list, fileName: str) -> None:
     with open(fileName, mode='a') as myFile:
+        for i in listRect:
+            str_out = extractRect(i)
+            myFile.write(str_out)
         pass
     
     #return nothing wtite in the file
+
+
+
+#Ideas algorithm for part2: --------------------------------
     
+    """
+    basically you use a util function check inside rect to see id all black in a given area, is true 
+    ufo can land else can't.
+    the approach is the same as in part 1, we use the upper left corner of the rectangle and the measures
+    from the file in input one each
+    """
+
+#end idea part 2 -----------------------------------------
 
 def ex(file_png, file_txt, file_out):
     """
@@ -253,16 +277,26 @@ def ex(file_png, file_txt, file_out):
     black = (0,0,0)
     white = (255,255,255)
     
-    new_matrix = [[0 if tup == (0,0,0) else 1 for tup in raw] for raw in matrix]
+    #new_matrix = [[0 if tup == (0,0,0) else 1 for tup in raw] for raw in matrix]
  
-    return matrix
+    list_buildings = checkRectangle(matrix)    
+    
+    # for m in list_buildings:
+    #     i = extractRect(m)
+    #     print(i)
+    
+    printRect(list_buildings, file_out)
+    return list_buildings
 
     pass
 
 if __name__ == "__main__":
-    test = ex('images/image0.png', 'rectangles/rectangles0.txt', 'prova2.txt')
     test = ex('images/example.png', 'rectangles/example.txt', 'prova2.txt')
     print(test)
-    prova = calculateRect(4, 4, test)
-    prova2 = calculateRect(0, 0, test)
+    #prova = calculateRect(4, 4, test)
+    #prova2 = calculateRect(0, 0, test)
+    test_real = ex('images/image0.png', 'rectangles/rectangles0.txt', 'prova3.txt')
     pass
+
+
+
