@@ -244,7 +244,7 @@ def printRect(listRect: list, fileName: str) -> None:
 
 
 
-#Ideas algorithm for part2: --------------------------------
+#Ideas algorithm for part2: ----------------------------------------------
     
     """
     basically you use a util function check inside rect to see id all black in a given area, is true 
@@ -253,7 +253,7 @@ def printRect(listRect: list, fileName: str) -> None:
     from the file in input one each
     """
 
-#end idea part 2 -----------------------------------------
+#end idea part 2 ----------------------------------------------------------
 
 
 def extractUfoFromFile(fileName: str) -> list:
@@ -274,15 +274,70 @@ def extractUfoFromFile(fileName: str) -> list:
     result = [(result[i], result[i+1], result[i+2]) for i in range(0, len(result), 3)]    
     
     return result
-    #done
+    #done: return tuples with numbers
     pass
 
-def checkInsideUfo() -> bool:
+def checkInsideUfo(measuresUfo: tuple, angle: tuple, table: list) -> bool:
     #this function check inside UFO shadow isall black or building
     #the returned bool is used for the parent returned list
+    #DON'T ITERATE ON ELEMENTS!!! will use for in ex function!!!!
+    
+    #resultSet = set()
+    width, height, padding = measuresUfo
+    black = (0,0,0)
+    
+    #result = set() #use this set to add  colours found
+    result = True
+    
+    for rawNum, raw in enumerate(table):
+        for columnNum, item in enumerate(raw):
+            if item != black:
+                continue #not free space, ignore it
+            else: #this need improvment, maybe another function !!!!!!!!
+                #check upper square
+                for checkRaw in table[rawNum-padding:rawNum+1]:
+                    for checkItem in checkRaw[:width+1]:
+                        if checkItem != black:
+                            return False
+                #check mid rect
+                for checkRawMid in table[rawNum: rawNum+height+1]:
+                    for checkItemMid in checkRawMid[columnNum-padding: columnNum+width+1]:
+                        if checkItemMid != black:
+                            return False
+                for checkRawLow in table[rawNum+height: rawNum+height+padding+1]:
+                    for checkItemLow in checkRawLow[columnNum: columnNum+padding+1]:
+                        if checkItemLow != black:
+                            return False
+                pass
+            
+                
+                
+    
+    # #check upper square
+    # for rawNum, raw in enumerate(table[rawNum]):
+    #     for tableNum, colour in enumerate(raw):
+    #         pass
+        
+    # #check middle rect
+    # for rawNum, raw in enumerate(table):
+    #     for tableNum, colour in enumerate(raw):
+    #         pass
+    
+    # #check lower square
+    # for rawNum, raw in enumerate(table):
+    #     for tableNum, colour in enumerate(raw):
+    #         pass
+    
+    # for point in table:
+    #     if point != (0,0,0):
+    #         continue
+    #     else:
+    #         pass #here implement function to check
+    
+    return result
     pass
 
-
+    #Done, to implement in function ex!!!!!
 
 def ex(file_png, file_txt, file_out):
     """
