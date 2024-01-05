@@ -256,15 +256,20 @@ def printRect(listRect: list, fileName: str) -> None:
 #end idea part 2 -----------------------------------------
 
 
+def extractUfoFromFile(fileName: str) -> tuple:
+    #use this function to extract measures from file to use in script: list,str,tuple,etc what needed
+    #the number representing UFOsare width hight padding
+    
+    with open(fileName, mode='r') as file_ufo:
+        tupl_ufo = file_ufo.readlines()
+    
+    return tupl_ufo
+    pass
+
 def checkInsideUfo() -> bool:
     #this function check inside UFO shadow isall black or building
     #the returned bool is used for the parent returned list
     pass
-
-def extractUfoFromFile():
-    #use this function to extract measures from file to use in script: list,str,tuple,etc what needed
-    pass
-
 
 
 
@@ -309,6 +314,8 @@ if __name__ == "__main__":
     #prova = calculateRect(4, 4, test)
     #prova2 = calculateRect(0, 0, test)
     test_real = ex('images/image0.png', 'rectangles/rectangles0.txt', 'prova3.txt')
+    
+    provaRead = extractUfoFromFile('rectangles/example.txt')
     pass
 
 
