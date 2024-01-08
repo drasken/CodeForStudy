@@ -277,7 +277,7 @@ def extractUfoFromFile(fileName: str) -> list:
     #done: return tuples with numbers
     pass
 
-def checkInsideUfo(measuresUfo: tuple, angle: tuple, table: list) -> bool:
+def checkInsideUfo(measuresUfo: tuple, table: list) -> bool:
     #this function check inside UFO shadow isall black or building
     #the returned bool is used for the parent returned list
     #DON'T ITERATE ON ELEMENTS!!! will use for in ex function!!!!
@@ -287,16 +287,17 @@ def checkInsideUfo(measuresUfo: tuple, angle: tuple, table: list) -> bool:
     black = (0,0,0)
     
     #result = set() #use this set to add  colours found
+    
     result = True
     
     for rawNum, raw in enumerate(table):
         for columnNum, item in enumerate(raw):
             if item != black:
-                continue #not free space, ignore it
+                continue #no free space, ignore it
             else: #this need improvment, maybe another function !!!!!!!!
                 #check upper square
                 for checkRaw in table[rawNum-padding:rawNum+1]:
-                    for checkItem in checkRaw[:width+1]:
+                    for checkItem in checkRaw[columnNum:width+1]:
                         if checkItem != black:
                             return False
                 #check mid rect
@@ -304,37 +305,17 @@ def checkInsideUfo(measuresUfo: tuple, angle: tuple, table: list) -> bool:
                     for checkItemMid in checkRawMid[columnNum-padding: columnNum+width+1]:
                         if checkItemMid != black:
                             return False
+                #check low square
                 for checkRawLow in table[rawNum+height: rawNum+height+padding+1]:
                     for checkItemLow in checkRawLow[columnNum: columnNum+padding+1]:
                         if checkItemLow != black:
                             return False
+                
+                return True
                 pass
             
                 
-                
-    
-    # #check upper square
-    # for rawNum, raw in enumerate(table[rawNum]):
-    #     for tableNum, colour in enumerate(raw):
-    #         pass
-        
-    # #check middle rect
-    # for rawNum, raw in enumerate(table):
-    #     for tableNum, colour in enumerate(raw):
-    #         pass
-    
-    # #check lower square
-    # for rawNum, raw in enumerate(table):
-    #     for tableNum, colour in enumerate(raw):
-    #         pass
-    
-    # for point in table:
-    #     if point != (0,0,0):
-    #         continue
-    #     else:
-    #         pass #here implement function to check
-    
-    return result
+    return result           
     pass
 
     #Done, to implement in function ex!!!!!
@@ -361,6 +342,14 @@ def ex(file_png, file_txt, file_out):
     black = (0,0,0)
     white = (255,255,255)
     
+    
+    #here for omplementing returned list for cycle
+    listUfos = extractUfoFromFile(file_txt)
+    listBooleanUfo = []
+    
+    for i in listUfos:
+        listBooleanUfo.append(checkInsideUfo(i, matrix))
+    
     #new_matrix = [[0 if tup == (0,0,0) else 1 for tup in raw] for raw in matrix]
  
     list_buildings = checkRectangle(matrix)    
@@ -370,7 +359,8 @@ def ex(file_png, file_txt, file_out):
     #     print(i)
     
     printRect(list_buildings, file_out)
-    return list_buildings
+    
+    return listBooleanUfo
 
     pass
 
@@ -383,6 +373,14 @@ if __name__ == "__main__":
     
     provaRead = extractUfoFromFile('rectangles/example.txt')
     provaRead2 = extractUfoFromFile('rectangles/rectangles0.txt')
+    
+    #use thi to test checkInsideUdo function, no not working
+    listTest = load_png8('images/example.png')
+    testMes = (3, 3, 0)
+    testCheckUfo = checkInsideUfo(testMes, listTest)
+    print(testCheckUfo)
+    
+    
 
     pass
 
