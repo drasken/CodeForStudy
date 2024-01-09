@@ -290,30 +290,49 @@ def checkInsideUfo(measuresUfo: tuple, table: list) -> bool:
     
     result = True
     
-    for rawNum, raw in enumerate(table):
-        for columnNum, item in enumerate(raw):
+    #need to use an eteernal function, the brack is not working
+    
+    for rawNum, raw in enumerate(table[height:-(height-1)]):
+        for columnNum, item in enumerate(raw[:-(width-1)]):
             if item != black:
                 continue #no free space, ignore it
             else: #this need improvment, maybe another function !!!!!!!!
                 #check upper square
                 for checkRaw in table[rawNum-padding:rawNum+1]:
-                    for checkItem in checkRaw[columnNum:width+1]:
+                    for checkItem in checkRaw[columnNum:columnNum + width + 1]:
                         if checkItem != black:
-                            return False
+                            result = False
+                            break
+                    if not result:
+                        break
                 #check mid rect
                 for checkRawMid in table[rawNum: rawNum+height+1]:
+                    if not result:
+                        break
                     for checkItemMid in checkRawMid[columnNum-padding: columnNum+width+1]:
                         if checkItemMid != black:
-                            return False
+                            result = False
+                            break
+                    if not result:
+                        break
                 #check low square
                 for checkRawLow in table[rawNum+height: rawNum+height+padding+1]:
+                    if not result:
+                        break
                     for checkItemLow in checkRawLow[columnNum: columnNum+padding+1]:
                         if checkItemLow != black:
-                            return False
+                            result = False
+                            break
+                    if not result:
+                        break
                 
-                return True
-                pass
+                if result:
+                    return result#if all for passed should be true
             
+                # if rawNum == len(table) and columnNum == len(raw):
+                #     return result
+                # else:
+                #     result = True
                 
     return result           
     pass
@@ -365,6 +384,13 @@ def ex(file_png, file_txt, file_out):
     pass
 
 if __name__ == "__main__":
+    
+    testCheck = ex('images/image0.png', 'rectangles/rectangles0.txt', 'prova3.txt')
+    print('ciao')
+    print(testCheck)
+    print('ciao')
+
+    
     test = ex('images/example.png', 'rectangles/example.txt', 'prova2.txt')
     print(test)
     #prova = calculateRect(4, 4, test)
