@@ -288,66 +288,122 @@ def checkInsideUfo(measuresUfo: tuple, table: list) -> bool:
     
     #result = set() #use this set to add  colours found
     
-    result = False
+    searchResult = {black}
+    result = set()
     
     #need to use an eteernal function, the brack is not working
     
-    for rawNum, raw in enumerate(table[height:-(height-1)]):
+    for rawNum, raw in enumerate(table): #faster? [height:-(height-1)]
+        if len(table[rawNum:]) < height:
+            continue
         for columnNum, item in enumerate(raw[:-(width-1)]):
+            if len(raw[columnNum:]) < width:
+                continue
             if item != black:
                 continue #no free space, ignore it
             else: #this need improvment, maybe another function !!!!!!!!
-                #check upper square
+            
+                check_up = True
+                check_mid = True
+                check_low = True
+                
                 for checkRaw in table[rawNum-padding:rawNum+1]:
-                    checkVar = True
+                    if check_up == False:
+                        break
                     for checkItem in checkRaw[columnNum:columnNum + width + 1]:
-                        if checkItem == black:
-                            continue
-                        else:
-                            checkVar = False
-                            break
-                            # result = False
-                            # break
-                    if not checkVar:
+                        if checkItem != black:
+                            check_up = False
+                
+                for checkRawMid in table[rawNum: rawNum+height+1]: 
+                    if check_up == False:
                         break
-                #check mid rect
-                for checkRawMid in table[rawNum: rawNum+height+1]:
-                    if not checkVar:
-                        break
-                    for checkItemMid in checkRawMid[columnNum-padding: columnNum+width+1]:
-                        checkVarMid = True
-                        if checkItemMid == black:
-                            continue
-                        else:
-                            checkVarMid = False
-                            break
-                            # result = False
-                            # break
-                    if not checkVar:
-                        break
-                #check low square
+                    for checkItemMid in checkRawMid[columnNum-padding: columnNum + width + padding + 1]:
+                        if check_mid != black:
+                            check_mid = False
+                
                 for checkRawLow in table[rawNum+height: rawNum+height+padding+1]:
-                    if not result and not checkVarMid:
+                    if check_up == False or check_mid == False:
                         break
                     for checkItemLow in checkRawLow[columnNum: columnNum+padding+1]:
-                        chekVarLow = True
-                        if checkItemLow == black:
-                            continue
-                        else:
-                            chekVarLow = False
-                            break
-                    if not chekVarLow:
-                        break
+                        if checkItemLow != black:
+                            check_low = False
                 
-                if checkVar and checkVarMid and chekVarLow:
-                    return True#if all for passed should be true
+                if check_up == True and check_mid  == True and check_low == True:
+                    return True
+                
+                
+                        
+    
+    
+    return False
+    
+    
+    
+                #check upper square
+                # checkVar = True
+                # checkVarMid = True
+                # checkVarLow = True
+
+                # for checkRaw in table[rawNum-padding:rawNum+1]:
+                #     for checkItem in checkRaw[columnNum:columnNum + width + 1]:
+                #         result.add(checkItem)
+                #     #     if checkItem == black:
+                #     #         continue
+                #     #     else:
+                #     #         checkVar = False
+                #     #         break
+                #     #         # result = False
+                #     #         # break
+                #     # if not checkVar:
+                #     #     break
+                # #check mid rect
+                # for checkRawMid in table[rawNum: rawNum+height+1]:
+                #     # if table[rawNum: rawNum+height+1] >= height:
+                #     #     continue
+                #     # else:
+                #     #     break
+                #     # if not checkVar:
+                #     #     break
+                #     for checkItemMid in checkRawMid[columnNum-padding: columnNum+width+1]:
+                #         # if checkRawMid[columnNum-padding: columnNum+width+1] >= width:
+                #         #     continue
+                #         # else:
+                #         #     break
+                #         if checkItemMid == black:
+                #             result.add(checkItemMid)
+                #         # else:
+                #         #     checkVarMid = False
+                #         #     break
+                #             # result = False
+                #             # break
+                #     # if not checkVar:
+                #     #     break
+                # #check low square
+                # for checkRawLow in table[rawNum+height: rawNum+height+padding+1]:
+                #     # if not result and not checkVarMid:
+                #     #     break
+                #     for checkItemLow in checkRawLow[columnNum: columnNum+padding+1]:
+                #         if checkItemLow == black:
+                #             result.add(checkItemLow)
+                #     #     else:
+                #     #         checkVarLow = False
+                #     #         break
+                #     # if not checkVarLow:
+                #     #     break
+                # if result == searchResult:
+                #     return True
+                
+                # result = set()
+                
+                # if checkVar and checkVarMid and checkVarLow:
+                #     return True#if all for passed should be true
             
                 # if rawNum == len(table) and columnNum == len(raw):
                 #     return result
                 # else:
                 #     result = True
                 
-    return result           
+    return False           
     pass
 
     #Done, to implement in function ex!!!!!
