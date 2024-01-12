@@ -292,50 +292,53 @@ def checkInsideUfo(measuresUfo: tuple, table: list) -> bool:
     result = set()
     
     #need to use an eteernal function, the brack is not working
-    
-    for rawNum, raw in enumerate(table): #faster? [height:-(height-1)]
-        if len(table[rawNum:]) < height:
-            continue
-        for columnNum, item in enumerate(raw[:-(width-1)]):
-            if len(raw[columnNum:]) < width:
-                continue
+    restProva = []
+    for rawNum, raw in enumerate(table[padding : - [padding + height - 1]]): #is not space padding ignore
+        # if len(table[rawNum:]) < height:
+        #     continue #break
+        for columnNum, item in enumerate(raw[padding: width + padding - 1]): # is not space ignore
+            # if len(raw[columnNum:]) < width:
+            #     continue #break
             if item != black:
                 continue #no free space, ignore it
             else: #this need improvment, maybe another function !!!!!!!!
+                
             
-                check_up = True
-                check_mid = True
-                check_low = True
+    return False
+            
+    #             check_up = True
+    #             check_mid = True
+    #             check_low = True
                 
-                for checkRaw in table[rawNum-padding:rawNum+1]:
-                    if check_up == False:
-                        break
-                    for checkItem in checkRaw[columnNum:columnNum + width + 1]:
-                        if checkItem != black:
-                            check_up = False
+    #             for checkRaw in table[rawNum-padding:rawNum]:
+    #                 if check_up == False:
+    #                     break
+    #                 for checkItem in checkRaw[columnNum:columnNum + width]:
+    #                     if checkItem != black:
+    #                         check_up = False
                 
-                for checkRawMid in table[rawNum: rawNum+height+1]: 
-                    if check_up == False:
-                        break
-                    for checkItemMid in checkRawMid[columnNum-padding: columnNum + width + padding + 1]:
-                        if check_mid != black:
-                            check_mid = False
+    #             for checkRawMid in table[rawNum: rawNum+height]: 
+    #                 if check_mid == False or check_up == False:
+    #                     break
+    #                 for checkItemMid in checkRawMid[columnNum-padding: columnNum + width + padding]:
+    #                     if checkItemMid != black:
+    #                         check_mid = False
                 
-                for checkRawLow in table[rawNum+height: rawNum+height+padding+1]:
-                    if check_up == False or check_mid == False:
-                        break
-                    for checkItemLow in checkRawLow[columnNum: columnNum+padding+1]:
-                        if checkItemLow != black:
-                            check_low = False
+    #             for checkRawLow in table[rawNum+height: rawNum+height+padding]:
+    #                 if check_low == False or check_mid == False or check_low == False:
+    #                     break
+    #                 for checkItemLow in checkRawLow[columnNum: columnNum+padding]:
+    #                     if checkItemLow != black:
+    #                         check_low = False
                 
-                if check_up == True and check_mid  == True and check_low == True:
-                    return True
+    #             if check_up == True and check_mid  == True and check_low == True:
+    #                 return True
                 
                 
                         
     
     
-    return False
+    # return False
     
     
     
@@ -462,6 +465,17 @@ if __name__ == "__main__":
     
     test = ex('images/example.png', 'rectangles/example.txt', 'prova2.txt')
     print(test)
+    
+    
+    testCheck5 = ex('images/image0.png', 'rectangles/rectangles5.txt', 'prova3.txt')
+    print('ciao 5555555555555555555')
+    print(testCheck5)
+    print('ciao')
+    
+    testCheck6 = ex('images/image0.png', 'rectangles/rectangles6.txt', 'prova3.txt')
+    print('ciao 6666666666666666')
+    print(testCheck6)
+    print('ciao')
     #prova = calculateRect(4, 4, test)
     #prova2 = calculateRect(0, 0, test)
     test_real = ex('images/image0.png', 'rectangles/rectangles0.txt', 'prova3.txt')
