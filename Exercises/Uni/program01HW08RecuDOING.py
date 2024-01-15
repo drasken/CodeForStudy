@@ -142,11 +142,22 @@ def findDivColour(table): #funzione per trovare colore del bordo o di una linea
     pass
 
 def partition(table):    
-    #first check if can divide
+    #first check if can be divided
     if len(set(table[0])) <= 1:
         return False
     
+    colourDivision = findDivColour(table) #icolour that act as divisor
     
+    horizontal_index = table.index(colourDivision* len(table[0]))
+    vertical_index = 0
+    
+    for index, colour in enumerate(table[0]):
+        if colour == table[-1][index]:
+            
+                
+        
+    
+    return horizontal_index
     
     
     pass
