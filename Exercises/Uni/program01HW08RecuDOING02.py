@@ -163,19 +163,37 @@ import images
 #     pass
 
 
-def recursiveCheck(table):
-    # #base case table not divisible
+
+
+# def recursiveCheck(table):
+#     #NOT TO USE
+#     # #base case table not divisible
     
-    # if not partition(table):
-    #     return 1, table[0][0]
+#     # if not partition(table):
+#     #     return 1, table[0][0]
     
-    # listColours = [table[0][0]]
-    # count = 0
+#     # listColours = [table[0][0]]
+#     # count = 0
      
     
-    # recursiveCheck(table)
+#     # recursiveCheck(table)
     
+#     pass
+
+def partition():
+    #use this function to provide input table to recFunction
     pass
+
+
+def recFunction(table):
+    
+    #base case: no subRect
+    #return 1
+    
+    #else call on sub rect
+    pass
+
+
 
 def ex1(input_file,  output_file):
     # write your code here
@@ -206,4 +224,3 @@ if __name__ == '__main__':
     test01 = ex1('puzzles/small01.in.png', 'output_file')
     print(test01)
     pass
-    test = provaRec(5)
