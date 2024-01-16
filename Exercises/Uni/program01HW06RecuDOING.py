@@ -293,16 +293,32 @@ def checkInsideUfo(measuresUfo: tuple, table: list) -> bool:
     
     #need to use an eteernal function, the brack is not working
     restProva = []
-    for rawNum, raw in enumerate(table[padding : - [padding + height - 1]]): #is not space padding ignore
-        # if len(table[rawNum:]) < height:
-        #     continue #break
-        for columnNum, item in enumerate(raw[padding: width + padding - 1]): # is not space ignore
+    for rawNum, raw in enumerate(table): #is not space padding ignore
+        if rawNum < padding or (len(table) -rawNum) < (height + padding):
+            continue
+        for columnNum, item in enumerate(raw): # is not space ignore
+            if columnNum < padding or (len(raw) - columnNum) < (width + padding):
+                continue
             # if len(raw[columnNum:]) < width:
             #     continue #break
             if item != black:
                 continue #no free space, ignore it
             else: #this need improvment, maybe another function !!!!!!!!
+                #here check Horizontal rect
+                check_set = set()
+                for hor_row in table[rawNum: height +1]:
+                    for colour in hor_row[columnNum - padding: columnNum + width + padding +1]:
+                        check_set.add(colour)
                 
+                for vert_rows in table[rawNum-padding: rawNum + height + padding +1]:
+                    for colourVert in vert_rows[columnNum: columnNum + width + 1]:
+                        check_set.add(colourVert)
+                        
+                check_set.difference_update(searchResult)
+                if len(check_set) == 0:
+                    return True
+            
+                pass
             
     return False
             
@@ -406,7 +422,6 @@ def checkInsideUfo(measuresUfo: tuple, table: list) -> bool:
                 # else:
                 #     result = True
                 
-    return False           
     pass
 
     #Done, to implement in function ex!!!!!
@@ -457,7 +472,7 @@ def ex(file_png, file_txt, file_out):
 
 if __name__ == "__main__":
     
-    testCheck = ex('images/image0.png', 'rectangles/rectangles0.txt', 'prova3.txt')
+    testCheck = ex('images/image0.png', 'rectangles/rectangles0.txt', 'prova0.txt')
     print('ciao')
     print(testCheck)
     print('ciao')
@@ -467,18 +482,18 @@ if __name__ == "__main__":
     print(test)
     
     
-    testCheck5 = ex('images/image0.png', 'rectangles/rectangles5.txt', 'prova3.txt')
+    testCheck5 = ex('images/image5.png', 'rectangles/rectangles5.txt', 'prova5.txt')
     print('ciao 5555555555555555555')
     print(testCheck5)
     print('ciao')
     
-    testCheck6 = ex('images/image0.png', 'rectangles/rectangles6.txt', 'prova3.txt')
+    testCheck6 = ex('images/image6.png', 'rectangles/rectangles6.txt', 'prova6.txt')
     print('ciao 6666666666666666')
     print(testCheck6)
     print('ciao')
     #prova = calculateRect(4, 4, test)
     #prova2 = calculateRect(0, 0, test)
-    test_real = ex('images/image0.png', 'rectangles/rectangles0.txt', 'prova3.txt')
+    test_real = ex('images/image0.png', 'rectangles/rectangles0.txt', 'prova0.txt')
     
     provaRead = extractUfoFromFile('rectangles/example.txt')
     provaRead2 = extractUfoFromFile('rectangles/rectangles0.txt')
@@ -487,7 +502,16 @@ if __name__ == "__main__":
     listTest = load_png8('images/example.png')
     testMes = (3, 3, 0)
     testCheckUfo = checkInsideUfo(testMes, listTest)
+    print('test check UFO')
     print(testCheckUfo)
+    
+    listTest6 = load_png8('images/image6.png')
+    testMes6 = (3,3,1)
+    testCheckUfo6 = checkInsideUfo(testMes6, listTest6)
+    print('test check UFO6')
+    print(testCheckUfo6)
+
+
     
     
 
