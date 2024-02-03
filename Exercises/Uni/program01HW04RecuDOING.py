@@ -210,7 +210,7 @@ def studenti_brillanti(dbsize): #works, just timeout error, need refactoring
     return topStudentsRanked
     pass
 
-def stampa_verbale(exam_code, dbsize, fileout):
+def stampa_verbale(exam_code, dbsize, fileout): #IT WORKS
     """
     stampa_verbale(exam_code, dbsize, fileout), che riceve un identificatore
       di esame e salva nel fileout le informazioni relative
@@ -257,9 +257,9 @@ def stampa_verbale(exam_code, dbsize, fileout):
         teachName = teac[0]['teach_name']
         teachSurname = teac[0]['teach_surname']
         
-    output = f"Lo studente {name} {surname}, matricola {student}, ha sostenuto in data {date} l'esame di {courseName} con il docente {teachSurname} {teachName} con votazione {grade}."
+    output = f"Lo studente {name} {surname}, matricola {student}, ha sostenuto in data {date} l'esame di {courseName} con il docente {teachName} {teachSurname} con votazione {grade}."
         
-    with open('fileout', mode='a', encoding='utf8') as out:
+    with open(fileout, mode='w', encoding='utf8') as out:
         out.writelines(output)
         
     return grade
@@ -336,97 +336,142 @@ def stampa_studenti_brillanti(dbsize, fileout):
         None.
 
     """
-    riga = "<stud_surname> <stud_name>\t<media>"
-    #TODO ALLINEA MEDIA VOTO UNA CON L'ALTRA
     
-    allStudentCode = []
-    topStudents = []
-    topAverage = []
-    studentsNames = []
-    studentSurnames = []
+    listStudentiBrillanti = studenti_brillanti(dbsize)
     
-    fileToOpen = f'{dbsize}_students.json'
+    studentsList = []
+    with open(f'{dbsize}_students.json', mode='r') as f:
+        students = json.load(f)
+        for brill in listStudentiBrillanti:
+            for stud in students:
+                if brill == stud["stud_code"]:
+                    media = media_studente(brill, dbsize)
+                    studentData = (stud["stud_surname"], stud["stud_name"], media)
+                    studentsList.append(studentData)
+                    break
     
-    with open(fileToOpen, 'r') as file:
-        content = json.load(file)
-        for i in range(len(content)):
-            allStudentCode.append(content[i]['stud_code']) #added all stud_code
+    maxLengthName = 0
+    
+    for persona in studentsList:
+        lunghezza = len(persona[0]) + 1 + len(persona[1])
+        if lunghezza > maxLengthName:
+            maxLengthName = lunghezza
         
-        for j in allStudentCode:
-            if media_studente(j, dbsize) >= 28:
-                topStudents.append(j)
-                topAverage.append(media_studente(j, dbsize))
-                #TODO!!!!! GET NAME AND SURNAME FROM HERE(?)
+    with open(fileout, mode='w') as out:
+        for data in studentsList:
+            surname = str(data[0])
+            name = str(data[1])
+            average = str(data[2])
+            spazioNome = maxLengthName - (len(name) + 1 + len(surname))
+            riempitivo = ' ' * spazioNome
+            linea = f'{surname} {name}' + riempitivo + f'\t{media}\n'#.format(stud_surname= surname, stud_name= name, media= average )
+            out.write(linea)
+
     
-    for y in range(len(content)):
-        if content[y]['stud_code'] in topStudents:
-            studentsNames.append(content[y]['stud_name'])
-            studentSurnames.append(content[y]['stud_surname'])
+    return len(listStudentiBrillanti)
     
-    studentAndGrade = list(zip(studentSurnames,studentsNames,topAverage)) 
-    studentAndGrade.sort(key=lambda x : (-int(x[2]), x[0], x[1]) )
+    # riga = "<stud_surname> <stud_name>\t<media>"
+    # #TODO ALLINEA MEDIA VOTO UNA CON L'ALTRA
     
-    with open(fileout, mode='a') as f:
-        for i in studentAndGrade:
-            name = i[1]
-            surname = i[0]
-            grade= i[2]
-            tempRiga = f"{surname} {name}\t{grade}"
-            spazioLunghezza = ' ' * (60 -len(tempRiga))
-            tempRiga = f"{surname} {name}" + spazioLunghezza + f"\t{grade}\n" 
-            f.writelines(tempRiga)
+    # allStudentCode = []
+    # topStudents = []
+    # topAverage = []
+    # studentsNames = []
+    # studentSurnames = []
     
-    with open(fileout, mode='r') as fOut:
-        result = fOut.readlines()
+    # fileToOpen = f'{dbsize}_students.json'
+    
+    # with open(fileToOpen, 'r') as file:
+    #     content = json.load(file)
+    #     for i in range(len(content)):
+    #         allStudentCode.append(content[i]['stud_code']) #added all stud_code
         
-    return len(result)
+    #     for j in allStudentCode:
+    #         if media_studente(j, dbsize) >= 28:
+    #             topStudents.append(j)
+    #             topAverage.append(media_studente(j, dbsize))
+    #             #TODO!!!!! GET NAME AND SURNAME FROM HERE(?)
+    
+    # for y in range(len(content)):
+    #     if content[y]['stud_code'] in topStudents:
+    #         studentsNames.append(content[y]['stud_name'])
+    #         studentSurnames.append(content[y]['stud_surname'])
+    
+    # studentAndGrade = list(zip(studentSurnames,studentsNames,topAverage)) 
+    # studentAndGrade.sort(key=lambda x : (-int(x[2]), x[0], x[1]) )
+    
+    # with open(fileout, mode='a') as f:
+    #     for i in studentAndGrade:
+    #         name = i[1]
+    #         surname = i[0]
+    #         grade= i[2]
+    #         tempRiga = f"{surname} {name}\t{grade}"
+    #         spazioLunghezza = ' ' * (60 -len(tempRiga))
+    #         tempRiga = f"{surname} {name}" + spazioLunghezza + f"\t{grade}\n" 
+    #         f.writelines(tempRiga)
+    
+    # with open(fileout, mode='r') as fOut:
+    #     result = fOut.readlines()
+        
+    # return len(result)
+    # pass
+
+
+
+#test per stampa studenti brillanti 
+
+provaStampaStudendiBrillantiSmall = stampa_studenti_brillanti('small', 'provaBrillantiSmall.txt')
+provaStampaVerbale = stampa_verbale(447, 'small', 'provaStampaVerbale.txt')
+
+
+if __name__ == '__main':
+    
     pass
 
+#OLD TEST
+# #test per prima funzione
+# prova = media_studente('1803891', 'small')
+# print(prova) #expected average of 22,26,23,24
 
+# #test seconda funzione
+# prova2 = media_corso('TIPAPFC0xa0bb4a', 'small')
+# # data: 22+21+31+27+31+24+19+27+19
+# print(prova2)
+# prova2B = media_corso('CELE0xc62458', 'medium')
+# print(prova2B)
+# prova2C = media_corso('MASP0x6f69a0', 'large')
+# print(prova2C)
 
-#test per prima funzione
-prova = media_studente('1803891', 'small')
-print(prova) #expected average of 22,26,23,24
+# #test per la terza funzione
+# prova3A = media_docente('003', 'small')
+# print('test 3')
+# print(prova3A)
+# # print(type(prova3A))
+# #expected courses: EDIELFAC0x5203a7, SOM0x835db8, SNL0xadd7c7
+# prova3 = media_docente('001', 'small')
+# print(prova3)
+# #expected courses: MP0x3702b5,TIPAPFC0xa0bb4a
+# #test passed with print not test lib
 
-#test seconda funzione
-prova2 = media_corso('TIPAPFC0xa0bb4a', 'small')
-# data: 22+21+31+27+31+24+19+27+19
-print(prova2)
-prova2B = media_corso('CELE0xc62458', 'medium')
-print(prova2B)
-prova2C = media_corso('MASP0x6f69a0', 'large')
-print(prova2C)
+# #test per la funzione 4
+# prova4 = studenti_brillanti('small')
+# print('test 4')
+# print(prova4)
 
-#test per la terza funzione
-prova3A = media_docente('003', 'small')
-print('test 3')
-print(prova3A)
-# print(type(prova3A))
-#expected courses: EDIELFAC0x5203a7, SOM0x835db8, SNL0xadd7c7
-prova3 = media_docente('001', 'small')
-print(prova3)
-#expected courses: MP0x3702b5,TIPAPFC0xa0bb4a
-#test passed with print not test lib
+# #test per la funzione 5
+# print('test for function 5')
+# print()
+# prova5 = stampa_esami_sostenuti('1803891', 'small', 'fileout')
+# print(prova5)
 
-#test per la funzione 4
-prova4 = studenti_brillanti('small')
-print('test 4')
-print(prova4)
+# #test per la funzione 6
+# print('test for function 6')
+# print()
+# prova6 = stampa_verbale(447, 'small', 'fileout')
+# print(prova6)
 
-#test per la funzione 5
-print('test for function 5')
-print()
-prova5 = stampa_esami_sostenuti('1803891', 'small', 'fileout')
-print(prova5)
-
-#test per la funzione 6
-print('test for function 6')
-print()
-prova6 = stampa_verbale(447, 'small', 'fileout')
-print(prova6)
-
-#test per la funzione 7
-print()
-print('test per la funzione 7')
-prova7 = stampa_studenti_brillanti('small', 'fileout.txt')
-print(prova7)
+# #test per la funzione 7
+# print()
+# print('test per la funzione 7')
+# prova7 = stampa_studenti_brillanti('small', 'fileout.txt')
+# print(prova7)
