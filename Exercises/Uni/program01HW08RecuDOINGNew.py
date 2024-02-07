@@ -144,12 +144,12 @@ class rectangle():
 
 #Util functions ------------------------------------------------
 
-def checkIfDivisible(rectangle):
+def checkIfDivisible(firstRow):
     # True if divisible else False
     blackSet = {(0,0,0)}
     
-    firstRow = set(rectangle[0])
-    if firstRow.difference(blackSet):
+    firstRowSet = set(firstRow)
+    if firstRowSet.difference(blackSet):
         return True
     
     return False
@@ -202,7 +202,15 @@ def partitionRect():
 #     #if not base case than this
 #     pass
 
-
+def recursiveCount(matrix, left_upper_x, left_upper_y, width, height):
+    
+    pass
+    #base case
+    count = 1
+    listDiv = []
+    
+    if not checkIfDivisible(matrix[left_upper_y: left_upper_y + width]):
+        return count, listDiv
 
 
 def ex1(input_file,  output_file):
@@ -234,6 +242,9 @@ if __name__ == '__main__':
     
     test1B = findDivColor(provaMatrix, 0, 0, 4, 4)
     test2B = findDivColor(provaMatrixDiv, 0, 0, 4, 4)
+    
+    test1C = recursiveCount(provaMatrix, 0, 0, 4, 4)
+    test2C = recursiveCount(provaMatrixDiv, 0, 0, 4, 4)
     
     # write your tests here
     pass
