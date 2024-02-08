@@ -255,7 +255,9 @@ def recursiveCount(matrix, left_upper_x, left_upper_y, width, height):
     count += subrectDownLeft[0]
     listDiv.extend(subrectDownLeft[1])
     
-    #subrectDownLeft = recursiveCount(matrix, left_upper_x, (divLine_y + 1), (divLine_x - left_upper_x), ())
+    subrectDownRight = recursiveCount(matrix, (divLine_x + 1), (divLine_y + 1), (left_upper_x + width - 1 - divLine_x) , (left_upper_y + height - 1 - divLine_y))
+    count += subrectDownRight[0]
+    listDiv.extend(subrectDownRight[1])
     
     return count, listDiv
 
