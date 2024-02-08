@@ -144,9 +144,9 @@ import images
 
 #Util functions ------------------------------------------------
 
-def checkIfDivisible(rectangle, angle_up_x, angle_up_y, width) -> bool:
+def checkIfDivisible(rectangle, angle_up_x, angle_up_y, width, bg_color) -> bool:
     # True if divisible else False
-    blackSet = {(0,0,0)}
+    bg_color_set = {bg_color}
     
     #firstElementSet = set()
     firstRowSet = set()
@@ -154,7 +154,7 @@ def checkIfDivisible(rectangle, angle_up_x, angle_up_y, width) -> bool:
     for color in rectangle[angle_up_y][angle_up_x: angle_up_x + width]:
         firstRowSet.add(color)
     
-    if firstRowSet.difference(blackSet):
+    if firstRowSet.difference(bg_color_set):
         return True
     
     #can't do a deep copy so inspect first column instead of first row
@@ -194,7 +194,7 @@ def findDivColor(matrix, rect_x, rect_y, width, height): #apparently it works
                 index_y = rect_y + rowNum
                 colorFound = color
                 
-    
+    #colorFound = list(colorFound)
     return colorFound, index_y, index_X
     pass
 
@@ -227,9 +227,10 @@ def recursiveCount(matrix, left_upper_x, left_upper_y, width, height):
     #local field 
     count = 0
     listDiv = []
+    bg_color = matrix[left_upper_y][left_upper_x]
     
     #base case
-    if not checkIfDivisible(matrix, left_upper_x, left_upper_y, width):
+    if not checkIfDivisible(matrix, left_upper_x, left_upper_y, width, bg_color):
         count += 1
         return count, listDiv
     
@@ -245,19 +246,24 @@ def recursiveCount(matrix, left_upper_x, left_upper_y, width, height):
     #now do a recursive call on each subRect and add the returned values
     subrectUpLeft = recursiveCount(matrix, left_upper_x, left_upper_y, (divLine_x - left_upper_x), (divLine_y - left_upper_y))
     count += subrectUpLeft[0]
-    listDiv.extend(subrectUpLeft[1])
     
     subrectUpRight = recursiveCount(matrix, (divLine_x + 1), left_upper_y, (left_upper_x + width - divLine_x - 1), divLine_y - left_upper_y)
     count += subrectUpRight[0]
-    listDiv.extend(subrectUpRight[1])
     
     subrectDownLeft = recursiveCount(matrix, left_upper_x, (divLine_y + 1), (divLine_x - left_upper_x), (left_upper_y + height - 1 - divLine_y))
     count += subrectDownLeft[0]
-    listDiv.extend(subrectDownLeft[1])
     
     subrectDownRight = recursiveCount(matrix, (divLine_x + 1), (divLine_y + 1), (left_upper_x + width - 1 - divLine_x) , (left_upper_y + height - 1 - divLine_y))
     count += subrectDownRight[0]
+    
+    #colors hierarchy
     listDiv.extend(subrectDownRight[1])
+    listDiv.extend(subrectDownLeft[1])
+    listDiv.extend(subrectUpRight[1])
+    listDiv.extend(subrectUpLeft[1])
+
+
+
     
     return count, listDiv
 
@@ -265,37 +271,60 @@ def ex1(input_file,  output_file):
     
     decField = images.load(input_file)
     
+   
+    
     #find background color
     bg_color = decField[0][0]
     
+    heightField = len(decField)
+    widthField = len(decField[0])
+    
+    
+    countedField = recursiveCount(decField, 0, 0, widthField, heightField)
+    
+    numFields = countedField[0]
+    
+    listColors = [bg_color]
+    
+    for col in countedField[1]:
+        listColors.append(col[0])
+        # putInsideList = [col[0]]
+        # listColors.append(putInsideList)
+    
+    outputListColors = [listColors]
+        
+    
+    
+    images.save(outputListColors, output_file)
+    #print(listColors)
     # for i,j in enumerate(decField):
     #     for k,l in enumerate(j):
     #         decField[i][k] = (0,0,0)
             
-    boolTest = checkIfDivisible(decField, 0, 0, 256)
+    #boolTest = checkIfDivisible(decField, 0, 0, 256)
     # res = recursiveCount(decField)
     
-    return boolTest,decField
+    return numFields#, listColors
     pass
 
 
 if __name__ == '__main__':
     
     testSmall01 = ex1('puzzles/small01.in.png', 'provaSmall01.png')
-    provaDec = testSmall01[1]
+    #provaDec = testSmall01[1]
     # ciaoooooo = 0
     # for num, i in enumerate(provaDec):
     #     if i[-1] == (255,0,0):
     #         ciaoooooo = num
         
-    provaSeria = findDivColor(provaDec, 0, 0, 256, 256)
-    provaRec = recursiveCount(provaDec, 0, 0, 256, 256)
+    # provaSeria = findDivColor(provaDec, 0, 0, 256, 256)
+    # provaRec = recursiveCount(provaDec, 0, 0, 256, 256)
     
     provaMatrix = [[(0,0,0),(0,0,0),(0,0,0),(0,0,0)],[(0,0,0),(0,0,0),(0,0,0),(0,0,0)],[(0,0,0),(0,0,0),(0,0,0),(0,0,0)],[(0,0,0),(0,0,0),(0,0,0),(0,0,0)]] 
     provaMatrixDiv = [[(0,0,0),(1,0,0),(0,0,0),(0,0,0)],[(0,0,0),(1,0,0),(0,0,0),(0,0,0)],[(1,0,0),(1,0,0),(1,0,0),(1,0,0)],[(0,0,0),(1,0,0),(0,0,0),(0,0,0)]] 
 
-    test = checkIfDivisible(provaMatrix, 0, 0, 4)
-    test2 = checkIfDivisible(provaMatrixDiv, 0, 0, 4)
+    test = checkIfDivisible(provaMatrix, 0, 0, 4, (0,0,0))
+    test2 = checkIfDivisible(provaMatrixDiv, 0, 0, 4, (0,0,0))
     
     test1B = findDivColor(provaMatrix, 0, 0, 4, 4)
     test2B = findDivColor(provaMatrixDiv, 0, 0, 4, 4)
