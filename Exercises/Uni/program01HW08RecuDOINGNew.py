@@ -128,29 +128,46 @@ NOTA: il sistema di test riconosce la presenza di ricorsione SOLO se
 
 import images
 
-class rectangle():
+# class rectangle():
     
-    divLine = []
+#     divLine = []
     
-    def __init__(self, x, y, width, height):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
+#     def __init__(self, x, y, width, height):
+#         self.x = x
+#         self.y = y
+#         self.width = width
+#         self.height = height
     
     
         
-    pass
+#     pass
 
 #Util functions ------------------------------------------------
 
-def checkIfDivisible(firstRow):
+def checkIfDivisible(rectangle, angle_up_x, angle_up_y, width) -> bool:
     # True if divisible else False
     blackSet = {(0,0,0)}
     
-    firstRowSet = set(firstRow)
+    #firstElementSet = set()
+    firstRowSet = set()
+    
+    for color in rectangle[angle_up_y][angle_up_x: angle_up_x + width]:
+        firstRowSet.add(color)
+    
     if firstRowSet.difference(blackSet):
         return True
+    
+    #can't do a deep copy so inspect first column instead of first row
+    # for i in rectangle:
+    #     firstElementSet.add(i[0])
+    
+    # if firstElementSet.difference(blackSet):
+    #     return True
+    
+    #inspect first row
+    # rectangleSet = set(rectangle[0])
+    # if rectangleSet.difference(blackSet):
+    #     return True
     
     return False
 
@@ -167,16 +184,18 @@ def findDivColor(matrix, rect_x, rect_y, width, height): #apparently it works
     for rowNum,row in enumerate(matrix[rect_y: rect_y + height]):
         if colorFound != 0:
             break
+        if len(set(row[rect_x: rect_x + width])) != 1:
+            continue
         for columnNum, color in enumerate(row[rect_x: rect_x + width]):
             if colorFound != 0:
                 break
-            if len(set(row)) == 1 and matrix[rect_y][rect_x + columnNum] == color:
+            if matrix[rect_y][rect_x + columnNum] == color:
                 index_X = rect_x + columnNum
                 index_y = rect_y + rowNum
                 colorFound = color
                 
     
-    return color, index_y, index_X
+    return colorFound, index_y, index_X
     pass
 
 def partitionRect():
@@ -205,23 +224,53 @@ def partitionRect():
 def recursiveCount(matrix, left_upper_x, left_upper_y, width, height):
     
     pass
-    #base case
-    count = 1
+    #local field 
+    count = 0
     listDiv = []
     
-    if not checkIfDivisible(matrix[left_upper_y: left_upper_y + width]):
+    #base case
+    if not checkIfDivisible(matrix, left_upper_x, left_upper_y, width):
+        count += 1
         return count, listDiv
-
+    
+    # if not checkIfDivisible(matrix[left_upper_y: left_upper_y + height][left_upper_x: left_upper_x + width]):
+    #     count += 1
+    #     return count, listDiv
+    
+    #this var save color and coordinates y,x
+    divLine = findDivColor(matrix, left_upper_x, left_upper_y, width, height)
+    listDiv.append(divLine)
+    divLine_x, divLine_y = divLine[2], divLine[1]
+    
+    #now do a recursive call on each subRect and add the returned values
+    subrectUpLeft = recursiveCount(matrix, left_upper_x, left_upper_y, (divLine_x - left_upper_x), (divLine_y - left_upper_y))
+    count += subrectUpLeft[0]
+    listDiv.extend(subrectUpLeft[1])
+    
+    subrectUpRight = recursiveCount(matrix, (divLine_x + 1), left_upper_y, (left_upper_x + width - divLine_x - 1), divLine_y - left_upper_y)
+    count += subrectUpRight[0]
+    listDiv.extend(subrectUpRight[1])
+    
+    subrectDownLeft = recursiveCount(matrix, left_upper_x, (divLine_y + 1), (divLine_x - left_upper_x), (left_upper_y + height - 1 - divLine_y))
+    count += subrectDownLeft[0]
+    listDiv.extend(subrectDownLeft[1])
+    
+    #subrectDownLeft = recursiveCount(matrix, left_upper_x, (divLine_y + 1), (divLine_x - left_upper_x), ())
+    
+    return count, listDiv
 
 def ex1(input_file,  output_file):
     
     decField = images.load(input_file)
     
+    #find background color
+    bg_color = decField[0][0]
+    
     # for i,j in enumerate(decField):
     #     for k,l in enumerate(j):
     #         decField[i][k] = (0,0,0)
             
-    boolTest = checkIfDivisible(decField)
+    boolTest = checkIfDivisible(decField, 0, 0, 256)
     # res = recursiveCount(decField)
     
     return boolTest,decField
@@ -232,13 +281,19 @@ if __name__ == '__main__':
     
     testSmall01 = ex1('puzzles/small01.in.png', 'provaSmall01.png')
     provaDec = testSmall01[1]
+    # ciaoooooo = 0
+    # for num, i in enumerate(provaDec):
+    #     if i[-1] == (255,0,0):
+    #         ciaoooooo = num
+        
     provaSeria = findDivColor(provaDec, 0, 0, 256, 256)
+    provaRec = recursiveCount(provaDec, 0, 0, 256, 256)
     
     provaMatrix = [[(0,0,0),(0,0,0),(0,0,0),(0,0,0)],[(0,0,0),(0,0,0),(0,0,0),(0,0,0)],[(0,0,0),(0,0,0),(0,0,0),(0,0,0)],[(0,0,0),(0,0,0),(0,0,0),(0,0,0)]] 
     provaMatrixDiv = [[(0,0,0),(1,0,0),(0,0,0),(0,0,0)],[(0,0,0),(1,0,0),(0,0,0),(0,0,0)],[(1,0,0),(1,0,0),(1,0,0),(1,0,0)],[(0,0,0),(1,0,0),(0,0,0),(0,0,0)]] 
 
-    test = checkIfDivisible(provaMatrix)
-    test2 = checkIfDivisible(provaMatrixDiv)
+    test = checkIfDivisible(provaMatrix, 0, 0, 4)
+    test2 = checkIfDivisible(provaMatrixDiv, 0, 0, 4)
     
     test1B = findDivColor(provaMatrix, 0, 0, 4, 4)
     test2B = findDivColor(provaMatrixDiv, 0, 0, 4, 4)
