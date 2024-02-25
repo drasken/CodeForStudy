@@ -48,20 +48,11 @@ def analyzeGames(fileName :str, colors: dict) -> int:
     fileReader = readInput(fileName)
     for linea in fileReader:
         processedLine = divideGameBySets(linea)
-        processedLine = divideSetByCubes(processedLine)
+        processedLine = divideSetByCubes(processedLine) #here is divided list of list for each set
         isPlayable = checkIfPlayableGame(processedLine, colors)
         if isPlayable:
             gameId = linea[5: linea.index(':')]
             resIds.append(int(gameId))
-        
-    # isPlayable = False
-    
-    # gameId = 0
-    
-    # newList = divideGameBySets(lineOfFile)
-    # newList = divideSetByCubes(newList)
-    
-    # isPlayable = checkIfPlayable(newList)
     
     return sum(resIds)
     pass
