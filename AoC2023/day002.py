@@ -27,17 +27,28 @@ Possibile idee per calcolare analizzare le stringhe:
 
 import stringFunction
 
+
 def readInput(inputFile):
+    
+    """"using this generator to read the file"""
+    
     with open(inputFile, mode='r') as f:
         context = f.readlines() #read file each str is a game
-    
-    return context
-         
-         
+        for line in context:
+            yield line #yield the str corrisponding on the line
+           
+            
 
 
 if __name__ == '__main__':
-    provaImport = 'Vediamo se funziona'
-    outputProva = stringFunction.extractNumber(provaImport) #ok
-    
+    #need to process this names
+    cubesOfGmes = '12 red cubes, 13 green cubes, and 14 blue cubes'
+
+    fileInput = 'input002.txt'
     provaReadFile = readInput('input002.txt')
+    provaGen = next(provaReadFile)
+    provaGen2 = next(provaReadFile)
+    provaSplit = provaGen2.split(';')
+    
+
+    
