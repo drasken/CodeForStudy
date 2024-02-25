@@ -24,3 +24,20 @@ Possibile idee per calcolare analizzare le stringhe:
     
 
 """
+
+import stringFunction
+
+def readInput(inputFile):
+    with open(inputFile, mode='r') as f:
+        context = f.readlines() #read file each str is a game
+    
+    return context
+         
+         
+
+
+if __name__ == '__main__':
+    provaImport = 'Vediamo se funziona'
+    outputProva = stringFunction.extractNumber(provaImport) #ok
+    
+    provaReadFile = readInput('input002.txt')
