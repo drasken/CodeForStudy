@@ -38,12 +38,13 @@ def readInput(inputFile):
             yield line #yield the str corrisponding on the line
  
 
-def analyzeGames(fileName :str, colors: dict) -> int:
+def analyzeGames(fileName :str, colors: dict, colorsList: list) -> int:
     """ Analyze a game by each subset and if all true return the ID int
     
     """
     
     resIds = []
+    powersIds = []
     
     fileReader = readInput(fileName)
     for linea in fileReader:
@@ -53,8 +54,10 @@ def analyzeGames(fileName :str, colors: dict) -> int:
         if isPlayable:
             gameId = linea[5: linea.index(':')]
             resIds.append(int(gameId))
+            
+        #here put calculatepowers functions
     
-    return sum(resIds)
+    return sum(resIds), sum(powersIds)
     pass
 
 def divideGameBySets(gameString:str) -> list:
@@ -69,6 +72,24 @@ def divideSetByCubes(setOfCubes: list[str]) -> list[list]:
     resList = [stringa.split(',') for stringa in setOfCubes]
     
     return resList
+    pass
+
+def getMinValue(listOfSets: list, listOfColors: list) -> dict:
+    """Use this function on the set list, call it in another for the game list"""
+    
+    resDict = dict()
+    
+    for stringa in listOfSets:
+        for colore in listOfColors:
+            if colore in stringa:
+                val = int(stringFunction.getNumberFromString(stringa))
+                if colore not in resDict:
+                    resDict[colore] = val
+                else:
+                    resDict[colore] = min(resDict[colore], val)
+    
+    return resDict
+    
     pass
             
 def checkIfPlayableSet(gamesAnalyzed: list, colors: dict) -> bool:
@@ -102,6 +123,7 @@ def checkIfPlayableGame (gameList: list, colors: dict) -> list[bool]:
 if __name__ == '__main__':
     #need to process this names
     cubesOfGmes = {'red': 12, 'green': 13, 'blue': 14}
+    colorsList = ['red', 'green', 'blue']
 
     fileInput = 'input002.txt'
     provaReadFile = readInput('input002.txt')
@@ -118,26 +140,35 @@ if __name__ == '__main__':
     provaFuncDivide2 = divideSetByCubes(provaFuncDivide)
     provaFunPlayabe = checkIfPlayableGame(provaFuncDivide2, cubesOfGmes)
     
-    inputAoC1 = 'Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green'
-    inputAoC1 = divideGameBySets(inputAoC1)
-    inputAoC1 = divideSetByCubes(inputAoC1)
-    testAoC = checkIfPlayableGame(inputAoC1, cubesOfGmes)
+    gameNew1 = 'Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green'
+    gameNew1 = divideGameBySets(gameNew1)
+    gameNew1 = divideSetByCubes(gameNew1)
+    provaFunMin = getMinValue(gameNew1[0], cubesOfGmes)
     
-    inputAoC2 = 'Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue'
-    testAoC2 = checkIfPlayableGame(inputAoC2, cubesOfGmes)
+    testSerious1 = analyzeGames(fileInput, cubesOfGmes, colorsList) 
+    #First answer:
+    #2162 DONE, CORRECT!!
     
-    inputAoC3 = 'Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red'
-    inputAoC3 = divideGameBySets(inputAoC3)
-    inputAoC3 = divideSetByCubes(inputAoC3)
-    testAoC3 = checkIfPlayableGame(inputAoC3, cubesOfGmes)
     
-    inputAoC4 = 'Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red'
-    testAoC4 = checkIfPlayableGame(inputAoC4, cubesOfGmes)
+    #OLD TEST FIRST PUZZLE
+    # inputAoC1 = 'Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green'
+    # inputAoC1 = divideGameBySets(inputAoC1)
+    # inputAoC1 = divideSetByCubes(inputAoC1)
+    # testAoC = checkIfPlayableGame(inputAoC1, cubesOfGmes)
     
-    inputAoC5 = 'Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green'
-    testAoC5 = checkIfPlayableGame(inputAoC5, cubesOfGmes)
+    # inputAoC2 = 'Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue'
+    # testAoC2 = checkIfPlayableGame(inputAoC2, cubesOfGmes)
     
-    testSerious = analyzeGames(fileInput, cubesOfGmes) #2162 DONE, CORRECT!!
+    # inputAoC3 = 'Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red'
+    # inputAoC3 = divideGameBySets(inputAoC3)
+    # inputAoC3 = divideSetByCubes(inputAoC3)
+    # testAoC3 = checkIfPlayableGame(inputAoC3, cubesOfGmes)
+    
+    # inputAoC4 = 'Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red'
+    # testAoC4 = checkIfPlayableGame(inputAoC4, cubesOfGmes)
+    
+    # inputAoC5 = 'Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green'
+    # testAoC5 = checkIfPlayableGame(inputAoC5, cubesOfGmes)
     
 
     
