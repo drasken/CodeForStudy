@@ -11,17 +11,3 @@
 ;test 002
 
 (ex02 "Hello" "world!") ;ok
-
-; Exercise 003
-
-(define str "helloworld")
-(define i 5) 
-
-; ok but not check if out of range
-(define (ex03 strin ind)
-  (string-append
-    (substring strin 0 ind)
-    "_"
-    (substring strin ind (string-length strin) )))
-; test 003
-(ex03 str i)
