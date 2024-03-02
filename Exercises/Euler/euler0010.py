@@ -3,7 +3,7 @@
 Find the sum of all the primes below two million.
 
 """
-
+from math import sqrt
 #Using Eratostene method
 
 # allNumbers = [x for x in range(1, 2000001) if x > 2 and x % 2 != 0 and x % 3 != 0 and x % 5 != 0 ] #all number minus even ones, multiple of 3 and 5
@@ -22,12 +22,39 @@ def findPrimes (limit, setResult):
                 break
             setResult.add(num)
             
+
+#TRYING SIEVE OF SUNDARAM
+
+def sieveSundaram (num: int) -> list:
+    arrayDimK = [True for x in range(((num-1) // 2) + 1)]
+    
+    k = len(arrayDimK)
+    
+    for i in range(1, int(sqrt(k))):
+        j = i
+        while (i+j+2) * i * j <= k:
+            arrayDimK[(i+j+2) * i * j] = False
+            j += 1
+    #create a list of index of arrayK that arre true
+    result = []
+    for index, elem in enumerate(arrayDimK):
+        if elem == True:
+            result.append(index)
+    
+    result = [x * 2 +1 for x in result]
+    
+    return result
+        
+    pass
+    
 if __name__ == '__main__':
     setPrimes = {1,2}
-    findPrimes(10000, setPrimes)
-    sumPrimes = sum(setPrimes)
+    
+    prova = sieveSundaram(20)
+    # findPrimes(100000, setPrimes)
+    # sumPrimes = sum(setPrimes)
             
-
+    
 # for num in resList:
 #     for eachNum in range (2, num):
 #         if num % eachNum == 0 :
