@@ -1,6 +1,7 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname exercise002_bho) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname exercise002_bho) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "image.rkt" "teachpack" "2htdp")) #f)))
+(require 2htdp/image)
 ;exercise 002
 
 (define prefix "hello")
@@ -15,7 +16,8 @@
 ; Exercise 003
 
 (define str "helloworld")
-(define i 5) 
+(define i 5)
+(define h 7)
 
 ; ok but not check if out of range
 (define (ex03 strin ind)
@@ -24,4 +26,5 @@
     "_"
     (substring strin ind (string-length strin) )))
 ; test 003
-(ex03 str i)
+(ex03 str i) ; ok
+(ex03 str h)
