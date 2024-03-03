@@ -32,7 +32,7 @@ def sieveSundaram (num: int) -> list:
     
     for i in range(1, int(sqrt(k))):
         j = i
-        while (i+j+2) * i * j <= k:
+        while (i+j+2) * i * j < k:
             arrayDimK[(i+j+2) * i * j] = False
             j += 1
     #create a list of index of arrayK that arre true
