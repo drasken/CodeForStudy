@@ -24,3 +24,5 @@ if __name__ == '__main__':
     main()
     taskProva = Task('Partita', 'giochiamo a calcio')
     interactDatabase.appendTaskToBatabase('tasks.csv', taskProva)
+    taskProva2 = Task('Pulizie', 'lava la terrazza')
+    interactDatabase.appendTaskToBatabase('tasks.csv', taskProva)

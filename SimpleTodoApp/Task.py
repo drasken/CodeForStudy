@@ -34,6 +34,6 @@ class Task:
         
     #mathod to format a Task for CSV file
     def toCsv(self):
-        return (f'{self.name}, {self.description}, {self.status.value}, {self.date}')
+        return (f'{self.name}, {self.description}, {self.status.value}, {self.date}\n')
 
 
