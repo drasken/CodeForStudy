@@ -30,4 +30,11 @@ def createDatabase (fileName: str):
 def appendTaskToBatabase(fileName:str, task: Task):
     with open(fileName, mode='a') as dataB:
         dataB.write(task.toCsv())
+
+def readAllTasks(databaseName: str):
+    #while the file is small this function in ok
+    listTask = []
+    with open(databaseName, mode='r') as dataB:
+        csvReader = csv.reader(dataB)
+        listTask = list(csvReader)
         

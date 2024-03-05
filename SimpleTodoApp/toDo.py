@@ -11,11 +11,16 @@ import interactDatabase
 from Task import Task
 
 #Global Variables
-databaseName = 'tasks.csv'
 
 def main():
-    if not interactDatabase.checkForDatabase(databaseName):
-        interactDatabase.createDatabase(databaseName)
+    
+    databaseName = 'tasks.csv'
+
+    while True:
+        
+        print()
+        if not interactDatabase.checkForDatabase(databaseName):
+            interactDatabase.createDatabase(databaseName)
 
 
 #First try to find the database, SQLite probably
