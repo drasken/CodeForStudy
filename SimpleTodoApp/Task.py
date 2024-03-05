@@ -31,5 +31,9 @@ class Task:
 
     def setCanceled(self):
         self.status = Status.CANCELED
+        
+    #mathod to format a Task for CSV file
+    def toCsv(self):
+        return (f'{self.name}, {self.description}, {self.status.value}, {self.date}')
 
 
