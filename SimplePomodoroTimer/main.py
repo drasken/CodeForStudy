@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Mar 11 15:13:28 2024
 
-""" Pomodoro main file to launch the script: it start a Pomodoro Timer in the Terminal"""
+@author: drasken
+"""
 
-__author__ = "Drasken"
-__version__ = "0.1"
-__email__ = "contumax90@yahoo.it"
 __status__ = "Development"
 
 def main():
