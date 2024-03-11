@@ -23,9 +23,23 @@ class Timer:
     
     def ringBellOnEnding(self): #to implement, ring the bell when the countdown ends
         pass
+    
+class Routine:
+    "This class start the routine when starting a Pomodoro session"
+    
+    def __init__(self, tupleTimer = (5)):
+        self.tupleTimer = [ Timer() for x in range(tupleTimer)]
+        
+    def __str__(self):
+        return "\n".join([timer.__str__() for timer in self.tupleTimer])
+        
+    
         
 if __name__ == '__main__':
     testTimer = Timer()
+    testRoutine = Routine()
+    
+    print(testRoutine)
 
 
 
