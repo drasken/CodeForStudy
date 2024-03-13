@@ -20,7 +20,7 @@ def downloadPdf():
         
         url = input("URL from wich to download -> ")
         
-        response = requests.get(url, verify=False)
+        response = requests.get(url) #for prof's site add param verify=False
         
         response.raise_for_status()
             
@@ -30,7 +30,7 @@ def downloadPdf():
         
         for link in links:
             href = link['href']
-            print(href)
+            #print(href)
             
             if href.lower().endswith('.pdf'):
                 # Build the absolute URL
@@ -39,7 +39,7 @@ def downloadPdf():
                 pdf_name = href.split('/')[-1]
                 
                 with open(pdf_name, mode='wb') as pdf:
-                    pdf_response = requests.get(absolute_url)
+                    pdf_response = requests.get(absolute_url) #for prof's site add param verify=False
                     pdf_response.raise_for_status()
                     pdf.write(pdf_response.content)
                     print('File Downloaded\n')
