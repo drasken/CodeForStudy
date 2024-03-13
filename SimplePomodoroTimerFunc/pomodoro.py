@@ -22,13 +22,24 @@ def pomodoro(minutes: int = 30)->str:
 
     """
     
-    start: float = time.time()
     convertionToSeconds: int = minutes * 60
+    start: float = time.time()
     prevEnding: float = start + convertionToSeconds
     
+    while True:
+        try:
+            current_time: float = time.time()
+            current_time_h = time.ctime()
+            print(f"Now is: {current_time_h}")
+            if current_time >= prevEnding:
+                break
+        except KeyboardInterrupt:
+            print("countDown interrupted!")
+            break
+        time.sleep(5)
     
     
-    return start
+    return "Pomodoro Ended"
     
 if __name__ == '__main__':
-    provaPomodoro = pomodoro()
+    provaPomodoro = pomodoro(1)
