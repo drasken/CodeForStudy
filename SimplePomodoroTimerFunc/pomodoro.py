@@ -22,6 +22,7 @@ def pomodoro(minutes: int = 30)->str:
 
     """
     
+    countDown = minutes
     convertionToSeconds: int = minutes * 60
     start: float = time.time()
     prevEnding: float = start + convertionToSeconds
@@ -30,13 +31,15 @@ def pomodoro(minutes: int = 30)->str:
         try:
             current_time: float = time.time()
             current_time_h = time.ctime()
-            print(f"Now is: {current_time_h}")
+            print(f"Now is: {current_time_h}. Still {countDown} minutes remaining")
+            countDown -= 1
             if current_time >= prevEnding:
+                print('Pomodoro ended')
                 break
         except KeyboardInterrupt:
             print("countDown interrupted!")
             break
-        time.sleep(5)
+        time.sleep(60)
     
     
     return "Pomodoro Ended"
