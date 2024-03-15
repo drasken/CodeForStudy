@@ -6,7 +6,9 @@ Created on Mon Mar 11 15:13:28 2024
 @author: drasken
 """
 
-__status__ = "Development"
+#__status__ = "Development"
+
+import pomodoro
 
 def main():
     while True:
@@ -16,16 +18,22 @@ def main():
         3 -> Quit the script
         """
         print(messageToPrint)
-
+        
         try:
             userInput = int(input("Choose your option: "))
         
 
             if userInput == 1:
                 print("Let's start a new timer!")
+                pomodoro.pomodoro()              
+                break
 
             elif userInput == 2:
                 print("Set Timer values!")
+                pomodoroMod, pauseMod = pomodoro.setPomodoroValues()
+                pomodoro.pomodoro(pomodoroMod)
+                pomodoro.pomodoro(pauseMod)
+                #break
 
             elif userInput == 3:
                 print("See you again!")

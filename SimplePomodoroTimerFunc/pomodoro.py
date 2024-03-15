@@ -13,14 +13,34 @@ from playsound import playsound
 #After pause function maybe refactor a generic timer function?
 #Than a startRoutine function to start the study session
 
-def pomodoro(minutes: int = 30)->str:
+def setPomodoroValues() -> tuple[int]:
+    pass
+    #print('test') #to delete
+    while True:            
+        try:
+            pomodoro = int(input('Set pomodoro length: '))
+            pause = int(input('Set break length: '))
+            
+            return pomodoro,pause
+        
+        except ValueError:
+            print('Value not correct, try again.\n')
+        except KeyboardInterrupt:
+            print('\n')
+            break
+        except Exception as e:
+            print(f'Error occurred: {e}')
+            break
+
+
+def pomodoro(minutes: int = 30)-> None:
     """
     This function run a single pomodoro session
 
     Parameters
     ----------
     minutes : TYPE, int
-        DESCRIPTION. Duration of the Pomodoro. The default is 30.
+        DESCRIPTION. Duration of the Pomodoro. The default is 30. Mus be positive.
 
     Returns
     -------
@@ -52,7 +72,8 @@ def pomodoro(minutes: int = 30)->str:
             break
         time.sleep(60)
     
-    return "Pomodoro Ended"
+    #print('Pomodoro ended')
+    # return "Pomodoro Ended"
 
 
 def pause(minutes: int = 5)->str:
@@ -82,4 +103,5 @@ def pause(minutes: int = 5)->str:
     return "Break Ended"
     
 if __name__ == '__main__':
-    provaPomodoro = pomodoro(1)
+    #provaPomodoro = pomodoro(1)
+    provaSet = setPomodoroValues()
