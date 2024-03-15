@@ -8,6 +8,15 @@ Created on Mon Mar 11 15:13:28 2024
 
 #__status__ = "Development"
 
+"""
+TODO:
+    - Add a schedule function to call pomodoro and pause function
+    - Generalize a timer function and than differentiate in pomororo and pause(?)
+    - Let's see if TUI can be improved'
+    - Maybe expose/translate it as webapp(?)
+"""
+    
+
 import pomodoro
 
 def main():
