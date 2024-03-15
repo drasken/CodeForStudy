@@ -25,7 +25,10 @@ def main():
 
             if userInput == 1:
                 print("Let's start a new timer!")
-                pomodoro.pomodoro()              
+                pomodoro.pomodoro()
+                pomodoro.pause()
+                pomodoro.pomodoro()
+                pomodoro.pause(15)
                 break
 
             elif userInput == 2:
