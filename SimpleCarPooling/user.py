@@ -12,7 +12,13 @@ class User:
             self.name = name
             self.passenger = 0
             self.driver = 0
-            
+    
+    def __str__(self):
+        return f'This User is: {self.name}'
+        
+    
+    def __repr__(self):
+        return f'User is: {self.name}'
     
     def isDriver(self):
         self.driver += 1
@@ -32,13 +38,15 @@ def generateUsers(names:list[str]) -> list[User]:
         list_of_users.append(new_user)
     return list_of_users
 
-if __name__ == 'main':
+if __name__ == '__main__':
     
-    test = User()
+    test = User('Test')
     bho = test.driver
     
-    provaUsers = generateUsers(['Rudy', 'Chiara'])
+    testUsers = generateUsers(['Rudy', 'Chiara'])
     
+    for u in testUsers:
+        print (u)
 
 
 
