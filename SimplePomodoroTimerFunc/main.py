@@ -44,7 +44,7 @@ def main():
                 print("Set Timer values!")
                 pomodoroMod, pauseMod = pomodoro.setPomodoroValues()
                 pomodoro.pomodoro(pomodoroMod)
-                pomodoro.pomodoro(pauseMod)
+                # pomodoro.pomodoro(pauseMod) just for testing, only 1 pomodoro ause nont needed
                 #break
 
             elif userInput == 3:
