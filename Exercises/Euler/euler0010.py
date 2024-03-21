@@ -4,11 +4,11 @@ Find the sum of all the primes below two million.
 
 """
 
-from util import sieve_E2
+from util import sieve_E
     
 if __name__ == '__main__':
     
-    print(sum(sieve_E2(2000000))) #ok result: 142913828923
+    print(sum(sieve_E(2000000))) #ok result: 142913828923
     
     
     
