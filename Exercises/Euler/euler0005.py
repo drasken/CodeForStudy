@@ -6,16 +6,15 @@ What is the smallest positive number that is evenly divisible by all of the numb
 
 # DOING
 
+from util import check_if_evely_divisible
 
-indexMax = 10
+listDivisor = [x for x in range(9, 21) if x != 10]
 
-listDivisor = [x for x in range(1, indexMax)]
-
-def divNumbers(num, iterNum):
-    for i in iterNum:
-        if num % i != 0:
-            return False
-    return True
+# def divNumbers(num, iterNum):
+#     for i in iterNum:
+#         if num % i != 0:
+#             return False
+#     return True
 
 # result = 0
 
@@ -33,10 +32,30 @@ def divNumbers(num, iterNum):
 # res = checkDiv(indexMax, listDivisor)
 
 
-indexRes = 2
+# indexRes = 2
 
-while divNumbers(indexRes, listDivisor) == True:
-    indexRes += 1
+# while divNumbers(indexRes, listDivisor) == True:
+#     indexRes += 1
 
-print(indexRes)
+# print(indexRes)
+
+if __name__ == '__main__':
+    
+    test = 11
+    firsts = [x for x in range(1,10)]
+    while   check_if_evely_divisible(firsts, test) == False:
+        test += 1
+    
+    print(test) #exp 2520 --> OK
+    
+    count  = 2520
+    list_of_divisors = [x for x in range(9, 21) if x != 10]
+
+
+    while   check_if_evely_divisible(list_of_divisors, count) == False:
+        count += 1
+
+    print(count)
+    
+    #solved --> 232792560
 
