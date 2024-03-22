@@ -10,6 +10,16 @@ Created on Wed Mar 20 22:52:38 2024
 Util for solving Euler Problem
 """
 
+def read_from_file(filename:str)->list:
+    
+    with open(filename, mode='r') as f:
+        
+        res = f.readlines()
+        
+        return res
+    
+    
+
 def check_if_evely_divisible(list_of_divisors: list, num_to_check: int)-> bool:
     
     for num in list_of_divisors:
