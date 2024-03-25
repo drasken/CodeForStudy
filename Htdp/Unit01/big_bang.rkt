@@ -7,6 +7,7 @@
 (define (C f)
   (* 5/9 (- f 32)))
 
+;function to convert fahrenheit and celsius
 (define (convert in out)
   (write-file out
     (string-append
