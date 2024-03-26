@@ -9,8 +9,23 @@ Created on Wed Mar 20 22:52:38 2024
 """
 Util for solving Euler Problem
 """
+import math 
 
 def read_from_file(filename:str)->list:
+    """
+    Simple util function to read input fil a string for the Project Euler problems
+
+    Parameters
+    ----------
+    filename : str
+        the file_path name.
+
+    Returns
+    -------
+    list
+        the lines of the file returnd as string in a list.
+
+    """
     
     with open(filename, mode='r') as f:
         
@@ -18,10 +33,52 @@ def read_from_file(filename:str)->list:
         
         return res
     
+
+def findDiv2(num: int) -> int:
+    """
+    Find all the divisor for the number  in input [1, num] included
+
+    Parameters
+    ----------
+    num : int
+        The number of wich to find divisor.
+
+    Returns
+    -------
+    int
+        The number of divisors found.
+
+    """
+    
+    count = 0
+
+    for i in range(1, int(math.sqrt(num)) + 1):
+        if num % i == 0:
+            if num / i == i:
+                count += 1
+            else:
+                count += 2
+    
+    return count
     
 
 def check_if_evely_divisible(list_of_divisors: list, num_to_check: int)-> bool:
-    
+    """
+    Used for checking if the numbers in the provided list are evenly divisible (?)
+
+    Parameters
+    ----------
+    list_of_divisors : list
+        DESCRIPTION.
+    num_to_check : int
+        DESCRIPTION.
+
+    Returns
+    -------
+    bool
+        DESCRIPTION.
+
+    """
     for num in list_of_divisors:
         if num_to_check % num != 0:
             return False
@@ -105,5 +162,6 @@ if __name__ == '__main__':
     
     testSieve = sieve_E2(20)
     first_ten = [x for x in  range(1,11)]
-    testDiv = chek_if_evely_divisible(first_ten, 2520) #exp True
-    testDiv = chek_if_evely_divisible(first_ten, 2521) #exp False
+    
+    testDiv = check_if_evely_divisible(first_ten, 2520) #exp True
+    testDiv = check_if_evely_divisible(first_ten, 2521) #exp False
