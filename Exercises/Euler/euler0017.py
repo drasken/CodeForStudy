@@ -22,6 +22,18 @@ def convert_num_to_twenty(num:int)-> str:
         digit = num % 10
         s = map_first_ten[digit] + 'teen'
         return s
+
+map_20_to_100 = {20:'twenty', 30:'thirty', 40:'fourty', 50:'fifty', 60:'sixty', 70:'seventy', 80:'eighty', 90:'ninety'}
+
+def convert_num_to_99(num:int)->str:
+    if num in map_20_to_100:
+        return map_20_to_100[num]
+    else:
+        unit = num % 10
+        dec = num - unit
+        s = map_20_to_100[dec] + map_first_ten[unit]
+        return s
+    
     
 
 list_first_nums = [x for x in range(1,6)]
