@@ -129,17 +129,30 @@ def check_horizontally(matrix: list[list], row_index: int, column_index: int, le
     
     res = reduce(lambda x,y: x * y, portion, 1)
     
-    return res
+    return res,portion
 
 #check vertical in matrix
 def check_vertically(matrix:list[list], row_index:int, column_index:int, len_word:int)-> int:
     pass
     
     
-    section = [[matrix[x][column_index] for x in li] for li in matrix[row_index:len_word]]
+    section = [[matrix[x][column_index] for x in li] for li in matrix[row_index:row_index + len_word]]
     
     res = reduce(lambda x,y: x * y, section, 1)
     
+    return res, section
+
+def check_diag(matrix:list[list], row_index:int, column_index:int, len_word:int)-> int:
+    
+    section = list()
+    
+    for row_num, row in enumerate(matrix[row_index: len_word]):
+        for col_num, num in enumerate(row[column_index: len_word]):
+            if row_num == col_num:
+                section.append(num)
+                
+    res = reduce(lambda x,y: x * y, section, 1)
+
     return res
 
 if __name__ == '__main__':
