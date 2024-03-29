@@ -10,6 +10,8 @@ Created on Wed Mar 20 22:52:38 2024
 Util for solving Euler Problem
 """
 import math 
+from functools import reduce
+
 
 def read_from_file(filename:str)->list:
     """
@@ -117,41 +119,28 @@ def sieve_E2(limit: int)-> list:
     
     return list_nums
 
-# def sieve_E(limit: int)-> list:
-#     """
-#     Implementation of Sieve of Eratostene to find prime numbers within limit number given in input
 
-#     Parameters
-#     ----------
-#     limit : int
-#         The number limit within we want to find prime numbers, limit included.
+#Utils for Matrix -------------------------------------------------------------
 
-#     Returns
-#     -------
-#     list
-#         List of integers from 1 included to limit
+#use this to check moltiplication horizontally
+def check_horizontally(matrix: list[list], row_index: int, column_index: int, length_word: int)-> int:
+    
+    portion = matrix[row_index][column_index: column_index + length_word]
+    
+    res = reduce(lambda x,y: x * y, portion, 1)
+    
+    return res
 
-#     """
+#check vertical in matrix
+def check_vertically(matrix:list[list], row_index:int, column_index:int, len_word:int)-> int:
+    pass
     
-#     list_nums = [True for x in range(limit + 1)]
     
-#     for index, el in enumerate(list_nums):
-#         if index == 0 or index == 1:
-#             list_nums[index] = False
-#         elif el == False:
-#             continue
-#         else:
-#             for new_index, mul in enumerate(list_nums):
-#                 if new_index > index and new_index % index == 0:
-#                     list_nums[new_index] = False
+    section = [[matrix[x][column_index] for x in li] for li in matrix[row_index:len_word]]
     
-#     list_res = [1] #this supposing we wnat to include 1, else empty list
+    res = reduce(lambda x,y: x * y, section, 1)
     
-#     for position, bo in enumerate(list_nums):
-#         if bo == True:
-#             list_res.append(position)
-            
-#     return list_res
+    return res
 
 if __name__ == '__main__':
     pass

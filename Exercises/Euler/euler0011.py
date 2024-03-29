@@ -6,8 +6,7 @@ Created on Fri Mar 22 09:45:18 2024
 @author: drasken
 """
 
-from functools import reduce
-from util import read_from_file
+import util
 
 #transform from str to int
 def transform_data(list_of_values:list[str])->list[int]:
@@ -21,21 +20,10 @@ def transform_data(list_of_values:list[str])->list[int]:
     
     return matrix
 
-#use this to check moltiplication horizontally
-def check_horizontally(matrix: list[list], row_index: int, column_index: int, length_word: int)-> int:
-    
-    portion = matrix[row_index][column_index: column_index + length_word]
-    
-    res = reduce(lambda x,y: x * y, portion, 1)
-    
-    return res
-
-def check_vertically():
-    pass
 
 if __name__ == '__main__':
-    testFile = read_from_file('euler0011_input.txt')
+    testFile = util.read_from_file('euler0011_input.txt')
     testFile2 = transform_data(testFile)
-    testMul = check_horizontally(testFile2, 5, 5, 2)
+    testMul = util.check_horizontally(testFile2, 5, 5, 4)
     
 
