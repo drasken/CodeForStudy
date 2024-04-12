@@ -385,7 +385,7 @@ def stampa_studenti_brillanti(dbsize, fileout):
             average = str(data[2])
             spazioNome = maxLengthName - (len(name) + 1 + len(surname))
             riempitivo = ' ' * spazioNome
-            linea = f'{surname} {name}' + riempitivo + f'\t{media}\n'#.format(stud_surname= surname, stud_name= name, media= average )
+            linea = f'{surname} {name}' + riempitivo + '\t' + f'{average}\n'#.format(stud_surname= surname, stud_name= name, media= average )
             out.write(linea)
 
     
@@ -479,11 +479,11 @@ if __name__ == '__main':
 # print('test 4')
 # print(prova4)
 
-#test per la funzione 5
-print('test for function 5')
-print()
-prova5 = stampa_esami_sostenuti('1803891', 'small', 'fileout')
-print(prova5)
+# #test per la funzione 5
+# print('test for function 5')
+# print()
+# prova5 = stampa_esami_sostenuti('1803891', 'small', 'fileout')
+# print(prova5)
 
 # #test per la funzione 6
 # print('test for function 6')
@@ -491,8 +491,8 @@ print(prova5)
 # prova6 = stampa_verbale(447, 'small', 'fileout')
 # print(prova6)
 
-# #test per la funzione 7
-# print()
-# print('test per la funzione 7')
-# prova7 = stampa_studenti_brillanti('small', 'fileout.txt')
-# print(prova7)
+#test per la funzione 7
+print()
+print('test per la funzione 7')
+prova7 = stampa_studenti_brillanti('small', 'fileout.txt')
+print(prova7)
