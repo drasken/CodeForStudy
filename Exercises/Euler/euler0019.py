@@ -47,18 +47,23 @@ class Year:
     
     def days_in_year(self):
         return sum(self.months.values())
+
+def calcolate_year(year, first_day) -> list[list, str]:
     
-def week_days(self, day:str):
-    all_year_weekdays = []
+    pass
     
-    index_day = days_of_week.index(day)
     
-    for month in self.months:
-        for i in range(self.months[month]):
-            day_to_add = (i + index_day) % 7
-            all_year_weekdays.append(days_of_week[day_to_add])
+# def week_days(self, day:str):
+#     all_year_weekdays = []
     
-    return all_year_weekdays
+#     index_day = days_of_week.index(day)
+    
+#     for month in self.months:
+#         for i in range(self.months[month]):
+#             day_to_add = (i + index_day) % 7
+#             all_year_weekdays.append(days_of_week[day_to_add])
+    
+#     return all_year_weekdays
 
 # Example usage:
 year_2024 = Year(2024)
