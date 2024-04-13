@@ -122,6 +122,10 @@ def sieve_E2(limit: int)-> list:
 
 #Utils for Matrix -------------------------------------------------------------
 
+def prod_mine(some_iterable):
+    
+    return math.prod(some_iterable)
+
 #use this to check moltiplication horizontally
 def check_horizontally(matrix: list[list], row_index: int, column_index: int, length_word: int)-> int:
     
