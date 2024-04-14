@@ -7,6 +7,7 @@ Created on Sat Apr 13 22:52:56 2024
 """
 
 import random
+import time
 
 #Firts milestone
 
@@ -16,7 +17,7 @@ def deadState (width, height):
     return output
 
 #Done
-def randomState (board, probability = 0.5):
+def randomState (board, probability = 0.4):
 
     width = len(board)
     height = len(board[0])
@@ -152,12 +153,28 @@ def next_board_state(board):
               
     return new_board
 
+
+def main(height, width):
+    
+    board = create_board(height, width)
+    
+    while True:
+        render(board)
+        
+        board = next_board_state(board)
+        
+        time.sleep(1)
+        
+    
+    
 if __name__ == '__main__':
     
-    test_board = create_board(10, 10)
-    render(test_board)
+    main(20, 20)
     
-    prova_next = next_board_state(test_board)
-    render(prova_next)
+    # test_board = create_board(10, 10)
+    # render(test_board)
+    
+    # prova_next = next_board_state(test_board)
+    # render(prova_next)
     
     
