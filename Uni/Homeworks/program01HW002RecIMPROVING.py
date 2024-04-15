@@ -105,9 +105,39 @@ def paymoney(dict_users_balance, sender, receiver, money_to_pay):
     dict_users_balance[sender] -= money_to_pay
     dict_users_balance[receiver] += money_to_pay
 
-def pay_intermediary_debt():
+def pay_receiver_debt(dict_users_balance, receiver, debtInt1, debtInt2):
     #use this function to pay debt after receiving money
     pass
+    #check if can pay all debt and who to pay first
+    
+    if debtInt1[receiver] < debtInt2[receiver]:
+        if dict_users_balance[receiver] >= abs(debtInt1[receiver]): #can pay it all
+            dict_users_balance[receiver] += debtInt1[receiver]
+            debtInt1[receiver] = 0
+        else: #don't have all the money
+            debtInt1[receiver] += dict_users_balance[receiver]
+            dict_users_balance[receiver] = 0
+         #check if I can pay second debt if there is one   
+        if dict_users_balance > 0 and dict_users_balance[receiver] >= abs(debtInt2[receiver]):
+            dict_users_balance[receiver] += debtInt2[receiver]
+            debtInt2[receiver] = 0
+        elif dict_users_balance[receiver] > 0 and dict_users_balance[receiver] < abs(debtInt2[receiver]):
+            debtInt2[receiver] += dict_users_balance[receiver]
+            dict_users_balance[receiver] = 0
+    else: #case second debt bigger than fist
+        if dict_users_balance[receiver] >= abs(debtInt2[receiver]):
+            dict_users_balance[receiver] += debtInt2[receiver]
+            debtInt2[receiver] = 0
+        else:
+            debtInt2[receiver] += dict_users_balance[receiver]
+            dict_users_balance[receiver] = 0
+        if dict_users_balance[receiver] > 0 and dict_users_balance[receiver] >= abs(debtInt1[receiver]):
+            dict_users_balance[receiver] += debtInt1[receiver]
+            debtInt1[receiver] = 0
+        elif dict_users_balance[receiver] > 0 and dict_users_balance[receiver] < abs(debtInt1[receiver]):
+            debtInt1[receiver] += dict_users_balance[receiver]
+            dict_users_balance[receiver] = 0
+
 
 def pay_intermediary_fee():
     #use this function to pay fee cost to intermediary as sender of transaction
@@ -123,7 +153,7 @@ def process_transaction(transaction:tuple, dictUsers:dict, dictIntermediary:dict
     
     if dictUsers[sender] >= fee_cost:
         paymoney(dictUsers, sender, receiver, fee_cost)
-        pay_intermediary_debt() # TO IMPLEMENT
+        pay_receiver_debt() # TO IMPLEMENT
     
     pay_intermediary_fee() #TO IMPLEMENT
     
