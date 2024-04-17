@@ -34,4 +34,43 @@
   (place-image UFO (/ WIDTH 2) y MTSCN))
 
 
-(main 11) ;OK it works
+
+;(main 11) ;OK it works
+
+
+;Sample Problem Add a status line. It says "descending" when
+;the UFO’s height is above one third of the height of the
+;canvas. It switches to "closing in" below that. And finally
+;, when the UFO has reached the bottom of the canvas, the
+;status notifies the player that the UFO has "landed". You
+;are free to use appropriate colors for the status line.
+(check-expect (state-text 350) (text "descending" 15 "black"))
+(check-expect (state-text 35) (text "closing in" 15 "black"))
+(check-expect (state-text -35) (text "landed" 15 "black")) 
+(define (state-text y)
+  (cond
+    [(> y 0 (/ HEIGHT 3)) (place-image
+                           (text "descending" 15 "black")
+                           20 20
+                           (render y))]
+    [(>= y (/ HEIGHT 3) ) (place-image
+                           (text "closing in" 15 "black")
+                           20 20
+                           (render y))]
+    [else (place-image
+           (text "landed" 15 "black")
+           20 20
+           (render y))]))
+
+
+; WorldState -> WorldState
+(define (new-main y0)
+  (big-bang y0
+     [on-tick nxt]
+     [to-draw state-text]))
+
+(new-main 5)
+ 
+ 
+;WORK IN PROGRESS
+;it works but reverset Y positions and text to align...
