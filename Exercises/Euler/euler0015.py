@@ -39,7 +39,44 @@ def add_step(path_list:list[tuple], limit:int) -> list[tuple]:
         res.append(temp_path2)
         
     return res
+
+def calculate_paths(starting_point: list[list[tuple]], limit:int) -> list[list[tuple]]:
+    pass
+    #start adding from the starting point
+    
+    res = []
+    
+    for path in starting_point:
+        to_add = add_step(path, limit)
+        res.extend(to_add)
+    
+    return res
+
+def check_if_ending(list_paths:list, limit:int) -> bool:
+    
+    #check if can continue iteration
+    
+    check = True
+    
+    for el in list_paths:
+        if el[-1][0] < limit or el[-1][1] < limit:
+            return check
+    
+    return False
         
+    
+    
+def calc_all_paths(start:list, limit:int) -> int:
+
+    temp_pahts = copy.deepcopy(start)
+    
+    new_temp_pahts = calculate_paths(temp_pahts, limit)
+    
+    #function check if stop iteration
+    
+    
+    
+      
 
 if __name__ == '__main__':
     #test function add_Step
@@ -59,9 +96,15 @@ if __name__ == '__main__':
     print(res_3B)
     #ok!
 
-
+    #testing calculate function
+    calculate_1 = [[(0,0)]]
+    calc_1 = calculate_paths(calculate_1, 20)
+    print(calc_1)
     
-    
+    #test check function
+    check_1 = [[(2, 3), (2, 4), (2, 5), (3, 5), (3, 6), (4, 6)], [(2, 3), (2, 4), (2, 5), (3, 5), (3, 6), (3, 7)]]
+    res_check = check_if_ending(check_1, 20)
+    res_checkB = check_if_ending(check_1, 3)
     
 
 
