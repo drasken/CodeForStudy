@@ -56,56 +56,109 @@ def check_if_ending(list_paths:list, limit:int) -> bool:
     
     #check if can continue iteration
     
-    check = True
+    check = False
+    check_tuple = (limit, limit)
     
-    for el in list_paths:
-        if el[-1][0] < limit or el[-1][1] < limit:
+    for lis in list_paths:
+        if lis[-1] != check_tuple:
             return check
     
-    return False
+    return not check
+    
+    # for el in list_paths:
+    #     if el[-1][0] < limit or el[-1][1] < limit:
+    #         return check
+    
+    # return False
         
     
     
 def calc_all_paths(start:list, limit:int) -> int:
 
-    temp_pahts = copy.deepcopy(start)
+    temp_paths = copy.deepcopy(start)
     
-    new_temp_pahts = calculate_paths(temp_pahts, limit)
+    #new_temp_pahts = calculate_paths(temp_pahts, limit)
     
     #function check if stop iteration
     
+    while check_if_ending(temp_paths, limit):
+        
+        temp_paths = calculate_paths(start, limit)
     
+    res = len(temp_paths)
     
-      
+    return res
+    
+def main(start:list[list], limit:int) -> int:
+    
+    pass
+
+    temp_list = copy.deepcopy(start)
+    
+    # tuple_goal = (limit, limit)
+    while True:
+        # for li in temp_list:
+        #     if li[-1] == tuple_goal:
+        #         break
+        
+        inner_list = calculate_paths(temp_list, limit)
+        
+        temp_list = copy.deepcopy(inner_list)
+    
+        if check_if_ending(temp_list, limit):
+            break
+    
+    res = len(temp_list)
+    
+    return res
+        
 
 if __name__ == '__main__':
     #test function add_Step
-    path_1 = [(0,1)]
-    res_1 = add_step(path_1, 4) #expected [[(0, 1), (1, 1)], [(0, 1), (0, 2)]]
-    print(res_1) #ok
+    # path_1 = [(0,1)]
+    # res_1 = add_step(path_1, 4) #expected [[(0, 1), (1, 1)], [(0, 1), (0, 2)]]
+    # print(res_1) #ok
     
-    path_2 = [(2,3), (2,4),(2,5), (3,5), (3,6)]
-    res_2 = add_step(path_2, 10)   
-    #expected -> [[(2,3), (2,4),(2,5), (3,5), (3,6), (4,6)], [(2,3), (2,4),(2,5), (3,5), (3,6), (3,7)]]
-    print(res_2)
-    #testing for limit
-    path_3 = [(2,3), (2,4),(2,5), (3,5), (3,6)]
-    res_3A = add_step(path_2, 2) #expectiong []
-    print(res_3A)
-    res_3B = add_step(path_2, 4)   #expectiong [[(2,3), (2,4),(2,5), (3,5), (3,6), (4,6)]
-    print(res_3B)
-    #ok!
+    # path_2 = [(2,3), (2,4),(2,5), (3,5), (3,6)]
+    # res_2 = add_step(path_2, 10)   
+    # #expected -> [[(2,3), (2,4),(2,5), (3,5), (3,6), (4,6)], [(2,3), (2,4),(2,5), (3,5), (3,6), (3,7)]]
+    # print(res_2)
+    # #testing for limit
+    # path_3 = [(2,3), (2,4),(2,5), (3,5), (3,6)]
+    # res_3A = add_step(path_2, 2) #expectiong []
+    # print(res_3A)
+    # res_3B = add_step(path_2, 4)   #expectiong [[(2,3), (2,4),(2,5), (3,5), (3,6), (4,6)]
+    # print(res_3B)
+    # #ok!
 
     #testing calculate function
-    calculate_1 = [[(0,0)]]
-    calc_1 = calculate_paths(calculate_1, 20)
-    print(calc_1)
+    # calculate_1 = [[(0,0)]]
+    # calc_1 = calculate_paths(calculate_1, 2)
+    # calc_2 = calculate_paths(calc_1, 2)
+    # calc_3 = calculate_paths(calc_2, 2)
+    # calc_4 = calculate_paths(calc_3, 2)
+    # calc_5 = calculate_paths(calc_4, 2)
+
+
+    # print(calc_1)
     
     #test check function
-    check_1 = [[(2, 3), (2, 4), (2, 5), (3, 5), (3, 6), (4, 6)], [(2, 3), (2, 4), (2, 5), (3, 5), (3, 6), (3, 7)]]
-    res_check = check_if_ending(check_1, 20)
-    res_checkB = check_if_ending(check_1, 3)
+    # check_1 = [[(2, 3), (2, 4), (2, 5), (3, 5), (3, 6), (4, 6)], [(2, 3), (2, 4), (2, 5), (3, 5), (3, 6), (3, 7)]]
+    # res_check = check_if_ending(check_1, 20)
+    # res_checkB = check_if_ending(check_1, 3)
     
-
+    #main function
+    
+    # start_solution = [[(0,0)]]
+    #solution = calc_all_paths(start_solution, 3)
+    
+    #test main
+    
+    first_try = [[(0,0)]]
+    
+    solu = main(first_try, 20)
+    
+    print(solu)
+    
 
 
