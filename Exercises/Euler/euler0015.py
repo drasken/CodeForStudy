@@ -9,156 +9,35 @@ Created on Sat May 11 23:01:19 2024
 from collections import namedtuple
 import copy
 
-
-Coordinate = namedtuple('Coordinate', ["row", "column"])
-
-dimension = 20
-
-
-#creating a matrix representing the problem 
-
-grid = [[(z, y) for y in range(dimension)] for z in range(dimension)]
-
-def add_step(path_list:list[tuple], limit:int) -> list[tuple]:
-    #controlling limiti i'll do it in the  outer function
+def add_path(list_path:list[tuple], limit:int) -> list[tuple]:
     
-    pass
-    last_step = path_list[-1]
-    #check = limit - 1
-    
-    res = []
+    last_step = list_path[-1]
+    res_paths = []
     
     if last_step[0] < limit:
-        temp_path = copy.copy(path_list)
-        temp_path.append((last_step[0] + 1, last_step[1]))
-        res.append(temp_path)
+        path_to_add = copy.deepcopy(list_path)
+        path_to_add.append((last_step[0] + 1, last_step[1]))
+        res_paths.append(path_to_add)
     
     if last_step[1] < limit:
-        temp_path2 = copy.copy(path_list)
-        temp_path2.append((last_step[0], last_step[1] + 1))
-        res.append(temp_path2)
-        
-    return res
+        path_to_add = copy.deepcopy(list_path)
+        path_to_add.append((last_step[0], last_step[1] + 1))
+        res_paths.append(path_to_add)
 
-def calculate_paths(starting_point: list[list[tuple]], limit:int) -> list[list[tuple]]:
-    pass
-    #start adding from the starting point
-    
-    res = []
-    
-    for path in starting_point:
-        to_add = add_step(path, limit)
-        res.extend(to_add)
-    
-    return res
-
-def check_if_ending(list_paths:list, limit:int) -> bool:
-    
-    #check if can continue iteration
-    
-    check = False
-    check_tuple = (limit, limit)
-    
-    for lis in list_paths:
-        if lis[-1] != check_tuple:
-            return check
-    
-    return not check
-    
-    # for el in list_paths:
-    #     if el[-1][0] < limit or el[-1][1] < limit:
-    #         return check
-    
-    # return False
-        
-    
-    
-def calc_all_paths(start:list, limit:int) -> int:
-
-    temp_paths = copy.deepcopy(start)
-    
-    #new_temp_pahts = calculate_paths(temp_pahts, limit)
-    
-    #function check if stop iteration
-    
-    while check_if_ending(temp_paths, limit):
-        
-        temp_paths = calculate_paths(start, limit)
-    
-    res = len(temp_paths)
-    
-    return res
-    
-def main(start:list[list], limit:int) -> int:
-    
-    pass
-
-    temp_list = copy.deepcopy(start)
-    
-    # tuple_goal = (limit, limit)
-    while True:
-        # for li in temp_list:
-        #     if li[-1] == tuple_goal:
-        #         break
-        
-        inner_list = calculate_paths(temp_list, limit)
-        
-        temp_list = copy.deepcopy(inner_list)
-    
-        if check_if_ending(temp_list, limit):
-            break
-    
-    res = len(temp_list)
-    
-    return res
-        
+    return res_paths
 
 if __name__ == '__main__':
-    #test function add_Step
-    # path_1 = [(0,1)]
-    # res_1 = add_step(path_1, 4) #expected [[(0, 1), (1, 1)], [(0, 1), (0, 2)]]
-    # print(res_1) #ok
+    pass
     
-    # path_2 = [(2,3), (2,4),(2,5), (3,5), (3,6)]
-    # res_2 = add_step(path_2, 10)   
-    # #expected -> [[(2,3), (2,4),(2,5), (3,5), (3,6), (4,6)], [(2,3), (2,4),(2,5), (3,5), (3,6), (3,7)]]
-    # print(res_2)
-    # #testing for limit
-    # path_3 = [(2,3), (2,4),(2,5), (3,5), (3,6)]
-    # res_3A = add_step(path_2, 2) #expectiong []
-    # print(res_3A)
-    # res_3B = add_step(path_2, 4)   #expectiong [[(2,3), (2,4),(2,5), (3,5), (3,6), (4,6)]
-    # print(res_3B)
-    # #ok!
+    #test function add_path()
+    test = [(2,3), (2,4),(2,5), (3,5), (3,6)]
+    test2 = [(4,4), (5,4),(5,5), (6,5), (7,5), (8,5), (9,5), (9,6)]
+    res_test = add_path(test, 8)
+    res_test2 = add_path(test2, 8)
+    res_test_formatted = []
+    res_test_formatted.extend(res_test2)
+    res_test_formatted.extend(res_test)
 
-    #testing calculate function
-    # calculate_1 = [[(0,0)]]
-    # calc_1 = calculate_paths(calculate_1, 2)
-    # calc_2 = calculate_paths(calc_1, 2)
-    # calc_3 = calculate_paths(calc_2, 2)
-    # calc_4 = calculate_paths(calc_3, 2)
-    # calc_5 = calculate_paths(calc_4, 2)
-
-
-    # print(calc_1)
-    
-    #test check function
-    # check_1 = [[(2, 3), (2, 4), (2, 5), (3, 5), (3, 6), (4, 6)], [(2, 3), (2, 4), (2, 5), (3, 5), (3, 6), (3, 7)]]
-    # res_check = check_if_ending(check_1, 20)
-    # res_checkB = check_if_ending(check_1, 3)
-    
-    #main function
-    
-    # start_solution = [[(0,0)]]
-    #solution = calc_all_paths(start_solution, 3)
-    
-    #test main
-    
-    first_try = [[(0,0)]]
-    
-    solu = main(first_try, 20)
-    
-    print(solu)
-    
+    print(res_test)    
 
 
