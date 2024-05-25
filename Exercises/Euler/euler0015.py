@@ -28,13 +28,43 @@ class Node:
         return f"node value: {self.value}. Children values:{string_children}"
 
 
+
 class BinaryTree:
     
     def __init__(self, root:Node, limit:tuple):
         self.root = root
         self.count = 0
         self.limit = limit
+        # self.goal = (limit, limit)
+        self.create_tree(self.root)
+    
+    
+    def create_tree(self, node):
         
+        if node.value[0] < self.limit:
+            left_child = Node((node.value[0] + 1, node.value[1]))
+            node.left = left_child
+            self.create_tree(node.left)
+        
+        if node.value[1] < self.limit:
+            right_child = Node((node.value[0], node.value[1] + 1))
+            node.right = right_child
+            self.create_tree(node.right)
+        
+        if node.value == (self.limit, self.limit):
+            self.count += 1
+
+            
+        # if node.left == None and node.right == None:
+        #     return
+        
+        # if node.right:
+        #     create_tree(node.right)
+        # if node.left:
+        #     create_tree(node.left)
+            
+        
+    
     def find_limit_leaves():
         pass
     
@@ -75,6 +105,10 @@ if __name__ == '__main__':
     test_right_chilfd = Node((0,1))
     test_node.right, test_node.left = test_right_chilfd, test_left_child
     print(test_node)
+    
+    test_root = Node((0,0))
+    test_tree = BinaryTree(test_root, 20)
+
     
 # =============================================================================
 #     #test function add_path()
