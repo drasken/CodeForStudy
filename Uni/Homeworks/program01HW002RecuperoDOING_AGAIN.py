@@ -124,17 +124,19 @@ def checkUserBalance(money, sender, dictionaryUsers):
     return res
 
 def payIntermediary(fee, sender, dictUsers, interm, dictIntermediary, dictDebtors):
+    #pay intermediary fee
+    
     if dictUsers[sender] >= fee:
         dictIntermediary[interm] += fee
         dictUsers[sender] -= fee
     else:
-        difference = fee - dictUsers[sender]
-        dictIntermediary[interm] += dictUsers[sender]
-        dictUsers[sender] = 0
+        difference = fee - dictUsers[sender] #money can'r be paid
+        dictIntermediary[interm] += dictUsers[sender] #user pay what can be paid
+        dictUsers[sender] = 0 #set user account to 0
         for i in dictDebtors:
             for j in i:
                 if j == interm:
-                    i[j][sender] -= difference
+                    dictDebtors[i][j][sender] -= difference
                 
 
 def payDebts(user, dictUser, dictDebts, keyImd, dictImd): #last one that I miss!!!
