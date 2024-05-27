@@ -106,92 +106,136 @@ ATTENZIONE: è proibito:
 """
 
 
-def checkPayDebt(money, receiver, inter, dictInterme):
-    #use this function for repaying debts after a transaction
-    for innerList in dictInterme:
-        for innerKey in innerList:
-            if innerKey == inter: #here we find the debt if exists
-                if innerKey[receiver] < 0:
-                    return innerKey[receiver]
-    return 0
-            
-def checkUserBalance(money, sender, dictionaryUsers):
+
+# def checkPayDebt(money, receiver, inter, dictInterme):
+#     #use this function for repaying debts after a transaction
+#     for innerList in dictInterme:
+#         for innerKey in innerList:
+#             if innerKey == inter: #here we find the debt if exists
+#                 if innerKey[receiver] < 0:
+#                     return innerKey[receiver]
+#     return 0
+
+
+# def payDebts(user, dictUser, dictDebts, keyImd, dictImd): #last one that I miss!!!
+#     #dictDebts is negative
+#     currentMoney = dictUser[user] #used to pay the int
+#     currentDebt = abs(dictDebts[user])
+#     if currentMoney >= currentDebt:
+#         transaction = currentMoney - currentDebt
+#         dictUser[user] = transaction
+#         dictImd[keyImd] += currentDebt
+#         dictDebts[user] = 0
+#     else:
+#         transaction = currentDebt - currentMoney
+#         dictDebts[user] = - transaction
+#         dictImd[keyImd] += currentMoney
+#         dictUser[user] = 0
+    
+           
+def payBetweenUsers(money:int, sender:int, dictionaryUsers:dict) -> int:
     #used to check if a transaction in doable
-    res = 0
+    res :int = 0
     if dictionaryUsers[sender] >= money:
         res = money #this will be updatedto receiver account else 0
         dictionaryUsers[sender] -= money
     return res
 
-def payIntermediary(fee, sender, dictUsers, interm, dictIntermediary, dictDebtors):
-    #pay intermediary fee
-    
-    if dictUsers[sender] >= fee:
-        dictIntermediary[interm] += fee
-        dictUsers[sender] -= fee
-    else:
-        difference = fee - dictUsers[sender] #money can'r be paid
-        dictIntermediary[interm] += dictUsers[sender] #user pay what can be paid
-        dictUsers[sender] = 0 #set user account to 0
-        for i in dictDebtors:
-            for j in i:
-                if j == interm:
-                    dictDebtors[i][j][sender] -= difference
-                
+# def payIntermediary(fee, sender, dictUsers, interm, dictIntermediary, dictDebtors):
+#     if dictUsers[sender] >= fee:
+#         dictIntermediary[interm] += fee
+#         dictUsers[sender] -= fee
+#     else:
+#         difference = fee - dictUsers[sender] #money can'r be paid
+#         dictIntermediary[interm] += dictUsers[sender] #user pay what can be paid
+#         dictUsers[sender] = 0 #set user account to 0
+#         for i in dictDebtors:
+#             for j in i:
+#                 if j == interm:
+#                     i[j][sender] -= difference
 
-def payDebts(user, dictUser, dictDebts, keyImd, dictImd): #last one that I miss!!!
-    #dictDebts is negative
-    currentMoney = dictUser[user] #used to pay the int
-    currentDebt = abs(dictDebts[user])
-    if currentMoney >= currentDebt:
-        transaction = currentMoney - currentDebt
-        dictUser[user] = transaction
-        dictImd[keyImd] += currentDebt
-        dictDebts[user] = 0
+def payIntermediaryTransaction(fee:int, payer:int, usersDict:dict, interm:int, dictIntermAccount:dict, dictDebtors:dict) -> None:
+    
+    if usersDict[payer] >= fee:
+        usersDict[payer] -= fee
+        dictIntermAccount[interm] += fee
     else:
-        transaction = currentDebt - currentMoney
-        dictDebts[user] = - transaction
-        dictImd[keyImd] += currentMoney
-        dictUser[user] = 0
+        missing_money = fee - usersDict[payer]
+        dictIntermAccount[interm] += usersDict[payer]
+        usersDict[payer] = 0
+        dictDebtors[payer] -= missing_money
     
+    return
+    pass
+
+def payIntermediaryDebts(receiver:int, dictUsers:dict, debts_firts:dict, debts_second:dict):
     
-    # pass
+    while dictUsers[receiver] > 0 and (debts_firts[receiver] < 0 and debts_second[receiver] < 0):
+        if debts_firts[receiver] < debts_second[receiver]:
+            payment = min(dictUsers[receiver], abs(debts_firts[receiver]))
+            dictUsers[receiver] -= payment
+            debts_firts[receiver] += payment
+            if dictUsers[receiver] > 0:
+                payment_2 = min(dictUsers[receiver], abs(debts_second[receiver])) 
+                dictUsers[receiver] -= payment_2
+                debts_second[receiver] += payment_2
+        else:
+            payment = min(dictUsers[receiver], abs(debts_second[receiver])) 
+            dictUsers[receiver] -= payment
+            debts_second[receiver] += payment
+            if dictUsers[receiver] > 0:
+                payment_2 = min(dictUsers[receiver], abs(debts_firts[receiver])) 
+                dictUsers[receiver] -= payment_2
+                debts_firts[receiver] += payment_2
+                
+    return
 
 def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
-    #INITIALIZE ALL WITH THE INPUT EXEPT LOG
-    #initialize the dictionary for the 
-    dictUsers = {acn1: init_amount, acn2: init_amount, acn3: init_amount}
-    dictIntermediary = {imd_acn1: 0, imd_acn2: 0}
-    #list intermediary keys
-    #still wrking on extracting list from this dictionary
-    dictDebts = [{imd_acn1: {acn1: 0, acn2: 0, acn3: 0}}, {imd_acn2: {acn1: 0, acn2: 0, acn3: 0}}] 
-    #created whit pointer so referring to the same object
-    debtInt1 = dictDebts[0][imd_acn1]
-    debtInt2 = dictDebts[1][imd_acn2]
+    #INITIALIZE ALL VAR WITH INPUT PARAMS EXEPT TRANSACT_LOG
+    
+    #initialize the dictionary for users and intermediays 
+    dictUsers:dict = {acn1: init_amount, acn2: init_amount, acn3: init_amount}
+    dictIntermediary:dict = {imd_acn1: 0, imd_acn2: 0}
+    
+    #dictionary used to track debts
+    dictDebts:dict = [{imd_acn1: {acn1: 0, acn2: 0, acn3: 0}}, {imd_acn2: {acn1: 0, acn2: 0, acn3: 0}}] 
+    #created whit pointer so referring to the same objects
+    debtInt1:dict = dictDebts[0][imd_acn1]
+    debtInt2:dict = dictDebts[1][imd_acn2]
     
     #TO USE AND INPLEMENT FUNC FOR LOG OPERATION
-    #initialize helpful variablec??
+    #initialize helpful variable??
     for transact in transact_log:
-        #initialize util var
-        sender = transact[0][0]
-        receiver = transact[0][1]
-        moneySent = transact[1]
-        intermediaryTemp = transact[2]
-        intermediaryFee = moneySent * transact[3] / 100
-        #first check if transaction in doable for now i assume if check == money precedence to receiver
-        dictUsers[receiver] += checkUserBalance(moneySent, sender, dictUsers) 
-        #now pay the int
-            #if not enought pay intermediary and than augment the debt
-        payIntermediary(intermediaryFee, sender, dictUsers, intermediaryTemp, dictIntermediary, dictDebts)
-        #with money received the receiver pay debts if there are
-        if debtInt1[receiver] <= debtInt2[receiver]:
-            payDebts(receiver, dictUsers, debtInt1, imd_acn1, dictIntermediary)
-            payDebts(receiver, dictUsers, debtInt2, imd_acn2, dictIntermediary)
+        #initialize util variables
+        sender:int = transact[0][0]
+        receiver:int = transact[0][1]
+        moneySent:int = transact[1]
+        intermediaryTemp:int = transact[2] 
+        intermediaryFee:int = moneySent * transact[3] / 100
+        debt_register_temp = dict()
+        
+        if intermediaryTemp in debtInt1:
+            debt_register_temp = debtInt1
         else:
-            payDebts(receiver, dictUsers, debtInt2, imd_acn2, dictIntermediary)
-            payDebts(receiver, dictUsers, debtInt1, imd_acn1, dictIntermediary)
-            pass #to end thi implementatsion
+            debt_register_temp = debtInt2
+        
+        #first check if transaction in doable for now i assume if check == money precedence to receiver
+        dictUsers[receiver] += payBetweenUsers(moneySent, sender, dictUsers) 
+        #now pay the int
+            #if not enought pay intermediary what users can and than add to debt
+        #payIntermediary(intermediaryFee, sender, dictUsers, intermediaryTemp, dictIntermediary, dictDebts)
+        payIntermediaryTransaction(intermediaryFee, sender, dictUsers, intermediaryTemp, dictIntermediary, debt_register_temp)
+        #with money received the receiver pay debts if there are
+        # if debtInt1[receiver] <= debtInt2[receiver]:
+        #     payDebts(receiver, dictUsers, debtInt1, imd_acn1, dictIntermediary)
+        #     payDebts(receiver, dictUsers, debtInt2, imd_acn2, dictIntermediary)
+        # else:
+        #     payDebts(receiver, dictUsers, debtInt2, imd_acn2, dictIntermediary)
+        #     payDebts(receiver, dictUsers, debtInt1, imd_acn1, dictIntermediary)
+        #     pass #to end thi implementatsion
         # STILL NOW WORKING 100 DIFFERENCE DEBTS NOT PAID, TEST
+        
+        payIntermediaryDebts(receiver, dictUsers, debtInt1, debtInt2)
         
         #try with a for using the max debt and usig he payInterm function and than pay the second int, just 2
         # while dictUsers[receiver] > 0 or dictDebts[imd_acn1][receiver] == 0 and dictDebts[imd_acn2][receiver] == 0:
