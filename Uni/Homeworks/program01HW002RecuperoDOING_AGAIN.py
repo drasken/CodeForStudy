@@ -168,27 +168,51 @@ def payIntermediaryTransaction(fee:int, payer:int, usersDict:dict, interm:int, d
     return
     pass
 
-def payIntermediaryDebts(receiver:int, dictUsers:dict, debts_firts:dict, debts_second:dict):
+def payIntermediaryDebts(receiver:int, dictUsers:dict, debts_firts:dict, debts_second:dict, dictInterm:dict):
     
-    while dictUsers[receiver] > 0 and (debts_firts[receiver] < 0 and debts_second[receiver] < 0):
-        if debts_firts[receiver] < debts_second[receiver]:
-            payment = min(dictUsers[receiver], abs(debts_firts[receiver]))
-            dictUsers[receiver] -= payment
-            debts_firts[receiver] += payment
-            if dictUsers[receiver] > 0:
-                payment_2 = min(dictUsers[receiver], abs(debts_second[receiver])) 
-                dictUsers[receiver] -= payment_2
-                debts_second[receiver] += payment_2
-        else:
-            payment = min(dictUsers[receiver], abs(debts_second[receiver])) 
-            dictUsers[receiver] -= payment
-            debts_second[receiver] += payment
-            if dictUsers[receiver] > 0:
-                payment_2 = min(dictUsers[receiver], abs(debts_firts[receiver])) 
-                dictUsers[receiver] -= payment_2
-                debts_firts[receiver] += payment_2
+    pay_first:dict = dictUsers
+    pay_second: dict = dictUsers
+    
+    money_to_add =[0, 0]
+    
+    if debts_firts[receiver] <= debts_second[receiver]:
+        pay_first = debts_firts
+        pay_second = debts_second
+    else:
+        pay_first = debts_second
+        pay_second = debts_firts
+
+    
+    if pay_first[receiver] < 0 and dictUsers[receiver] > 0:
+        payment: int = min(abs(pay_first[receiver]), dictUsers[receiver])
+        dictUsers[receiver] -= payment
+        pay_first[receiver] += payment
+        money_to_add[0] = payment
+        if pay_second[receiver] < 0 and dictUsers[receiver] > 0:
+            payment2: int = min(abs(pay_second[receiver]), abs(dictUsers[receiver]))
+            dictUsers[receiver] -= payment2
+            pay_second[receiver] += payment2
+            money_to_add[1] = payment2
+    
+    # while dictUsers[receiver] > 0 and (debts_firts[receiver] < 0 and debts_second[receiver] < 0):
+    #     if debts_firts[receiver] < debts_second[receiver]:
+    #         payment = min(dictUsers[receiver], abs(debts_firts[receiver]))
+    #         dictUsers[receiver] -= payment
+    #         debts_firts[receiver] += payment
+    #         if dictUsers[receiver] > 0:
+    #             payment_2 = min(dictUsers[receiver], abs(debts_second[receiver])) 
+    #             dictUsers[receiver] -= payment_2
+    #             debts_second[receiver] += payment_2
+    #     else:
+    #         payment = min(dictUsers[receiver], abs(debts_second[receiver])) 
+    #         dictUsers[receiver] -= payment
+    #         debts_second[receiver] += payment
+    #         if dictUsers[receiver] > 0:
+    #             payment_2 = min(dictUsers[receiver], abs(debts_firts[receiver])) 
+    #             dictUsers[receiver] -= payment_2
+    #             debts_firts[receiver] += payment_2
                 
-    return
+    return money_to_add
 
 def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
     #INITIALIZE ALL VAR WITH INPUT PARAMS EXEPT TRANSACT_LOG
@@ -214,7 +238,7 @@ def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
         intermediaryFee:int = moneySent * transact[3] / 100
         debt_register_temp = dict()
         
-        if intermediaryTemp in debtInt1:
+        if intermediaryTemp in dictDebts[0]:
             debt_register_temp = debtInt1
         else:
             debt_register_temp = debtInt2
@@ -235,8 +259,15 @@ def ex1(acn1, acn2, acn3, imd_acn1, imd_acn2, init_amount, transact_log):
         #     pass #to end thi implementatsion
         # STILL NOW WORKING 100 DIFFERENCE DEBTS NOT PAID, TEST
         
-        payIntermediaryDebts(receiver, dictUsers, debtInt1, debtInt2)
-        
+        to_pay = payIntermediaryDebts(receiver, dictUsers, debtInt1, debtInt2, dictIntermediary)
+        if dictUsers[receiver] > 0:
+            if debtInt1[receiver] <= debtInt2[receiver]:
+                dictIntermediary[imd_acn1] += to_pay[0]
+                dictIntermediary[imd_acn2] += to_pay[1]
+            else:
+                dictIntermediary[imd_acn1] += to_pay[1]
+                dictIntermediary[imd_acn2] += to_pay[0]
+
         #try with a for using the max debt and usig he payInterm function and than pay the second int, just 2
         # while dictUsers[receiver] > 0 or dictDebts[imd_acn1][receiver] == 0 and dictDebts[imd_acn2][receiver] == 0:
         #     paydebts(receiver, dictUsers, dictDebts,)
@@ -269,4 +300,23 @@ if __name__ == '__main__':
     assert (provaTest == ( [2098, 568, 0], [66, 268], [ [0, 0, 0], [0, 0, -28] ] ))
     print("test passed")
     
-
+    provaTest_1 = ex1(2694,2027, 5775, 76, 242, 1000, 
+                     [((2694,5775), 0, 242, 17),
+                      ((2027, 5775), 900, 76, 18),
+                      ((5775, 2694), 600, 76, 13),
+                      ((2027, 5775), 1100, 242, 20),
+                      ((2694, 5775), 700, 76, 4),
+                      ((2027, 5775), 1400, 76, 3),
+                      ((2694, 5775), 1000, 76, 19),
+                      ((2027, 2694), 500, 242, 17),    
+                      ((5775, 2694), 1900, 76, 7),
+                      ((2027, 2694), 2800, 242, 11)])
+    
+    assert(provaTest_1 ==  ([682, 183, 889], [633, 613], [[ 0, 0, 0], [ 0, 0, 0]]))
+    
+    print('test2 passed')
+    
+    
+    
+    
+    
