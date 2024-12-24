@@ -92,7 +92,6 @@ def sieve_E2(limit: int)-> list:
     """
     Implementation of Sieve of Eratostene to find prime numbers within limit number given in input
 
-
     Parameters
     ----------
     limit : int

@@ -21,7 +21,6 @@ Possibile idee per calcolare analizzare le stringhe:
     check con le condizione dell'indovinello
     se ok aggiungi 1 al counter
     ritorna counter
-    
 
 """
 
@@ -29,34 +28,34 @@ import stringFunction
 
 
 def readInput(inputFile):
-    
+
     """"using this generator to read the file"""
-    
+
     with open(inputFile, mode='r') as f:
         context = f.readlines() #read file each str is a game
         for line in context:
             yield line #yield the str corrisponding on the line
- 
 
-def analyzeGames(fileName :str, colors: dict, colorsList: list) -> int:
+
+def analyzeGames(fileName: str, colors: dict, colorsList: list) -> int:
     """ Analyze a game by each subset and if all true return the ID int
-    
+
     """
-    
+
     resIds = []
     powersIds = []
-    
+
     fileReader = readInput(fileName)
     for linea in fileReader:
         processedLine = divideGameBySets(linea)
-        processedLine = divideSetByCubes(processedLine) #here is divided list of list for each set
+        processedLine = divideSetByCubes(processedLine)  # here is divided list of list for each set
         isPlayable = checkIfPlayableGame(processedLine, colors)
         if isPlayable:
             gameId = linea[5: linea.index(':')]
             resIds.append(int(gameId))
-            
+
         #here put calculatepowers functions
-    
+
     return sum(resIds), sum(powersIds)
     pass
 
