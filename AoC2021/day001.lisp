@@ -16,6 +16,11 @@
 			    (setf acc (1+ acc))))
     acc))
 
+;;found online
+
+(defun increasing-pairs (nums)
+  (loop for (a b) on nums while b count (< a b))) ;;OK
+
 ;; First Part Solution: 1581 --> OK!!
 
 (defun sol-part-2 (lis)
@@ -24,6 +29,11 @@
 	  collect (reduce #'+ (list (nth (1- x) lis)
 				(nth x lis)
 				(nth (1+ x) lis))))))
+
+;;found online same as for part 1, same way using loop
+
+(defun increasing-tri (nums)
+  (loop for (a b c d) on nums while d count (< (+ a b c) (+ b c d))))
 
 ;; Second Part Solution: 1618 -> OK!!
     
