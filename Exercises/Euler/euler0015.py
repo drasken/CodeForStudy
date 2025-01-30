@@ -5,68 +5,94 @@ Created on Sat May 11 23:01:19 2024
 
 @author: drasken
 """
+"""
+Trying doing Dynamoc programming
+"""
 
-from collections import namedtuple
-import copy
+side_len = 21
+
+my_matrix = [[0 for x in range(side_len)] for y in range(side_len)]
+
+print(my_matrix)
+
+def find_paths(matr):
+    for index, line in enumerate(matr):
+        for index_el, el in enumerate(line):
+            if index == 0 or index_el == 0:
+                matr[index][index_el] = 1
+            else:
+                matr[index][index_el] = line[index_el - 1] + matr[index - 1][index_el]
+                #print(matr[index][index_el])
+    return matr[-1][-1]
+
+find_paths(my_matrix)
+
+#print(my_matrix)
+
+#first test = 35345263800 --> Wrong
+#2nd test = 137846528820 --> OK, side too short by 1
+
+# from collections import namedtuple
+# import copy
 
 
-class Node:
+# class Node:
     
-    def __init__(self, value):
-        self.value = value
-        self.left = None
-        self.right = None
+#     def __init__(self, value):
+#         self.value = value
+#         self.left = None
+#         self.right = None
     
-    def __str__(self):
-        string_children = " "
+#     def __str__(self):
+#         string_children = " "
         
-        if self.left != None:
-            string_children += str(self.left.value) + " " 
-        if self.right != None:
-            string_children += str(self.right.value)
+#         if self.left != None:
+#             string_children += str(self.left.value) + " " 
+#         if self.right != None:
+#             string_children += str(self.right.value)
         
-        return f"node value: {self.value}. Children values:{string_children}"
+#         return f"node value: {self.value}. Children values:{string_children}"
 
 
 
-class BinaryTree:
+# class BinaryTree:
     
-    def __init__(self, root:Node, limit:tuple):
-        self.root = root
-        self.count = 0
-        self.limit = limit
-        # self.goal = (limit, limit)
-        self.create_tree(self.root)
+#     def __init__(self, root:Node, limit:tuple):
+#         self.root = root
+#         self.count = 0
+#         self.limit = limit
+#         # self.goal = (limit, limit)
+#         self.create_tree(self.root)
     
     
-    def create_tree(self, node):
+#     def create_tree(self, node):
         
-        if node.value[0] < self.limit:
-            left_child = Node((node.value[0] + 1, node.value[1]))
-            node.left = left_child
-            self.create_tree(node.left)
+#         if node.value[0] < self.limit:
+#             left_child = Node((node.value[0] + 1, node.value[1]))
+#             node.left = left_child
+#             self.create_tree(node.left)
         
-        if node.value[1] < self.limit:
-            right_child = Node((node.value[0], node.value[1] + 1))
-            node.right = right_child
-            self.create_tree(node.right)
+#         if node.value[1] < self.limit:
+#             right_child = Node((node.value[0], node.value[1] + 1))
+#             node.right = right_child
+#             self.create_tree(node.right)
         
-        if node.value == (self.limit, self.limit):
-            self.count += 1
+#         if node.value == (self.limit, self.limit):
+#             self.count += 1
 
             
-        # if node.left == None and node.right == None:
-        #     return
+#         # if node.left == None and node.right == None:
+#         #     return
         
-        # if node.right:
-        #     create_tree(node.right)
-        # if node.left:
-        #     create_tree(node.left)
+#         # if node.right:
+#         #     create_tree(node.right)
+#         # if node.left:
+#         #     create_tree(node.left)
             
         
     
-    def find_limit_leaves():
-        pass
+#     def find_limit_leaves():
+#         pass
     
     
 # =============================================================================
