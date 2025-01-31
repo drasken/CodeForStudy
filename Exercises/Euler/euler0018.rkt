@@ -19,50 +19,6 @@
 (04 62 98 27 23 09 70 98 73 93 38 53 60 04 23)))
 
 
-(define (find-max-path listss)
-  (cond [(empty? listss) "Nada"]
-        [(=  (length listss) 1) (first listss)]
-
-
-        ))
-
-
-
-(define (test-fun listss)
-  (write "Ciao"))
-
-;; (define (upgrade-list l1 l2)
-;;   (for ([el l2])))
-  
-(define (sum-rec li)
-  (if (empty? li) 0
-      (+ (car li) (sum-rec (cdr li)))))  
-
-(define tess (sum-rec '(1 2 3)))
-
-
-;; (define (my-path-rec triangule)
-;;   (define (tr len index)
-;;     (cond
-;;      [(empty? tr) 0]
-;;      [(zero? len) (caar tr)]
-;;      [else (set! (list-ref tr len
-
-;;first reverse list
-
-(define (path-rec trian)
-  (define (my-rec tr index)
-    (let ([res 0]
-	  [new-tr  tr])
-      (cond
-       [(zero? index) (caar new-tr)]
-       ))))
-
-(define (util-rec l1 l2)
-  (for ([el l2])
-    (set! el (+ el (max )))))
-
-(map (lambda (x y) (+ x y)) '(1 2 3) '(7 7 7))
 
 	 
 	 

@@ -1,4 +1,9 @@
+"""
+Trying using DP and iterative approach
+//TODO: try in recursive way
+"""
 
+#my input
 triang = [[75],
           [95, 64],
           [17, 47, 82],
@@ -15,17 +20,26 @@ triang = [[75],
           [63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31],
           [4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23]]
 
-def my_max_path(triangule):
-    for ind, lin  in enumerate(triangule):
-        if ind == 0:
-            continue
-        for index, num in enumerate(lin):
-            pass
-        
+#test input
+test_tr = [[3], [7, 4], [2, 4, 6], [8, 5, 9, 3]] # expected --> 23
 
 
-def app_rec_fun(tr, ind, maxxim):
-    pass
+def max_path_bis(triangle):
 
-def my_path_rec(triang):
-    pass
+    sol = [[0 for n in l] for l in triangle]
+
+    for index, row in enumerate(triangle):
+        for index_row, num in enumerate(row):
+            if index == 0: #step one
+                sol[0][0] = triangle[0][0]
+            elif index_row == 0: #edge case left -one possible path
+                sol[index][index_row] = num + sol[index - 1][0]
+            elif index_row == (len(row) - 1): #edge case rigth -again one path
+                sol[index][index_row] = num + sol[index - 1][index_row - 1]
+            else:
+                sol[index][index_row] = num + max(sol[index - 1][index_row - 1], sol[index - 1][index_row])
+    return max(sol[-1])
+
+
+solution = max_path_bis(triang)
+print(solution) #First test = 1074 --> OK! it works 
