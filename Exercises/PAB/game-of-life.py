@@ -104,14 +104,12 @@ def count_neighbors(board: list[list], y_pos: int, x_pos: int) -> int:
             return 1
         else:
             return 0
-
-    if cell_state == 1:
+    elif cell_state == 1:
         if count_neigh == 2 or count_neigh == 3:
             return 1
         else:
             return 0
-
-    if cell_state != 0 and cell_state != 1:
+    else:
         return -1
 
 # Tests passed
@@ -169,36 +167,18 @@ def main(h: int, w: int):
             print("Goodbye!")
             break
 
-    #     try:
-    #         my_board = dead_state(h, w)
-    #         random_state(my_board)
-
-    #         render(my_board)
-
-    #         # print("test!!!!")
-
-    #         board2 = next_board_state(my_board)
-
-    #         render(board2)
-
-    #         time.sleep(0.5)
-
-    #     except KeyboardInterrupt:
-    #         print("You stopped the program. Goodbye!")
-    #         break
-
 
 if __name__ == '__main__':
 
-    test = main(10, 20)
+#    test = main(10, 20)
 
-    # # test count neigh
-    # test_matrix = [[2,2,2,2], [2,0,1,0], [2,1,1,0],[2,0,1,0],[2,0,1,0]]
-    # test_count1 = count_neighbors(test_matrix, 1, 1)  # expected 1
-    # print(test_count1)
-    # test_count2 = count_neighbors(test_matrix, 2, 2)  # expected 1
-    # print(test_count2)
-    # test_count3 = count_neighbors(test_matrix, 3, 1)  # expected 0
-    # print(test_count3)
-    # PASS
+    # test count neigh
+    test_matrix = [[2,2,2,2], [2,0,1,0], [2,1,1,0],[2,0,1,0],[2,0,1,0]]
+    test_count1 = count_neighbors(test_matrix, 1, 1)  # expected 1
+    print(test_count1)
+    test_count2 = count_neighbors(test_matrix, 2, 2)  # expected 1
+    print(test_count2)
+    test_count3 = count_neighbors(test_matrix, 3, 1)  # expected 0
+    print(test_count3)
+
 
