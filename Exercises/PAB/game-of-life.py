@@ -57,7 +57,7 @@ def render(board: list[list]):
             if el == 2:
                 print("#", end="")
             elif el == 1:
-                print("X", end="")
+                print("O", end="")
             else:
                 print(" ", end="")
         print("\n")
