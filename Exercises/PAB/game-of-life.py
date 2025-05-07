@@ -126,22 +126,25 @@ def next_board_state(board: list[list]) -> list[list]:
 
     h, w = len(board), len(board[0])  # TODO: type annotations??
 
-    out_board: list[list] = dead_state(h, w)
+    out_board: list[list] = dead_state(h - 2, w - 2)
 
-    random_state(out_board)
+    # random_state(out_board)
 
     for i_row, row in enumerate(board):
         for i_el, el in enumerate(row):
             if el != 2:
                 new_state = count_neighbors(board, i_row, i_el)
                 out_board[i_row][i_el] = new_state
-
+            else:
+                out_board[i_row][i_el] = 2
 
     return out_board
 
 # DONE
 # Fourth Milestone
 # Modify the main() function to loop infinitely
+
+vel: float = 0.6
 
 def main(h: int, w: int):
 
@@ -162,7 +165,7 @@ def main(h: int, w: int):
             render(board2)
 
             my_board = copy.deepcopy(board2)
-            time.sleep(1)
+            time.sleep(vel)
         except KeyboardInterrupt:
             print("Goodbye!")
             break
@@ -170,15 +173,15 @@ def main(h: int, w: int):
 
 if __name__ == '__main__':
 
-#    test = main(10, 20)
+    test = main(20, 100)
 
-    # test count neigh
-    test_matrix = [[2,2,2,2], [2,0,1,0], [2,1,1,0],[2,0,1,0],[2,0,1,0]]
-    test_count1 = count_neighbors(test_matrix, 1, 1)  # expected 1
-    print(test_count1)
-    test_count2 = count_neighbors(test_matrix, 2, 2)  # expected 1
-    print(test_count2)
-    test_count3 = count_neighbors(test_matrix, 3, 1)  # expected 0
-    print(test_count3)
+    # # test count neigh
+    # test_matrix = [[2,2,2,2], [2,0,1,0], [2,1,1,0],[2,0,1,0],[2,0,1,0]]
+    # test_count1 = count_neighbors(test_matrix, 1, 1)  # expected 1
+    # print(test_count1)
+    # test_count2 = count_neighbors(test_matrix, 2, 2)  # expected 1
+    # print(test_count2)
+    # test_count3 = count_neighbors(test_matrix, 3, 1)  # expected 0
+    # print(test_count3)
 
 
