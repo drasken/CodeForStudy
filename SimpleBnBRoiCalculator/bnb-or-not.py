@@ -11,24 +11,27 @@ Global var constants and import statement
 """
 
 import numpy as np
-import matplotlib as 
+import matplotlib.pyplot as plt 
 
 # Home value at the starting point. Change accordingly
 INIT_HOME_VALUE = 100_000
 # Estimated a 3% yearly on average, found on-line, change on what you think is more appropriate
 ANNUAL_HOME_DEPRECIATION = 0.03
-
+# Change accordingly, this is the rate for 12 months government bond atm
+RISK_FREE_RATE = 1.73
 
 """
  Here is the section about using the apartment for BnB
 """
+expected_annual_income = 8500
+annual_expected_gross_income = 0
+annual_taxes = 0
+intermediary_fee =0
+annual_expected_expense = 1500
+expected_net_income = 0
+years = 30 # more than 30 years is too much time
 
-annual_expected_income = pass
-annual_taxes = pass
-intermediary_fees = pass
-annual_expected_expense = pass
-risk_free_rate = 1.73 # Change accordingly, this is the rate for 12 months government bond today
-
+return_by_year = [x for x in range(years)]
 
 """
 Here is the section about using the money after selling the apartment

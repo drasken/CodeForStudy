@@ -125,4 +125,28 @@
 
 (defvar *home-value* 100000) ; use this for home value
 (defvar *yearly-depreciation* 0.03)
+(defvar *yearly-average-inflation* 0.02)
+
+
+;; List of Bnb var
+
+
+
+;; The expected income for the year when starting the BnB
+;; Will be corrected per inflation
+(defparameter annual-expected-income 8500) ; Here
+;; Var used if is known the gross income not used for net income
+(defparameter gross-income 0)
+(defparameter annual-taxes-rate 0)
+(defparameter intermediary-fees-rate 0)
+(defparameter net-income (if  (not (zerop gross-income))(- gross-income
+							   (* gross-income annual-taxes-rate)
+							   (* gross-income intermediary-fees-rate))
+			      annual-expected-income))
+ 
+(defparameter stating-business-costs 1450) ; will be subtracted only first year
+;; This value will be used to creade a list of values
+(defparameter year-to-consider 30) ; more than 30 year is too much for a home
+
+;(defun calc-bnb-roi (years-list 
 
