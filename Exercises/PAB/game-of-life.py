@@ -5,6 +5,7 @@ Trying again do it using Python
 import random
 import time
 import copy
+import os
 
 # First Milestone
 
@@ -144,9 +145,19 @@ def next_board_state(board: list[list]) -> list[list]:
 # Fourth Milestone
 # Modify the main() function to loop infinitely
 
-vel: float = 0.6
+vel: float = 0.5
+
+
+def clear_screen() -> None:
+    """
+    Utility function to clear the screen between each board print 
+    """
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 
 def main(h: int, w: int):
+
+    generations = 0
 
     my_board = dead_state(h, w)
     random_state(my_board)
@@ -160,20 +171,34 @@ def main(h: int, w: int):
     # render(board2)
     while True:
         try:
+            clear_screen()
             board2 = next_board_state(my_board)
 
             render(board2)
 
             my_board = copy.deepcopy(board2)
+            generations += 1
+            
             time.sleep(vel)
+            
         except KeyboardInterrupt:
             print("Goodbye!")
             break
+        
+    clear_screen()    
+    print(f"Your world lived for {generations} generations")
+        
 
 
 if __name__ == '__main__':
 
-    test = main(20, 100)
+    """
+    TODO: missing features
+    - add passing argument by user input feature
+    - adding an open/circular implementation, cells are counted as
+      neighbor even if across a border
+    """
+    test = main(26, 60)
 
     # # test count neigh
     # test_matrix = [[2,2,2,2], [2,0,1,0], [2,1,1,0],[2,0,1,0],[2,0,1,0]]
