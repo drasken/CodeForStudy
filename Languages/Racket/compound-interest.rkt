@@ -46,8 +46,18 @@
 
 
 
+;;;; TEST with for/fold
+;; (for/fold ([acc '()]
+;;              [seen (hash)]
+;;              #:result (reverse acc))
+;;             ([x (in-list '(0 1 1 2 3 4 4 4))])
 
 
+;;   ;; Testing with for/fold
+;;   (for/fold ([roi 1000])
+;; 	     ([year (in-range 20)])
+;; 	   (round(+ roi (* roi 0.05))))
+  
 ;; (plot (list
 ;;        (lines my-inv
 ;; 	      #:color "yellow")
