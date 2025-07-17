@@ -1,3 +1,5 @@
+#lang racket
+
 ;;;; Trying to do L-99: 99 problems in Lisp
 
 ;; Problem 001
