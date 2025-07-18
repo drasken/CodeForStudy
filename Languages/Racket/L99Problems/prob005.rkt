@@ -28,8 +28,9 @@
 ;; * (my-flatten '(a (b (c d) e)))
 ;; (A B C D E)
 (define (my-flatten lst)
-;; TODO
-  )
+  'test )
+;; TODO6
+  
 
 ;; test
 ;;(my-flatten '(a (b (c d) e)))		    
@@ -46,5 +47,8 @@
 
 ;; Idea is to use an hash-map
 (define (my-filter-dup lst)
-  )
+  'test)
+
+
+
 
