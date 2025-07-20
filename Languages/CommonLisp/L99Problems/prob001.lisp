@@ -12,7 +12,7 @@
 (my-last '(37))
 
 
-(defun my-last (lst)
+(defun my-but-last (lst)
   "Find last two element in a list"
   (cond ((null lst) nil)
 	((null (cdr lst)) nil)
