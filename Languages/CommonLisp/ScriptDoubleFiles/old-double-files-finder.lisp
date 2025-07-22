@@ -10,6 +10,15 @@
 ;; - Maybe let the user choos the name and location for log file (check location)
 
 
+(defpackage :double-files-finder
+  (:nickname :my-dff)
+  (:use :cl :uiop :str)
+  (:export :main))
+
+
+(in-package :double-files-finder)
+
 ;; Here main function
 (defun main ()
+  (print "Test successful")
   )
