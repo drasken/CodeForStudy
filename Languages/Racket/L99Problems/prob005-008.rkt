@@ -29,13 +29,13 @@
 ;; (A B C D E)
 (define (my-flatten lst)
   'test )
-;; TODO6
+;; TODO
   
 
 ;; test
 ;;(my-flatten '(a (b (c d) e)))		    
 		    
-
+;; TODO this too
 ;; Problem 008
 ;; Eliminate consecutive duplicates of list elements.
 ;; If a list contains repeated elements they should be replaced
@@ -46,8 +46,23 @@
 ;; ((A A A A) (B) (C C) (A A) (D) (E E E E))
 
 ;; Idea is to use an hash-map
-(define (my-filter-dup lst)
-  'test)
+;; (define (my-compress lst)
+;;   (for*/list ([l lst]
+;; 	      [new-l '()]
+;; 	      #:when (not (member l new-l)))
+;;     (append new-l l)
+;;     new-l))
+
+;; (define (my-compress-new lst)
+;;   (do ([l lst (cdr l)]
+;;        [res '()])
+;;       ((empty? l) (reverse res))
+;;     (when (not (equal? (car l) (car res)))
+;;       (cons (car l) res))))
+
+;; test
+(my-compress-new '(a a a  b c c c c c b b b b e d a a))
+	   
 
 
 
