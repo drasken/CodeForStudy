@@ -8,7 +8,7 @@
   (aux-my-func lst '()))
 
 ;; test -> OK
-(my-reverse '(1 4 5 8 99))
+;; (my-reverse '(1 4 5 8 99))
 
 
 ;; Problem 006
@@ -18,50 +18,38 @@
     (if (equal? rev lst) #t #f)))
 
 ;; test -> OK
-(is-pal '(a b c b a a))
-(is-pal '(a b c b a)) 
-(is-pal '())    
+;; (is-pal '(a b c b a a))
+;; (is-pal '(a b c b a)) 
+;; (is-pal '())    
 
-
+;; TODO --------------------
 ;; Problem 007 - flatten list
 ;; Example:
 ;; * (my-flatten '(a (b (c d) e)))
 ;; (A B C D E)
 (define (my-flatten lst)
   'test )
-;; TODO
-  
 
 ;; test
 ;;(my-flatten '(a (b (c d) e)))		    
 		    
-;; TODO this too
+
 ;; Problem 008
 ;; Eliminate consecutive duplicates of list elements.
 ;; If a list contains repeated elements they should be replaced
 ;; with a single copy of the element.
-;; The order of the elements should not be changed.
-;; Example:
-;; * (pack '(a a a a b c c a a d e e e e))
-;; ((A A A A) (B) (C C) (A A) (D) (E E E E))
 
-;; Idea is to use an hash-map
-;; (define (my-compress lst)
-;;   (for*/list ([l lst]
-;; 	      [new-l '()]
-;; 	      #:when (not (member l new-l)))
-;;     (append new-l l)
-;;     new-l))
+(define (my-compress lst)
+  (define (my-com-help l acc)
+    (cond [(empty? l) acc]
+          [(equal? (car l) (car acc)) (my-com-help (cdr l) acc)]
+          [else (my-com-help (cdr l) (cons (car l) acc))]))
+  (reverse (my-com-help lst (list (car lst)))))
 
-;; (define (my-compress-new lst)
-;;   (do ([l lst (cdr l)]
-;;        [res '()])
-;;       ((empty? l) (reverse res))
-;;     (when (not (equal? (car l) (car res)))
-;;       (cons (car l) res))))
 
-;; test
-(my-compress-new '(a a a  b c c c c c b b b b e d a a))
+;; test -> OK!
+;; (my-compress '(a a a  b c c c c c b b b b e d a a))
+;; (my-compress '(a a a a b c c a a d e e e e))
 	   
 
 
