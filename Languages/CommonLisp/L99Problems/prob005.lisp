@@ -2,15 +2,37 @@
 
 ;; Problem 05
 (defun my-reverse (lst &optional acc)
+  "Recursive version, not tail optimized"
   (cond ((null lst) acc)
 	(t (my-reverse (cdr lst) (cons (car lst) acc)))))
 
 
-;; Test
-#+nil
-(progn
-  (my-reverse '(1 2 4 6 7))
-  (my-reverse '(1 1 3 1 1))
-  (my-reverse '(1))
-  (my-reverse '()))
+(defun my-rev-iter (lst)
+  (let ((res '())) (loop for x in lst
+			 do (setf res (cons x res)))
+    res))
 
+
+;; ;; Test
+
+;; (my-reverse '(1 2 4 6 7))
+;; (my-reverse '(1 1 3 1 1))
+;; (my-reverse '(1))
+;; (my-reverse '()))
+
+;; (my-rev-iter '(1 2 4 6 7))
+;; (my-rev-iter '(1 1 3 1 1))
+;; (my-rev-iter '(1))
+;; (my-rev-iter '()))
+
+
+;; Problem 06
+(defun my-pal (lst)
+  "First naive and trivial solution with reverse"
+  (equalp lst (reverse lst)))
+
+
+;; ;; Test
+;; (my-pal '(1 2 4 6 7))
+;; (my-pal '(11 11 4 11 11))
+;; (my-pal '())
