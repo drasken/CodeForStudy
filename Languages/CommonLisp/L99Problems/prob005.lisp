@@ -49,13 +49,28 @@
 ;; Mantain order of elements if possible
 (defun my-compress (lst)
   (if (null lst)'()
-      (reverse (help-comp lst '()))))
+      (reverse (help-acc lst '()))))
 
-(defun help-comp (lis acc)
-  ((lambda (l1 l2) (when (not (equal (last l1) (car l2))) (push (car l1) l2)))
-   lis acc)
-  (cond ((null (cdr lis)) acc)
-	(t (help-comp (cdr lis) acc))))
+(defun help-acc (l res)
+  ;; DELETE
+  ;; Pseudocode:
+  ;; if l empty -> res
+  ;; else: if car res == car l recursion cdr l
+  ;; else else recursion push new element
+  (if (null l) res
+      (if (equal (car l) (car res))
+	  (help-acc (cdr l) res)
+	  (progn (push (car l) res)
+		 (help-acc (cdr l) res)))))))
+
+
+
+
+;; (defun help-comp (lis acc)
+;;   ((lambda (l1 l2) (when (not (equal (last l1) (car l2))) (push (car l1) l2)))
+;;    lis acc)
+;;   (cond ((null (cdr lis)) acc)
+;; 	(t (help-comp (cdr lis) acc))))
 	  
 ;; Test
 
