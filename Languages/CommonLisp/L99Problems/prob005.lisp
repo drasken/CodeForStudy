@@ -43,38 +43,22 @@
 
 
 
-;; TODO
+
 ;; Problem 008
 ;; Eliminate onsecutive dulicate in a list.
 ;; Mantain order of elements if possible
 (defun my-compress (lst)
-  (if (null lst)'()
-      (reverse (help-acc lst '()))))
+  (let ((res '()))
+    (dolist (el lst)
+      (when (not (equal el (car res)))
+	(push el res)))
+    (reverse res)))
 
-(defun help-acc (l res)
-  ;; DELETE
-  ;; Pseudocode:
-  ;; if l empty -> res
-  ;; else: if car res == car l recursion cdr l
-  ;; else else recursion push new element
-  (if (null l) res
-      (if (equal (car l) (car res))
-	  (help-acc (cdr l) res)
-	  (progn (push (car l) res)
-		 (help-acc (cdr l) res)))))))
-
-
-
-
-;; (defun help-comp (lis acc)
-;;   ((lambda (l1 l2) (when (not (equal (last l1) (car l2))) (push (car l1) l2)))
-;;    lis acc)
-;;   (cond ((null (cdr lis)) acc)
-;; 	(t (help-comp (cdr lis) acc))))
-	  
 ;; Test
-
 (my-compress '(a a a a b b a e e e b b b a g r j d a a))
+(my-compress '(a a a a))
+(my-compress '())
+
 
 	 
   
