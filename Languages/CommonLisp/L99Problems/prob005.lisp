@@ -36,3 +36,32 @@
 ;; (my-pal '(1 2 4 6 7))
 ;; (my-pal '(11 11 4 11 11))
 ;; (my-pal '())
+
+
+;; Problem 007
+;; TODO: flatten a list of nested lists
+
+
+
+;; TODO
+;; Problem 008
+;; Eliminate onsecutive dulicate in a list.
+;; Mantain order of elements if possible
+(defun my-compress (lst)
+  (if (null lst)'()
+      (reverse (help-comp lst '()))))
+
+(defun help-comp (lis acc)
+  ((lambda (l1 l2) (when (not (equal (last l1) (car l2))) (push (car l1) l2)))
+   lis acc)
+  (cond ((null (cdr lis)) acc)
+	(t (help-comp (cdr lis) acc))))
+	  
+;; Test
+
+(my-compress '(a a a a b b a e e e b b b a g r j d a a))
+
+	 
+  
+
+
