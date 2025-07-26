@@ -1,0 +1,20 @@
+;;;; File for test from 09 to 12
+
+
+;; Problem 009
+;; Using an ausiliary function whit a temp list and acc list
+(define (my-pack lst)
+  (when (empty? lst) '())
+  (define (help-my-pack l acc temp)
+    (cond [(empty? l) (append acc (list temp))]
+	  [(or (empty? temp) (equal? (car l) (car temp)))
+	   (help-my-pack (cdr l) acc (cons (car l) temp))]
+	  [else (help-my-pack (cdr l) (append acc (list temp)) (list (car l)))]))
+  (help-my-pack lst (list) (list)))
+
+;; test -> OK
+(my-pack '(a a a a b c c a a d e e e))
+;; Expected ((A A A)(B)(C C)(A A)(D)(E E E))
+
+
+;; Problem 10
