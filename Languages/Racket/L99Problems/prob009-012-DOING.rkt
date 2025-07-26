@@ -40,3 +40,12 @@
 ;; Test -> OK
 ;; (my-len-encode-bis '(a a a a b c c a a d e e e))
 
+
+;; Problem 012
+(define (my-decode lst)
+  (for/list ([el lst])
+    (make-list (car el)(cadr el))))
+
+;; Test -> OK
+;; (define my-test-to-decode (my-len-encode '(a a a a b c c a a d e e e)))
+;; (my-decode my-test-to-decode)
