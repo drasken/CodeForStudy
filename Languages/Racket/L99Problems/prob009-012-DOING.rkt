@@ -12,9 +12,31 @@
 	  [else (help-my-pack (cdr l) (append acc (list temp)) (list (car l)))]))
   (help-my-pack lst (list) (list)))
 
-;; test -> OK
-(my-pack '(a a a a b c c a a d e e e))
+;; Test -> OK
+;; (my-pack '(a a a a b c c a a d e e e))
 ;; Expected ((A A A)(B)(C C)(A A)(D)(E E E))
 
 
-;; Problem 10
+;; Problem 010
+(define (my-len-encode lst)
+  (let ([res (my-pack lst)])
+    (map (lambda (l)
+	   (list (length l) (car l)))
+	 res)))
+
+;; Test -> OK
+;; (my-len-encode '(a a a a b c c a a d e e e))
+
+
+
+;; Problem 011
+(define (my-len-encode-bis lst)
+  (let ([res (my-len-encode lst)])
+    (for/list ([el res])
+      (if (= (car el) 1)
+	  (cadr el)
+	  el))))
+	  
+;; Test -> OK
+;; (my-len-encode-bis '(a a a a b c c a a d e e e))
+
