@@ -17,8 +17,8 @@ def compound_with_deposit(init_sum: float, interest: float, years: int, deposit:
         new_sum = round((init_sum + deposit) * (1 + interest), 2)
         return compound_with_deposit(new_sum, interest, years - 1, deposit)
 
-test = compound_with_deposit(1000, 0.05, 10, 200)
-print(test)
+# test = compound_with_deposit(1000, 0.05, 10, 200)
+# print(test)
 
 def compound_with_DP(init_sum, interest, years, deposit):
 
@@ -30,3 +30,6 @@ def compound_with_DP(init_sum, interest, years, deposit):
         else:
             res[index] = round((res[index - 1] + deposit) * (1 + interest), 2)
     return res
+
+
+# compound_with_DP(1000, 0.05, 10, 200)
