@@ -10,33 +10,35 @@
 
 ;;; Constants
 
-(define BOARD-WIDTH 25)
-(define BOARD-HEIGHT 25)
+(define BOARD-WIDTH 4)
+(define BOARD-HEIGHT 4)
 (define ALIVE "O")
 (define DEAD ".")
 (define RATIO-INIT-CELLS 0.75)
 
-;;; Functions to init board
+;;;; Functions to init board
 
 ;; First attempt, not good and return a single vector -> Not good		     
-(define (init-py)
-  (let ([res (make-vector 0 0)])
-    (for ([i (in-range BOARD-HEIGHT)])
-      (set! res
-	    (vector-append res (make-vector BOARD-WIDTH 0))))
-    res))
+;; (define (init-py)
+;;   (let ([res (make-vector 0 0)])
+;;     (for ([i (in-range BOARD-HEIGHT)])
+;;       (set! res
+;; 	    (vector-append res (make-vector BOARD-WIDTH 0))))
+;;     res))
 
-;(init-py)
-	      
-		       
-;; Second version, this one works but the inner define looks bad		     
-(define (init-board)
-  (define (make-row)
-    (make-vector BOARD-WIDTH 0))
-  (let ([matrix (make-vector BOARD-HEIGHT (make-row))])
-    matrix))
+;; (define my-board-3 (init-py))
+	      		       
+;; ;; Second version, this one works
+;; ;; Not working correctly, multiple vectors same pointers so can't modify
+;; ;; modification in one is on all vectors
+;; (define (init-board)
+;;   (define (make-row)
+;;     (make-vector BOARD-WIDTH 0))
+;;   (let ([matrix (make-vector BOARD-HEIGHT (make-row))])
+;;     matrix))
 
-; (define my-board (init-board))
+;; (define my-board (init-board))
+
 
 ;; Third version more Racky
 (define (init-my-board height width)
@@ -46,8 +48,8 @@
 
 
 ;; It works
-(define my-board (init-my-board BOARD-HEIGHT BOARD-WIDTH))
-my-board
+(define my-board-def (init-my-board BOARD-HEIGHT BOARD-WIDTH))
+;; my-board
 
 ;;; TODO: finish recursive implementation
 ;; (define (init-board2)
@@ -60,7 +62,7 @@ my-board
 ;; (define matrix (init-board))
 
 
-;;; Helper access function to get and to set elements in a board
+;;;; Helper access function to get and to set elements in a board
 
 (define (get-matrix-el matrix y-index x-index)
   (vector-ref (vector-ref matrix y-index) x-index))
@@ -74,7 +76,7 @@ my-board
 ;; (display my-board)
 ;; (newline)
 
-;;; Third part
+;;;; Third part
 
 ;; Here function to randomize board initial state
 (define (randomize-board board)
@@ -87,10 +89,27 @@ my-board
 ;; (randomize-board my-board)
 ;; (display my-board)
 
-;;; Fourth part, function to calc board next state
 
+;;;; Fourth part, function to calc board next state
+
+(define (normalize-y-index index)
+  (modulo (+ index BOARD-HEIGHT) BOARD-HEIGHT))
+
+(define (normalize-x-index index)
+  (modulo (+ index BOARD-WIDTH) BOARD-HEIGHT))
+
+
+;;;; TODO: it sum but return a wring value
 ;; Count cell neighbours
-(define (count-neig board y-index x-index)
-  ;;TODO: Implement counting alive  neighbours
-  )
+;; (define (count-neig board y-index x-index)
+;;   ;; Input the board and the indexes of cell of interest
+;;   (for/sum ([res
+;;     (for/vector ([y (in-range (- y-index 1) (+ 2 y-index))]
+;; 		 [x (in-range (- x-index 1) (+ 2 x-index))])
+;;       (get-matrix-el board
+;; 		     (normalize-y-index y)
+;; 		     (normalize-x-index x)))])
+;;     res))
+
+
 
