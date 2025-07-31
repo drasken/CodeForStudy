@@ -1,0 +1,4 @@
+Just writing something for testing
+This file should be the same to the other after encrypt/decrypt
+Don't know other things to write
+Maybe next testing with a LOREM IPSUM
