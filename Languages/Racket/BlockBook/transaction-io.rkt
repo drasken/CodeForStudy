@@ -1,5 +1,14 @@
 #lang racket
 
+
+(require (only-in sha sha256))
+(require (only-in sha bytes->hex-string))
+(require racket/serialize)
+
+(provide (struct-out transaction-io)
+	 make-transaction-io valid-transaction-io?)
+
+
 (struct transaction-io
   (transaction-hash value owner timestamp)
   #:prefab)
