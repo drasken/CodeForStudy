@@ -28,3 +28,18 @@
 ;; Test -> OK
 ;; (my-dupli-n '(a b c) 3)
 ;; (my-dupli-n (in-range 10)  2)
+
+
+;; Problem 016
+;; Drop every nth element from list
+(define (my-drop lst num-filter)
+  (define (helper-rec l acc counter)
+    (cond [(empty? l) acc]
+	  [(= (modulo counter num-filter) 0)
+	   (helper-rec (cdr l) acc (add1 counter))]
+	  [else (helper-rec (cdr l) (cons (car l) acc) (add1 counter))]))
+  (reverse (helper-rec lst '() 1)))
+
+
+;; Test -> OK
+;; (my-drop '(a b c d e f g h i l) 3)
