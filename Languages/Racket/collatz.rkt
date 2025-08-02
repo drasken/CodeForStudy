@@ -1,4 +1,5 @@
 #lang racket
+
 (require test-engine/racket-tests)
 
 ;(provide collatz)
@@ -19,10 +20,27 @@
                     (/ num 2)
                     (add1 (* num 3)))]
        [step step (add1 step)])
-       ((= num 1) step))
-    ))
+       ((= num 1) step))))
 
-    
+
+
+;;;; FUnctions to compare different iteration efficiency
+(define (collatz-multiple upper-limit)
+  (for ([i (in-range 1 upper-limit)])
+    (collatz i))
+  'end)
+
+
+(define (collatz-multiple2 upper-limit)
+  (for ([i (in-range 1 upper-limit)])
+    (collatz2 i))
+  'end)
+
+
+;; (collatz 1)
+
+;; (collatz-multiple 9)
+
 (check-expect 9 (collatz 12))
 (check-expect 152 (collatz 1000000))
 (test)
