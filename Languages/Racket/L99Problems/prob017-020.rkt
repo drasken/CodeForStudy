@@ -12,7 +12,7 @@
   (if (< len 0) (error "Not valid len input")
       (helper-rec lst '() len)))
 
-;; Test
+;; Test -> OK
 ;; (my-split '(a b c d e f g h i k) 3)
 
 
@@ -32,5 +32,13 @@
 ;; Test -> OK
 ;; (my-slice '(a b c d e f g h i k) 3 7)
 
-		     
-		     
+
+;; Problem 019 Rotate a list N place to the left
+(define (my-rotate-l lst num) ; should accept negative values
+  (define my-index (if (< num 0) (+ (length lst) num) num)) ; manage negative index
+  (let ([split-lst (my-split lst my-index)])
+    (append (cadr split-lst) (car split-lst))))
+
+;; Test
+;; (my-rotate-l '(a b c d e f g h) 3)
+;; (my-rotate-l '(a b c d e f g h) -2)		     
