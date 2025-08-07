@@ -39,6 +39,21 @@
   (let ([split-lst (my-split lst my-index)])
     (append (cadr split-lst) (car split-lst))))
 
-;; Test
+;; Test -> OK
 ;; (my-rotate-l '(a b c d e f g h) 3)
 ;; (my-rotate-l '(a b c d e f g h) -2)		     
+
+
+;; Problem 020 Removr k-th element in list (counting from 1)
+(define (my-remove lst k)
+  (define (helper-rec l i acc)
+    (cond [(empty? l) acc]
+	  [(= i 1) (helper-rec (cdr l) (- i 1) acc)]
+	  [else (helper-rec (cdr l) (- i 1) (cons (car l) acc))]))
+  (reverse(helper-rec lst k '())))
+		     
+;; Test -> OK
+;; (my-remove '(a b c d) 2)
+;; (my-remove '(a b c d e f g h i) 4)
+;; (my-remove '(a b c d e f g h i) 0)
+;; (my-remove '(a b c d e f g h i) -4)
