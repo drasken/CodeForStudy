@@ -17,4 +17,16 @@
 ;; (my-insert 'test '(1 2 3 4 5 6) 5)
 
 
+;; Problem 022 Create list of integers in a given range
+;; If first number limit is greater than secons the order is descending
+;; First easy solution with racket for/list
+(define (my-range1 val-1 val-2)
+;  (define descending (if (> val-1 val-2) #t #f)
+  (for/list ([i (if (> val-1 val-2)
+		    (in-range val-1 (- val-2 1) -1)
+		    (in-range val-1 (add1 val-2)))])
+    i))
 
+;; Test
+(my-range1 21 10) 
+		    
