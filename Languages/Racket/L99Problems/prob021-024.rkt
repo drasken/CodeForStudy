@@ -28,5 +28,25 @@
     i))
 
 ;; Test
-(my-range1 21 10) 
+;; (my-range1 21 10) 
 		    
+
+;; Problem 023
+;; Select n number elements from a list
+;; 2 possible direct approaches
+;; First: random shuffle and select n from list
+;; Second: select randomly and extract it form list
+;; and put it in result list
+(define (my-rnd-select1 lst num)
+  (define (helper-re l n acc)
+    (cond [(empty? l) acc]
+	  [(zero? n) acc]
+	  [else (helper-re (cdr l) (- n 1) (cons (car l) acc))]))
+  (helper-re (shuffle lst) num '()))
+
+;; Test
+;; (my-rnd-select1 '(a b c d e f g h i) 3)
+;; TODO
+;(define (my-rnd-select2 lst num)
+   
+  
