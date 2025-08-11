@@ -1,3 +1,5 @@
+#lang racket
+
 ;;;; Problems from 021 to 024
 
 
@@ -46,7 +48,19 @@
 
 ;; Test
 ;; (my-rnd-select1 '(a b c d e f g h i) 3)
-;; TODO
-;(define (my-rnd-select2 lst num)
+
+;; TODO, maybe using a named let
+
+
+;; Problem 024
+;; Generate a random permutation of the elements of a list
+;; NOTE: trying not using the shuffle function
+;; First trying it not in place with list
+(define (my-lotto-select num upper)
+  (my-rnd-select1 (my-range1 1 upper) num))
+
+;; Test
+(my-lotto-select 6 49)
+
    
   
