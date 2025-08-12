@@ -1,4 +1,7 @@
 #lang racket
+(provide my-range1
+         my-rnd-select1
+         my-lotto-select)
 
 ;;;; Problems from 021 to 024
 
@@ -60,7 +63,7 @@
   (my-rnd-select1 (my-range1 1 upper) num))
 
 ;; Test
-(my-lotto-select 6 49)
+;; (my-lotto-select 6 49)
 
    
   
