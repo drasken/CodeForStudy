@@ -28,3 +28,12 @@
 ;; Test -> OK
 ;; (my-gcd 35 15)
 ;; (my-gcd 101 17)
+
+
+;; Problem 033 find if 2 numbers are coprime
+(define (my-coprime? num1 num2)
+  (if (= (my-gcd num1 num2) 1) #t #f))
+
+;; Test -> OK
+;; (my-coprime? 35 64)
+;; (my-coprime? 35 65)
