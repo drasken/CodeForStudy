@@ -37,3 +37,14 @@
 ;; Test -> OK
 ;; (my-coprime? 35 64)
 ;; (my-coprime? 35 65)
+
+
+;; Problem 034 - Calculate Euler's totient function (phi)
+;; Using naive approach
+(define (my-totient-phi num)
+  (length
+   (filter (lambda (x)  (my-coprime? x num)) ; using lambda with my-comprime?
+	   (stream->list (in-range num))))) ; generate list to filter
+
+;; Test -> OK
+(my-totient-phi 10)
