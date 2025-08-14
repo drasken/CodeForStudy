@@ -1,6 +1,6 @@
 #lang racket
 (require racket/trace) ; testing recursive calls
-
+(provide my-is-prime?)
 ;;;; Problems from 031 to 034 Arithmetic
 
 
@@ -47,4 +47,4 @@
 	   (stream->list (in-range num))))) ; generate list to filter
 
 ;; Test -> OK
-(my-totient-phi 10)
+;; (my-totient-phi 10)
