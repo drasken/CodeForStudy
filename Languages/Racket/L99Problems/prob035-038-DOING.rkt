@@ -1,6 +1,7 @@
 #lang racket
 (require "./prob031-034-DONE.rkt") ; importing my-is-prime? 
 (require racket/trace)
+
 ;;;; Problems from 035 to 038
 ;; Hekper funciton to find all primes in a given range
 (define (find-primes num)
@@ -12,7 +13,7 @@
   (reverse (helper-rec num 2 '())))
 
 ;; Test
- (find-primes 19)
+;; (find-primes 19)
 
 
 ;; Effective main funciton
@@ -29,3 +30,22 @@
 ;; (my-prime-factors 315)
 ;; (my-prime-factors 15)
 ;; (my-prime-factors 17)
+
+
+;; Problem 036 - express factor with a multiplicity pair instead of listing flat
+;; Solving it using an hash table
+(define (my-factors-new num)
+  (define my-res (make-hash))
+  (define my-factors (my-prime-factors num))
+  (for ([i my-factors])
+    (if (hash-has-key? my-res i)
+	(hash-update! my-res i add1)
+	(hash-set! my-res i 1)))
+  (hash-map my-res (lambda (k v) (list k ))))
+
+;; Test
+;; (my-factors-new 315)
+;; (my-factors-new 15)
+
+
+
