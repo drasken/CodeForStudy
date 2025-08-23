@@ -16,18 +16,78 @@
 	[else #f]))
 
 
+;; Try 03 using Dynamic programming recursively
 
-;; Try 02 with list
+; Create the array needed to compute 
+(define my-years (* 12 1))
+(define my-calendar (for/vector ([i (in-range my-years)]) -1))
+(vector-set! my-calendar 0 1)
 
-;; Algo: add to alist of number modulo 7 depending on
-;; the previous added value and the step counter for moths
-;; using a second counter for year and lep year count
+(define (set-calendar calendar start-year end-year) ; end year included
+  (for ([i (in-range 1 (vector-length calendar))]
+	[year start-year])
+    (cond [(> (+ start-year (quotient i 12)) end-year) (void)]
+	  [(member (remainder i 12) '(0 2 4 6 7 9)) ] ; TODO 31 days
+	  [(= (remainder i 12) 11) ] ; TODO: december
+	  [(member (remainder i 12) '(3 5 8 10)) ] ; TODO 30 days ex. feb
+	  [(is-leap? (+ (quotient i 12) start-year)) ] ; leap year
+	  [else ]))) ; normal febraury
 
-;; create a list with index and populate it until year is surpassed
+
+
+
+;; ;; Try 02 with list
+
+;; ;; Algo: add to alist of number modulo 7 depending on
+;; ;; the previous added value and the step counter for moths
+;; ;; using a second counter for year and lep year count
+
+;; (define (aux-get-day month-days old-val)
+;;   (remainder (+ old-val month-days) 7))
+
+;; ;; (aux-get-day 31 0) 
+
+;; ;; create a list with index and populate it until year is surpassed
 ;; (define (my-calendar start-year end-year)
-;;   (define (helper-rec year1 year2 month acc)
-;;     (cond [
+;;   (define (helper-rec year1 year2 month acc) ; month represent last month
+;;     ;; (displayln month)
+;;     ;; (displayln acc)
+;;     (cond [(> year1 year2) acc]
+;; 	  [(member (remainder month 12) '(0 2 4 6 7 9)) ; pick month in this list
+;; 	   (helper-rec year1 year2 (add1 month) (cons (aux-get-day 31 (car acc)) acc))]
+;; 	  [(= (remainder month 12) 11)
+;; 	   (helper-rec (add1 year1) year2 (add1 month) (cons (aux-get-day 31 (car acc)) acc))]
+;; 	  [(member (remainder month 12) '(3 5 8 10))
+;; 	   (helper-rec year1 year2 (add1 month) (cons (aux-get-day 30 (car acc)) acc))]
+;; 	  [(is-leap? year1)
+;; 	   (helper-rec year1 year2 (add1 month) (cons (aux-get-day 29 (car acc)) acc))]
+;; 	  [else (helper-rec year1 year2 (add1 month) (cons (aux-get-day 28 (car acc)) acc))]))
+;;   (helper-rec start-year end-year 0 '(0)))
 
+;; ;; (my-calendar 1901 1901)
+;;   ;; (define (helper-rec year1 year2 month last-element acc)
+;;   ;;   (cond [(> year1 year2) acc]
+;;   ;; 	  [(member (remainder month 12) '(1 3 5 7 8 10)) ; pick month
+;;   ;; 	   (helper-rec year1 year2 (add1 month) (aux-get-day 31 element) (cons element acc))]
+;;   ;; 	  [(= 12 (remainder month 12))
+;;   ;; 	   (helper-rec (add1 year1) year2 (add1 month) (aux-get-day 31 element) (cons element acc))]
+;;   ;; 	  [(member (remainder month 12) '(4 6 9 11))
+;;   ;; 	   (helper-rec year1 year2 (add1 month) (aux-get-day 30 element) (cons element acc))]
+;;   ;; 	  [(is-leap? year1)
+;;   ;; 	   (helper-rec year1 year2 (add1 month) (aux-get-day 29 element) (cons element acc))]
+;;   ;; 	  [else (helper-rec year1 year2 (add1 month) (aux-get-day 28 element) (cons element acc))]))
+;;   ;; (helper-rec start-year end-year 1 0 '()))
+
+;; (define res-list (my-calendar 1900 2000))
+;; ;res-list
+;; (for/sum ([i res-list])
+;;   (if (= i 0) 1 0))
+;;(define res-list (filter (lambda (x) (= x 0)) (cdr (my-calendar 1900 1900))))  ; list of all my calculated values
+
+;; res-list
+;; Here get the desired result, count all the sundays -> 0 values
+;; (for/sum ([i res-list])
+;;   (if (= i 0) 1 0))
 
 
 ;; ;; Try 001: using matrix and checking with offset modulo 7
