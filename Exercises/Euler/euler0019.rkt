@@ -16,6 +16,10 @@
 	[else #f]))
 
 
+(define (aux-get-day month-days old-val)
+  (remainder (+ old-val month-days) 7))
+
+
 ;; Try 03 using Dynamic programming recursively
 
 ; Create the array needed to compute 
@@ -26,13 +30,18 @@
 (define (set-calendar calendar start-year end-year) ; end year included
   (for ([i (in-range 1 (vector-length calendar))]
 	[year start-year])
-    (cond [(> (+ start-year (quotient i 12)) end-year) (void)]
-	  [(member (remainder i 12) '(0 2 4 6 7 9)) ] ; TODO 31 days
-	  [(= (remainder i 12) 11) ] ; TODO: december
-	  [(member (remainder i 12) '(3 5 8 10)) ] ; TODO 30 days ex. feb
-	  [(is-leap? (+ (quotient i 12) start-year)) ] ; leap year
-	  [else ]))) ; normal febraury
+    ;[(> (+ start-year (quotient i 12)) end-year) (void)]
+    (cond [(member (remainder i 12) '(4 6 9 11)) 
+	   (vector-set! calendar i (aux-get-day 30 (vector-ref calendar (- i 1))))] ; TODO 31 days
+	  ; [(= (remainder i 12) 11) ] ; TODO: december
+	  [(member (remainder i 12) '(0 1 3 5 7 8 10))
+	   (vector-set! calendar i (aux-get-day 31 (vector-ref calendar (- i 1))))] ; TODO 30 days ex. feb
+	  [(is-leap? (+ (quotient i 12) start-year))
+	   (vector-set! calendar i (aux-get-day 29 (vector-ref calendar (- i 1))))] ; leap year
+	  [else (vector-set! calendar i (aux-get-day 28 (vector-ref calendar (- i 1))))]))) ; normal febraury
 
+; Calc calendar
+(set-calendar my-calendar 1900 1900)
 
 
 
