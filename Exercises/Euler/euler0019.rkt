@@ -23,7 +23,9 @@
 ;; Try 03 using Dynamic programming recursively
 
 ; Create the array needed to compute 
-(define my-years (* 12 1))
+(define my-year1 1901)
+(define my-year2 1902)
+(define my-years (* 12 (add1 (- my-year2 my-year1))))
 (define my-calendar (for/vector ([i (in-range my-years)]) -1))
 (vector-set! my-calendar 0 1)
 
@@ -41,8 +43,15 @@
 	  [else (vector-set! calendar i (aux-get-day 28 (vector-ref calendar (- i 1))))]))) ; normal febraury
 
 ; Calc calendar
-(set-calendar my-calendar 1900 1900)
+(set-calendar my-calendar my-year1 my-year2)
 
+
+
+(define (my-solution calendar)
+  (for/sum ([i calendar])
+    (if (= i 0) 1 0)))
+
+(define my-result (my-solution my-calendar)) ; use this var to count sundays
 
 
 ;; ;; Try 02 with list
