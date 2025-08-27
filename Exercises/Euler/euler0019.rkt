@@ -54,6 +54,50 @@
 (define my-result (my-solution my-calendar)) ; use this var to count sundays
 
 
+;;;; Code from thread ProjectEuler
+;; CommonLisp
+;; (defun day-of-week-for-date (day month year)
+;;   (nth 6 (multiple-value-list
+;;           (decode-universal-time
+;;            (encode-universal-time 0 0 8 day month year)))))
+
+;; (defun sundayp (day month year)
+;;   (= (day-of-week-for-date day month year) 6))
+
+;; (defun euler19 ()
+;;   (loop for year from 1901 to 2000
+;;         sum (loop for month from 1 to 12
+;;                   if (sundayp 1 month year)
+;;                      count month)))
+
+;; Converted in Racket by ChatGPT
+;; #lang racket
+;; (require srfi/19) ; for date/time conversion utilities
+
+;; (define (day-of-week-for-date day month year)
+;; ;; Racket's date-day-of-week returns 0 = Sunday .. 6 = Saturday
+;; (let* ([secs (date->seconds (make-date year month day 8 0 0 0 #f))] ; 08:00 like CL code
+;; [dt (seconds->date secs)])
+;; (date-day-of-week dt)))
+
+;; (define (sunday? day month year)
+;; (= (day-of-week-for-date day month year) 0)) ; 0 == Sunday in Racket
+
+;; (define (euler19)
+;; (for/sum ([year (in-range 1901 2001)]) ; 1901..2000 inclusive
+;; (for/sum ([month (in-range 1 13)])   ; 1..12
+;; (if (sunday? 1 month year) 1 0))))
+
+;; ;; Example: compute the Project Euler answer
+;; (euler19) ; => 171
+
+;; Notes:
+
+;; srfi/19 date functions use date-day-of-week with 0 = Sunday.
+;; I created the date at 08:00 to match the Common Lisp code's use of 8 for the hour.
+;; euler19 uses for/sum to sum counts of months whose 1st is a Sunday.
+
+
 ;; ;; Try 02 with list
 
 ;; ;; Algo: add to alist of number modulo 7 depending on
