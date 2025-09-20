@@ -1,0 +1,7 @@
+Symple first toy program to start learning C better.
+The  program needs to do: [1/5]
+1. [X] Accept a file path as an input argument from the terminal.
+2. [ ] Open the file for reading.
+3. [ ] Read the content of the file.
+4. [ ] Count the number of words.
+5. [ ] Output the word count.
