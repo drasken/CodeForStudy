@@ -1,0 +1,12 @@
+Test scripting in Racket
+
+Using this approach:
+
+#! /usr/bin/env racket
+#lang racket
+
+> ./main.rkt <input-here>
+
+When reading the input appear as first element of args vector
+It's not like in C, program's name is not included in the args array
+
