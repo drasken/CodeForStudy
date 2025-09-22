@@ -1,0 +1,16 @@
+Test scripting in Python
+
+Using this approach:
+
+#! /usr/bin/env python
+
+> ./main.py <input-file-here>
+
+Just toy project to re-start with python. Take a file in input and
+return the number of words in it.
+
+First simple approach: using built in split and return number of
+words. Check for special characters if everything works rigth
+
+[2025-09-22 lun] Done. Everything works as expected.
+
