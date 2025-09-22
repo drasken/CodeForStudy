@@ -7,3 +7,15 @@ Trying to do a simple sudoku solver es exercise
 - Using a matrix of 9x9 to store sudoku values. Empty cells have 0
 - Using a transpose matrix to access columns
 - Maybe using a list of blocks? Can modify in-place?
+- Trying simple backtracking procedure. Check for each empty cell 
+
+** Task TODO [2/7]
+
+- [X] Implement init function to make a blank table
+- [X] implement a populate_table function to populate sudoku table.
+- [ ] LATER: a function to get an input state and create a sudoku
+  table from that
+- [ ] Function that for each cell get the set of possible choices
+- [ ] Utility function that check is state is a valid stat
+- [ ] Main loop that traverse the table
+- [ ] Output the final  sudoku state
