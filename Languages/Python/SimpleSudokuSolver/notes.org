@@ -1,0 +1,9 @@
+Trying to do a simple sudoku solver es exercise
+
+* How to solve it
+
+** First idea
+
+- Using a matrix of 9x9 to store sudoku values. Empty cells have 0
+- Using a transpose matrix to access columns
+- Maybe using a list of blocks? Can modify in-place?
