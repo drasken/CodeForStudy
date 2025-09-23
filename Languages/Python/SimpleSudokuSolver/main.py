@@ -6,6 +6,7 @@ To see further documentation, see notes.org
 
 import random
 import pprint  # Useful for debugging
+import numpy as np
 
 
 # GLOBAL VARIABLES HERE ---------------
@@ -35,6 +36,11 @@ def randomize_table(table: list[list]) -> None:
                 table[row_index][index] = random.randint(1,9)
             else:
                 table[row_index][index] = 0  # Be sure to set as empty cell
+    return
+
+
+def get_block(y_index: int, x_index: int) -> list:
+    pass
 
 
 def main():
@@ -43,7 +49,8 @@ def main():
     """
     my_table: list[list] = init_empty_table()
     randomize_table(my_table)
-
+    my_transpose = np.transpose(my_table)
+    
     return my_table
 
 
