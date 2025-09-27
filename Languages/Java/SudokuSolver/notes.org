@@ -1,0 +1,11 @@
+Notes to help me guiding me in my simple project:
+
+
+Milestones (high level):
+
+1. Board representation & I/O
+2. Cell utilities & constraints
+3. Basic logical solvers (deterministic techniques)
+4. Backtracking search with heuristics
+5. Validation, performance, and testing
+6. Optional: GUI / file import / advanced techniques
