@@ -23,7 +23,27 @@
 
 ;; Test
 ;; (calc-compond-interest 100 0.05 10)  ; -> 162.89 - OK
- 
+
+
+;; Annualize final investment return in percentage
+;; This is the yearly version
+;; Formula: AnnReturn = (1 + cumulativeReturn) ^ 1/n-years - 1
+(define (calc-annual-return-y init-sum final-sum years)  ; This version we get our total return
+  (let ([tot-return (- (/ final-sum init-sum) 1)])
+    (- (expt (+ 1 tot-return) (/ 1 years)) 1)))
+
+
+;; Annualize final investment return in percentage
+;; This is the daily version
+;; ; Formula: AnnReturn = (1 + cumulativeReturn) ^ 365/n-days - 1
+(define (calc-annual-return-d init-sum final-sum days)  ; This version we get our total return
+  (let ([tot-return (- (/ final-sum init-sum) 1)])
+    (- (expt (+ 1 tot-return) (/ 365 days)) 1)))
+
+
+;; Test
+;; (calc-annual-return-d 100 115.75 650)  ; -> 0.0855 - OK
+
 
 ;;;; HERE IO USER'S INTERACTION LOGIC ---------------
 
