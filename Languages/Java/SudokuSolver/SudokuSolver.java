@@ -34,7 +34,7 @@ public class SudokuSolver{
     }
 
 
-    // TODO: method to get collection of  
+    // TODO: method to get collection of blocks
 
 
     // TODO: implement a method to read a string and create a table from that
