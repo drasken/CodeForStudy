@@ -4,6 +4,7 @@
 ;; Problem 009
 ;; Using an ausiliary function whit a temp list and acc list
 (define (my-pack lst)
+
   (when (empty? lst) '())
   (define (help-my-pack l acc temp)
     (cond [(empty? l) (append acc (list temp))]

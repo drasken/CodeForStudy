@@ -1,5 +1,6 @@
-Notes to help me guiding me in my simple project:
+This project is a simlpe SudokuSolver in Java
 
+Notes to help me guiding me in this simple project:
 
 Milestones (high level):
 

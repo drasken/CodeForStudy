@@ -14,14 +14,15 @@ POPULATE_PARAM_EASY: float = 0.80
 POPULATE_PARAM_MEDIUM: float = 0.65
 POPULATE_PARAM_HARD: float = 0.50
 POPULATE_PARAM_VERY_HARD: float = 0.3
+BOARD_SIZE: int = 9
 
 
 def init_empty_table() -> list[list]:
     """
     Make an initial empty sudoku table.
-    The dimension es the classic 9x9 sudoku
+    The dimension is following the global variable
     """
-    my_table: list[list] = [[0 for x in range(9)] for y in range(9)]
+    my_table: list[list] = [[0 for x in range(BOARD_SIZE)] for y in range(BOARD_SIZE)]
 
     return my_table
 
@@ -40,6 +41,18 @@ def randomize_table(table: list[list]) -> None:
 
 
 def get_block(y_index: int, x_index: int) -> list:
+    pass
+
+
+def get_row():
+    pass
+
+
+def get_col():
+    pass
+
+
+def is_valid_num():
     pass
 
 

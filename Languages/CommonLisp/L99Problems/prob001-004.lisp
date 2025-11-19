@@ -25,7 +25,6 @@
 	((null (cddr lst)) lst)
 	(t (my-but-last (cdr lst)))))
 
-
 ;;test
 (my-but-last '(3 5 6 7)) 
 (my-but-last '())

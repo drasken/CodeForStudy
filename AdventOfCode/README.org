@@ -1,0 +1,12 @@
+Reorganizing my directory here.
+
+Here I'll put each different programming language rules and decision
+on how to organize the code.
+
+* CommonLisp
+
+I use an advent.asd file in the root directory and a single
+advent-<year>.lisp for each directory and use a single file for all
+solution, inspired by Norvig's repository
+
+
