@@ -23,7 +23,6 @@
 ;; all-boxes defined later, under cross function
 ;; Unit: a unit is a row, column, or box; each unit is a tuple of 9 squares.
 ;; all_units is a list of all 27 units.
-;; all_units = [cross(rows, c) for c in cols] + [cross(r, cols) for r in rows] + all_boxes
 ;; units is a dict such that units[s] is a tuple of the 3 units that square s is a part of.
 ;; NOTE: so I can use it to validate input on a square
 ;; Peers: the squares that share a unit are called peers.
@@ -52,12 +51,20 @@
 ;;         (set! res (cons (util-str-app s1 s2 i j) res))))
 ;;     res))
 
+;; BAD: good but I misunderstood the intention
+;; (define (cross2 s1 s2)
+;;   (for*/list ([i (in-string s1)]
+;;               [j (in-string s2)])
+;;     (apply string (list i j))))
 
-(define (cross2 s1 s2)
-  (for*/list ([i (in-string s1)]
-              [j (in-string s2)])
-    (apply string (list i j))))
-
+;; Finally a good implementatoin
+(define (cross3 l1 l2)
+  (for*/list ([i (in-list l1)]
+             [j (in-list l2)])
+             (for*/list ([k (in-string i)]
+                        [l (in-string j)])
+               (apply string (list k l)))))
+          
 ;; OLD: implementation is not good anymore
 ;; (define all-boxes  (foldl append '()
 ;;                           (for*/list
@@ -65,9 +72,15 @@
 ;;                                [j (list "123" "456" "789")])
 ;;                             (cross i j))))
 
-
-(define all-boxes (cross2 rows digits))
-(define all-units (
+(define r-box '("ABC" "DEF" "GHI"))
+(define c-box '("123" "456" "789"))
+;; Python code
+;; all_units = [cross(rows, c) for c in cols] + [cross(r, cols) for r in rows] + all_boxes
+;; (define all-boxes (cross2 rows digits))
+(define all-boxes (cross3 r-box c-box))
+;; Python code:
+;; units     = {s: tuple(u for u in all_units if s in u) for s in squares}
+(define all-units 'i)
 
 ;(define all-units ())
   
