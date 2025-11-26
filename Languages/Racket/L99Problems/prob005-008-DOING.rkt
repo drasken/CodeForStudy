@@ -28,7 +28,18 @@
 ;; * (my-flatten '(a (b (c d) e)))
 ;; (A B C D E)
 (define (my-flatten lst)
-  'test )
+  (define (rec-flat l acc)
+    (cond [(null? l) acc]
+          [(pair? (car l))
+           (append (rec-flat (car l) acc))]
+          [else (append (rec-flat (cdr l) (cons (car l) acc)))]))
+  (rec-flat lst '()))
+
+
+(define (my-flatten2 lst)
+  (define (rec-flat2 l acc)
+    (cond [(null? l) acc]
+          [(pair? l) (append (rec-flat2 
 
 ;; test
 ;;(my-flatten '(a (b (c d) e)))		    
